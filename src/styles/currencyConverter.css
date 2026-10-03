@@ -1,0 +1,25 @@
+.cc-container { max-width: 1000px; margin: 0 auto; }
+.cc-title { color: var(--text-primary); margin: 0 0 6px; }
+.cc-desc { color: var(--text-secondary); margin: 0 0 8px; }
+.cc-panel { background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 10px; padding: 16px; margin-top: 16px; }
+.cc-row { display: flex; gap: 12px; flex-wrap: wrap; align-items: center; margin-bottom: 10px; }
+.cc-label { display: block; font-size: 12px; color: var(--text-muted); margin-bottom: 4px; }
+.cc-btn { padding: 7px 14px; background: var(--color-primary); color: #fff; border: 1px solid var(--color-primary); border-radius: 6px; }
+.cc-btn:hover { opacity: 0.9; }
+.cc-btn.secondary { background: var(--bg-tertiary); color: var(--text-primary); border-color: var(--border-color); }
+.cc-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+.cc-textarea { width: 100%; min-height: 140px; font-family: Menlo, Consolas, monospace; font-size: 13px; resize: vertical; }
+.cc-input { min-width: 0; }
+.cc-out { white-space: pre-wrap; word-break: break-all; font-family: Menlo, Consolas, monospace; font-size: 13px; background: var(--bg-input); border: 1px solid var(--border-color); border-radius: 6px; padding: 10px; margin: 0; color: var(--text-primary); }
+.cc-err { color: var(--color-error); }
+.cc-ok { color: var(--color-success); }
+.cc-muted { color: var(--text-muted); }
+.cc-table { width: 100%; border-collapse: collapse; background: var(--bg-table); font-size: 13px; }
+.cc-table th, .cc-table td { text-align: left; padding: 6px 10px; border-bottom: 1px solid var(--border-color-light); vertical-align: top; word-break: break-word; }
+.cc-table tr:hover td { background: var(--bg-table-hover); }
+.cc-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 12px; }
+.cc-stat { background: var(--bg-stat); border-radius: 8px; padding: 10px 12px; }
+.cc-stat:hover { background: var(--bg-stat-hover); }
+.cc-stat b { display: block; font-size: 12px; color: var(--text-muted); font-weight: 500; }
+.cc-notice { margin-top: 16px; padding: 12px 16px; border: 1px dashed var(--border-color); border-radius: 8px; background: var(--bg-card); color: var(--text-muted); }
+.cc-result { font-size: 20px; margin-bottom: 6px; }

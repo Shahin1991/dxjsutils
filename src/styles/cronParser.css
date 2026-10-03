@@ -1,0 +1,25 @@
+.cp-container { max-width: 1000px; margin: 0 auto; }
+.cp-title { color: var(--text-primary); margin: 0 0 6px; }
+.cp-desc { color: var(--text-secondary); margin: 0 0 8px; }
+.cp-panel { background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 10px; padding: 16px; margin-top: 16px; }
+.cp-row { display: flex; gap: 12px; flex-wrap: wrap; align-items: center; margin-bottom: 10px; }
+.cp-label { display: block; font-size: 12px; color: var(--text-muted); margin-bottom: 4px; }
+.cp-btn { padding: 7px 14px; background: var(--color-primary); color: #fff; border: 1px solid var(--color-primary); border-radius: 6px; }
+.cp-btn:hover { opacity: 0.9; }
+.cp-btn.secondary { background: var(--bg-tertiary); color: var(--text-primary); border-color: var(--border-color); }
+.cp-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+.cp-textarea { width: 100%; min-height: 140px; font-family: Menlo, Consolas, monospace; font-size: 13px; resize: vertical; }
+.cp-input { min-width: 0; }
+.cp-out { white-space: pre-wrap; word-break: break-all; font-family: Menlo, Consolas, monospace; font-size: 13px; background: var(--bg-input); border: 1px solid var(--border-color); border-radius: 6px; padding: 10px; margin: 0; color: var(--text-primary); }
+.cp-err { color: var(--color-error); }
+.cp-ok { color: var(--color-success); }
+.cp-muted { color: var(--text-muted); }
+.cp-table { width: 100%; border-collapse: collapse; background: var(--bg-table); font-size: 13px; }
+.cp-table th, .cp-table td { text-align: left; padding: 6px 10px; border-bottom: 1px solid var(--border-color-light); vertical-align: top; word-break: break-word; }
+.cp-table tr:hover td { background: var(--bg-table-hover); }
+.cp-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 12px; }
+.cp-stat { background: var(--bg-stat); border-radius: 8px; padding: 10px 12px; }
+.cp-stat:hover { background: var(--bg-stat-hover); }
+.cp-stat b { display: block; font-size: 12px; color: var(--text-muted); font-weight: 500; }
+.cp-expr { width: 100%; font-family: Menlo, Consolas, monospace; font-size: 18px; }
+.cp-gap { margin-top: 10px; }

@@ -1,0 +1,24 @@
+.jv-container { max-width: 1000px; margin: 0 auto; }
+.jv-title { color: var(--text-primary); margin: 0 0 6px; }
+.jv-desc { color: var(--text-secondary); margin: 0 0 8px; }
+.jv-panel { background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 10px; padding: 16px; margin-top: 16px; }
+.jv-row { display: flex; gap: 12px; flex-wrap: wrap; align-items: center; margin-bottom: 10px; }
+.jv-label { display: block; font-size: 12px; color: var(--text-muted); margin-bottom: 4px; }
+.jv-btn { padding: 7px 14px; background: var(--color-primary); color: #fff; border: 1px solid var(--color-primary); border-radius: 6px; }
+.jv-btn:hover { opacity: 0.9; }
+.jv-btn.secondary { background: var(--bg-tertiary); color: var(--text-primary); border-color: var(--border-color); }
+.jv-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+.jv-textarea { width: 100%; min-height: 140px; font-family: Menlo, Consolas, monospace; font-size: 13px; resize: vertical; }
+.jv-input { min-width: 0; }
+.jv-out { white-space: pre-wrap; word-break: break-all; font-family: Menlo, Consolas, monospace; font-size: 13px; background: var(--bg-input); border: 1px solid var(--border-color); border-radius: 6px; padding: 10px; margin: 0; color: var(--text-primary); }
+.jv-err { color: var(--color-error); }
+.jv-ok { color: var(--color-success); }
+.jv-muted { color: var(--text-muted); }
+.jv-table { width: 100%; border-collapse: collapse; background: var(--bg-table); font-size: 13px; }
+.jv-table th, .jv-table td { text-align: left; padding: 6px 10px; border-bottom: 1px solid var(--border-color-light); vertical-align: top; word-break: break-word; }
+.jv-table tr:hover td { background: var(--bg-table-hover); }
+.jv-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 12px; }
+.jv-stat { background: var(--bg-stat); border-radius: 8px; padding: 10px 12px; }
+.jv-stat:hover { background: var(--bg-stat-hover); }
+.jv-stat b { display: block; font-size: 12px; color: var(--text-muted); font-weight: 500; }
+.jv-gap { margin-top: 10px; }

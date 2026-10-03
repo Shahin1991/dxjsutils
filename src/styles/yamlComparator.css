@@ -1,0 +1,29 @@
+.yc-container { max-width: 1000px; margin: 0 auto; }
+.yc-title { color: var(--text-primary); margin: 0 0 6px; }
+.yc-desc { color: var(--text-secondary); margin: 0 0 8px; }
+.yc-panel { background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 10px; padding: 16px; margin-top: 16px; }
+.yc-row { display: flex; gap: 12px; flex-wrap: wrap; align-items: center; margin-bottom: 10px; }
+.yc-label { display: block; font-size: 12px; color: var(--text-muted); margin-bottom: 4px; }
+.yc-btn { padding: 7px 14px; background: var(--color-primary); color: #fff; border: 1px solid var(--color-primary); border-radius: 6px; }
+.yc-btn:hover { opacity: 0.9; }
+.yc-btn.secondary { background: var(--bg-tertiary); color: var(--text-primary); border-color: var(--border-color); }
+.yc-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+.yc-textarea { width: 100%; min-height: 140px; font-family: Menlo, Consolas, monospace; font-size: 13px; resize: vertical; }
+.yc-input { min-width: 0; }
+.yc-out { white-space: pre-wrap; word-break: break-all; font-family: Menlo, Consolas, monospace; font-size: 13px; background: var(--bg-input); border: 1px solid var(--border-color); border-radius: 6px; padding: 10px; margin: 0; color: var(--text-primary); }
+.yc-err { color: var(--color-error); }
+.yc-ok { color: var(--color-success); }
+.yc-muted { color: var(--text-muted); }
+.yc-table { width: 100%; border-collapse: collapse; background: var(--bg-table); font-size: 13px; }
+.yc-table th, .yc-table td { text-align: left; padding: 6px 10px; border-bottom: 1px solid var(--border-color-light); vertical-align: top; word-break: break-word; }
+.yc-table tr:hover td { background: var(--bg-table-hover); }
+.yc-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 12px; }
+.yc-stat { background: var(--bg-stat); border-radius: 8px; padding: 10px 12px; }
+.yc-stat:hover { background: var(--bg-stat-hover); }
+.yc-stat b { display: block; font-size: 12px; color: var(--text-muted); font-weight: 500; }
+.yc-split { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 12px; }
+.yc-warn { color: var(--color-warning); }
+.yc-table tr.yc-added td { background: rgba(63, 185, 80, 0.15); }
+.yc-table tr.yc-removed td { background: rgba(248, 81, 73, 0.15); }
+.yc-table tr.yc-changed td { background: rgba(210, 153, 34, 0.18); }
+@media (max-width: 768px) { .yc-split { grid-template-columns: 1fr; } }

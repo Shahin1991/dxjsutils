@@ -1,0 +1,25 @@
+.ci-container { max-width: 1000px; margin: 0 auto; }
+.ci-title { color: var(--text-primary); margin: 0 0 6px; }
+.ci-desc { color: var(--text-secondary); margin: 0 0 8px; }
+.ci-panel { background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 10px; padding: 16px; margin-top: 16px; }
+.ci-row { display: flex; gap: 12px; flex-wrap: wrap; align-items: center; margin-bottom: 10px; }
+.ci-label { display: block; font-size: 12px; color: var(--text-muted); margin-bottom: 4px; }
+.ci-btn { padding: 7px 14px; background: var(--color-primary); color: #fff; border: 1px solid var(--color-primary); border-radius: 6px; }
+.ci-btn:hover { opacity: 0.9; }
+.ci-btn.secondary { background: var(--bg-tertiary); color: var(--text-primary); border-color: var(--border-color); }
+.ci-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+.ci-textarea { width: 100%; min-height: 140px; font-family: Menlo, Consolas, monospace; font-size: 13px; resize: vertical; }
+.ci-input { min-width: 0; }
+.ci-out { white-space: pre-wrap; word-break: break-all; font-family: Menlo, Consolas, monospace; font-size: 13px; background: var(--bg-input); border: 1px solid var(--border-color); border-radius: 6px; padding: 10px; margin: 0; color: var(--text-primary); }
+.ci-err { color: var(--color-error); }
+.ci-ok { color: var(--color-success); }
+.ci-muted { color: var(--text-muted); }
+.ci-table { width: 100%; border-collapse: collapse; background: var(--bg-table); font-size: 13px; }
+.ci-table th, .ci-table td { text-align: left; padding: 6px 10px; border-bottom: 1px solid var(--border-color-light); vertical-align: top; word-break: break-word; }
+.ci-table tr:hover td { background: var(--bg-table-hover); }
+.ci-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 12px; }
+.ci-stat { background: var(--bg-stat); border-radius: 8px; padding: 10px 12px; }
+.ci-stat:hover { background: var(--bg-stat-hover); }
+.ci-stat b { display: block; font-size: 12px; color: var(--text-muted); font-weight: 500; }
+.ci-wide { width: 100%; max-width: 360px; font-size: 18px; font-family: Menlo, Consolas, monospace; }
+.ci-gap { margin-top: 8px; }

@@ -1,0 +1,24 @@
+.cs-container { max-width: 1000px; margin: 0 auto; }
+.cs-title { color: var(--text-primary); margin: 0 0 6px; }
+.cs-desc { color: var(--text-secondary); margin: 0 0 8px; }
+.cs-panel { background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 10px; padding: 16px; margin-top: 16px; }
+.cs-row { display: flex; gap: 12px; flex-wrap: wrap; align-items: center; margin-bottom: 10px; }
+.cs-label { display: block; font-size: 12px; color: var(--text-muted); margin-bottom: 4px; }
+.cs-btn { padding: 7px 14px; background: var(--color-primary); color: #fff; border: 1px solid var(--color-primary); border-radius: 6px; }
+.cs-btn:hover { opacity: 0.9; }
+.cs-btn.secondary { background: var(--bg-tertiary); color: var(--text-primary); border-color: var(--border-color); }
+.cs-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+.cs-textarea { width: 100%; min-height: 140px; font-family: Menlo, Consolas, monospace; font-size: 13px; resize: vertical; }
+.cs-input { min-width: 0; }
+.cs-out { white-space: pre-wrap; word-break: break-all; font-family: Menlo, Consolas, monospace; font-size: 13px; background: var(--bg-input); border: 1px solid var(--border-color); border-radius: 6px; padding: 10px; margin: 0; color: var(--text-primary); }
+.cs-err { color: var(--color-error); }
+.cs-ok { color: var(--color-success); }
+.cs-muted { color: var(--text-muted); }
+.cs-table { width: 100%; border-collapse: collapse; background: var(--bg-table); font-size: 13px; }
+.cs-table th, .cs-table td { text-align: left; padding: 6px 10px; border-bottom: 1px solid var(--border-color-light); vertical-align: top; word-break: break-word; }
+.cs-table tr:hover td { background: var(--bg-table-hover); }
+.cs-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 12px; }
+.cs-stat { background: var(--bg-stat); border-radius: 8px; padding: 10px 12px; }
+.cs-stat:hover { background: var(--bg-stat-hover); }
+.cs-stat b { display: block; font-size: 12px; color: var(--text-muted); font-weight: 500; }
+.cs-search { flex: 1; min-width: 220px; }

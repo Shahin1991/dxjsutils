@@ -1,0 +1,145 @@
+:root,
+.app-shell.dark {
+  --bg-primary: #0d1117;
+  --bg-secondary: #161b22;
+  --bg-tertiary: #1c2230;
+  --bg-card: #161b22;
+  --bg-input: #0d1117;
+  --bg-input-focus: #131a24;
+  --bg-stat: #1c2230;
+  --bg-stat-hover: #232b3b;
+  --bg-progress: #21262d;
+  --bg-header: #161b22;
+  --bg-table: #161b22;
+  --bg-table-hover: #1c2230;
+  --bg-ongoing: #12261e;
+  --bg-ongoing-hover: #17332a;
+  --text-primary: #f0f6fc;
+  --text-secondary: #c9d1d9;
+  --text-muted: #8b949e;
+  --border-color: #30363d;
+  --border-color-light: #21262d;
+  --color-primary: #58a6ff;
+  --color-secondary: #3fb9a8;
+  --color-accent: #58a6ff;
+  --color-success: #3fb950;
+  --color-error: #f85149;
+  --color-warning: #d29922;
+  --shadow-box: 0 4px 16px rgba(0, 0, 0, 0.45);
+}
+
+.app-shell.light {
+  --bg-primary: #e8edf2;
+  --bg-secondary: #f2f4f7;
+  --bg-tertiary: #dde3ea;
+  --bg-card: #ffffff;
+  --bg-input: #ffffff;
+  --bg-input-focus: #fdfdfe;
+  --bg-stat: #f2f4f7;
+  --bg-stat-hover: #e8edf2;
+  --bg-progress: #d6dde5;
+  --bg-header: #ffffff;
+  --bg-table: #ffffff;
+  --bg-table-hover: #f2f4f7;
+  --bg-ongoing: #e3f3ef;
+  --bg-ongoing-hover: #d3ece6;
+  --text-primary: #1a1a2e;
+  --text-secondary: #3a3a52;
+  --text-muted: #6b6b80;
+  --border-color: #cfd6de;
+  --border-color-light: #e1e6ec;
+  --color-primary: #af0e20;
+  --color-secondary: #00796b;
+  --color-accent: #af0e20;
+  --color-success: #2e7d32;
+  --color-error: #c62828;
+  --color-warning: #b26a00;
+  --shadow-box: 0 4px 16px rgba(26, 26, 46, 0.12);
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  -webkit-font-smoothing: antialiased;
+}
+
+button,
+input,
+select,
+textarea {
+  font: inherit;
+  color: inherit;
+}
+
+button {
+  cursor: pointer;
+}
+
+input,
+select,
+textarea {
+  background: var(--bg-input);
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  padding: 8px 10px;
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+  outline: none;
+  background: var(--bg-input-focus);
+  border-color: var(--color-primary);
+}
+
+.loading {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 32px;
+  color: var(--text-muted);
+}
+
+.spinner {
+  width: 22px;
+  height: 22px;
+  border: 3px solid var(--bg-progress);
+  border-top-color: var(--color-primary);
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.error-boundary {
+  max-width: 700px;
+  margin: 40px auto;
+  padding: 24px;
+  background: var(--bg-card);
+  border: 1px solid var(--color-error);
+  border-radius: 10px;
+}
+
+.error-boundary pre {
+  white-space: pre-wrap;
+  color: var(--color-error);
+}

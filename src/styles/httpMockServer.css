@@ -1,0 +1,28 @@
+.ms-container { max-width: 1000px; margin: 0 auto; }
+.ms-title { color: var(--text-primary); margin: 0 0 6px; }
+.ms-desc { color: var(--text-secondary); margin: 0 0 8px; }
+.ms-panel { background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 10px; padding: 16px; margin-top: 16px; }
+.ms-row { display: flex; gap: 12px; flex-wrap: wrap; align-items: center; margin-bottom: 10px; }
+.ms-label { display: block; font-size: 12px; color: var(--text-muted); margin-bottom: 4px; }
+.ms-btn { padding: 7px 14px; background: var(--color-primary); color: #fff; border: 1px solid var(--color-primary); border-radius: 6px; }
+.ms-btn:hover { opacity: 0.9; }
+.ms-btn.secondary { background: var(--bg-tertiary); color: var(--text-primary); border-color: var(--border-color); }
+.ms-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+.ms-textarea { width: 100%; min-height: 140px; font-family: Menlo, Consolas, monospace; font-size: 13px; resize: vertical; }
+.ms-input { min-width: 0; }
+.ms-out { white-space: pre-wrap; word-break: break-all; font-family: Menlo, Consolas, monospace; font-size: 13px; background: var(--bg-input); border: 1px solid var(--border-color); border-radius: 6px; padding: 10px; margin: 0; color: var(--text-primary); }
+.ms-err { color: var(--color-error); }
+.ms-ok { color: var(--color-success); }
+.ms-muted { color: var(--text-muted); }
+.ms-table { width: 100%; border-collapse: collapse; background: var(--bg-table); font-size: 13px; }
+.ms-table th, .ms-table td { text-align: left; padding: 6px 10px; border-bottom: 1px solid var(--border-color-light); vertical-align: top; word-break: break-word; }
+.ms-table tr:hover td { background: var(--bg-table-hover); }
+.ms-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 12px; }
+.ms-stat { background: var(--bg-stat); border-radius: 8px; padding: 10px 12px; }
+.ms-stat:hover { background: var(--bg-stat-hover); }
+.ms-stat b { display: block; font-size: 12px; color: var(--text-muted); font-weight: 500; }
+.ms-path { flex: 1; min-width: 200px; }
+.ms-gap { margin-top: 8px; }
+.ms-log { border-bottom: 1px solid var(--border-color-light); padding: 4px 0; }
+.ms-log summary { cursor: pointer; }
+.ms-notice { margin-top: 16px; padding: 12px 16px; border: 1px dashed var(--border-color); border-radius: 8px; background: var(--bg-card); color: var(--text-muted); }

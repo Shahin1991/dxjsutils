@@ -1,0 +1,26 @@
+.ys-container { max-width: 1000px; margin: 0 auto; }
+.ys-title { color: var(--text-primary); margin: 0 0 6px; }
+.ys-desc { color: var(--text-secondary); margin: 0 0 8px; }
+.ys-panel { background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 10px; padding: 16px; margin-top: 16px; }
+.ys-row { display: flex; gap: 12px; flex-wrap: wrap; align-items: center; margin-bottom: 10px; }
+.ys-label { display: block; font-size: 12px; color: var(--text-muted); margin-bottom: 4px; }
+.ys-btn { padding: 7px 14px; background: var(--color-primary); color: #fff; border: 1px solid var(--color-primary); border-radius: 6px; }
+.ys-btn:hover { opacity: 0.9; }
+.ys-btn.secondary { background: var(--bg-tertiary); color: var(--text-primary); border-color: var(--border-color); }
+.ys-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+.ys-textarea { width: 100%; min-height: 140px; font-family: Menlo, Consolas, monospace; font-size: 13px; resize: vertical; }
+.ys-input { min-width: 0; }
+.ys-out { white-space: pre-wrap; word-break: break-all; font-family: Menlo, Consolas, monospace; font-size: 13px; background: var(--bg-input); border: 1px solid var(--border-color); border-radius: 6px; padding: 10px; margin: 0; color: var(--text-primary); }
+.ys-err { color: var(--color-error); }
+.ys-ok { color: var(--color-success); }
+.ys-muted { color: var(--text-muted); }
+.ys-table { width: 100%; border-collapse: collapse; background: var(--bg-table); font-size: 13px; }
+.ys-table th, .ys-table td { text-align: left; padding: 6px 10px; border-bottom: 1px solid var(--border-color-light); vertical-align: top; word-break: break-word; }
+.ys-table tr:hover td { background: var(--bg-table-hover); }
+.ys-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 12px; }
+.ys-stat { background: var(--bg-stat); border-radius: 8px; padding: 10px 12px; }
+.ys-stat:hover { background: var(--bg-stat-hover); }
+.ys-stat b { display: block; font-size: 12px; color: var(--text-muted); font-weight: 500; }
+.ys-split { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 12px; }
+.ys-tall { min-height: 360px; }
+@media (max-width: 768px) { .ys-split { grid-template-columns: 1fr; } }

@@ -1,0 +1,26 @@
+.hg-container { max-width: 1000px; margin: 0 auto; }
+.hg-title { color: var(--text-primary); margin: 0 0 6px; }
+.hg-desc { color: var(--text-secondary); margin: 0 0 8px; }
+.hg-panel { background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 10px; padding: 16px; margin-top: 16px; }
+.hg-row { display: flex; gap: 12px; flex-wrap: wrap; align-items: center; margin-bottom: 10px; }
+.hg-label { display: block; font-size: 12px; color: var(--text-muted); margin-bottom: 4px; }
+.hg-btn { padding: 7px 14px; background: var(--color-primary); color: #fff; border: 1px solid var(--color-primary); border-radius: 6px; }
+.hg-btn:hover { opacity: 0.9; }
+.hg-btn.secondary { background: var(--bg-tertiary); color: var(--text-primary); border-color: var(--border-color); }
+.hg-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+.hg-textarea { width: 100%; min-height: 140px; font-family: Menlo, Consolas, monospace; font-size: 13px; resize: vertical; }
+.hg-input { min-width: 0; }
+.hg-out { white-space: pre-wrap; word-break: break-all; font-family: Menlo, Consolas, monospace; font-size: 13px; background: var(--bg-input); border: 1px solid var(--border-color); border-radius: 6px; padding: 10px; margin: 0; color: var(--text-primary); }
+.hg-err { color: var(--color-error); }
+.hg-ok { color: var(--color-success); }
+.hg-muted { color: var(--text-muted); }
+.hg-table { width: 100%; border-collapse: collapse; background: var(--bg-table); font-size: 13px; }
+.hg-table th, .hg-table td { text-align: left; padding: 6px 10px; border-bottom: 1px solid var(--border-color-light); vertical-align: top; word-break: break-word; }
+.hg-table tr:hover td { background: var(--bg-table-hover); }
+.hg-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 12px; }
+.hg-stat { background: var(--bg-stat); border-radius: 8px; padding: 10px 12px; }
+.hg-stat:hover { background: var(--bg-stat-hover); }
+.hg-stat b { display: block; font-size: 12px; color: var(--text-muted); font-weight: 500; }
+.hg-gap { margin-top: 8px; }
+.hg-item { display: grid; grid-template-columns: 80px 1fr auto; gap: 10px; align-items: center; padding: 8px 0; border-bottom: 1px solid var(--border-color-light); }
+.hg-hash { word-break: break-all; font-size: 12px; }

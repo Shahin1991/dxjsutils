@@ -1,0 +1,53 @@
+.tn-row {
+  font-family: Menlo, Consolas, monospace;
+  font-size: 13px;
+  line-height: 1.6;
+  white-space: pre-wrap;
+  word-break: break-all;
+}
+
+.tn-toggle {
+  cursor: pointer;
+}
+
+.tn-toggle:hover {
+  background: var(--bg-table-hover);
+}
+
+.tn-arrow,
+.tn-spacer {
+  display: inline-block;
+  width: 16px;
+  font-size: 10px;
+  color: var(--text-muted);
+}
+
+.tn-children {
+  margin-left: 16px;
+  border-left: 1px solid var(--border-color-light);
+}
+
+.tn-key {
+  color: var(--color-accent);
+}
+
+.tn-bracket,
+.tn-summary {
+  color: var(--text-muted);
+}
+
+.tn-string {
+  color: var(--color-success);
+}
+
+.tn-number {
+  color: var(--color-warning);
+}
+
+.tn-boolean {
+  color: var(--color-secondary);
+}
+
+.tn-null {
+  color: var(--color-error);
+}

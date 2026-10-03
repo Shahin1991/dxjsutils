@@ -1,0 +1,24 @@
+.b64-container { max-width: 1000px; margin: 0 auto; }
+.b64-title { color: var(--text-primary); margin: 0 0 6px; }
+.b64-desc { color: var(--text-secondary); margin: 0 0 8px; }
+.b64-panel { background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 10px; padding: 16px; margin-top: 16px; }
+.b64-row { display: flex; gap: 12px; flex-wrap: wrap; align-items: center; margin-bottom: 10px; }
+.b64-label { display: block; font-size: 12px; color: var(--text-muted); margin-bottom: 4px; }
+.b64-btn { padding: 7px 14px; background: var(--color-primary); color: #fff; border: 1px solid var(--color-primary); border-radius: 6px; }
+.b64-btn:hover { opacity: 0.9; }
+.b64-btn.secondary { background: var(--bg-tertiary); color: var(--text-primary); border-color: var(--border-color); }
+.b64-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+.b64-textarea { width: 100%; min-height: 140px; font-family: Menlo, Consolas, monospace; font-size: 13px; resize: vertical; }
+.b64-input { min-width: 0; }
+.b64-out { white-space: pre-wrap; word-break: break-all; font-family: Menlo, Consolas, monospace; font-size: 13px; background: var(--bg-input); border: 1px solid var(--border-color); border-radius: 6px; padding: 10px; margin: 0; color: var(--text-primary); }
+.b64-err { color: var(--color-error); }
+.b64-ok { color: var(--color-success); }
+.b64-muted { color: var(--text-muted); }
+.b64-table { width: 100%; border-collapse: collapse; background: var(--bg-table); font-size: 13px; }
+.b64-table th, .b64-table td { text-align: left; padding: 6px 10px; border-bottom: 1px solid var(--border-color-light); vertical-align: top; word-break: break-word; }
+.b64-table tr:hover td { background: var(--bg-table-hover); }
+.b64-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 12px; }
+.b64-stat { background: var(--bg-stat); border-radius: 8px; padding: 10px 12px; }
+.b64-stat:hover { background: var(--bg-stat-hover); }
+.b64-stat b { display: block; font-size: 12px; color: var(--text-muted); font-weight: 500; }
+.b64-gap { margin-top: 12px; }
