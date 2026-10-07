@@ -199,7 +199,7 @@ function App() {
           ☰
         </button>
         <button type="button" className="brand" onClick={goHome}>
-          <img src={`${process.env.PUBLIC_URL}/Ek_logo.png`} alt="" className="brand-logo" />
+          <img src={`${process.env.PUBLIC_URL}/logo.svg`} alt="" className="brand-logo" />
           <span className="brand-name">dxjsutils</span>
         </button>
         {current && (

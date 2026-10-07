@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" role="img" aria-label="dxjsutils logo">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#ff5a4d"/>
+      <stop offset="0.55" stop-color="#d4182e"/>
+      <stop offset="1" stop-color="#7d0b2a"/>
+    </linearGradient>
+    <linearGradient id="bolt" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#fff6c2"/>
+      <stop offset="1" stop-color="#ffc533"/>
+    </linearGradient>
+    <radialGradient id="shine" cx="0.25" cy="0.15" r="0.8">
+      <stop offset="0" stop-color="#fff" stop-opacity="0.38"/>
+      <stop offset="1" stop-color="#fff" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <rect width="128" height="128" rx="30" fill="url(#bg)"/>
+  <rect width="128" height="128" rx="30" fill="url(#shine)"/>
+  <g fill="none" stroke="#fff" stroke-width="9" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M44 30 C32 30 32 38 32 48 C32 58 28 64 20 64 C28 64 32 70 32 80 C32 90 32 98 44 98"/>
+    <path d="M84 30 C96 30 96 38 96 48 C96 58 100 64 108 64 C100 64 96 70 96 80 C96 90 96 98 84 98"/>
+  </g>
+  <path d="M69 26 L47 68 H62 L57 102 L82 58 H66 Z" fill="url(#bolt)" stroke="#7d0b2a" stroke-opacity="0.35" stroke-width="2" stroke-linejoin="round"/>
+</svg>

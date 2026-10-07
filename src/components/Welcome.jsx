@@ -22,7 +22,10 @@ export function Welcome({ onSelect }) {
 
   return (
     <div className="welcome">
-      <h1>Welcome to dxjsutils</h1>
+      <h1 className="welcome-title">
+        <img src={`${process.env.PUBLIC_URL}/logo.svg`} alt="" className="welcome-logo" />
+        Welcome to dxjsutils
+      </h1>
       <p className="welcome-sub">A toolbox of offline-capable utilities for everyday work.</p>
       <input
         className="welcome-search"

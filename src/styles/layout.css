@@ -37,7 +37,8 @@
 }
 
 .brand-logo {
-  height: 28px;
+  height: 32px;
+  border-radius: 8px;
   width: auto;
 }
 
@@ -55,7 +56,8 @@
   position: relative;
   display: inline-block;
   width: 60px;
-  height: 28px;
+  height: 32px;
+  border-radius: 8px;
 }
 
 .theme-switch input {
@@ -255,4 +257,15 @@ button:focus-visible,
   .header-btn kbd {
     display: none;
   }
+}
+
+.welcome-title {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.welcome-logo {
+  width: 48px;
+  height: 48px;
 }
