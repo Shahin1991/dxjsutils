@@ -8,9 +8,9 @@
 .rt-btn:hover { opacity: 0.9; }
 .rt-btn.secondary { background: var(--bg-tertiary); color: var(--text-primary); border-color: var(--border-color); }
 .rt-btn:disabled { opacity: 0.5; cursor: not-allowed; }
-.rt-textarea { width: 100%; min-height: 140px; font-family: Menlo, Consolas, monospace; font-size: 13px; resize: vertical; }
+.rt-textarea { width: 100%; min-height: 140px; font-family: var(--font-mono); font-size: 13px; resize: vertical; }
 .rt-input { min-width: 0; }
-.rt-out { white-space: pre-wrap; word-break: break-all; font-family: Menlo, Consolas, monospace; font-size: 13px; background: var(--bg-input); border: 1px solid var(--border-color); border-radius: 6px; padding: 10px; margin: 0; color: var(--text-primary); }
+.rt-out { white-space: pre-wrap; word-break: break-all; font-family: var(--font-mono); font-size: 13px; background: var(--bg-input); border: 1px solid var(--border-color); border-radius: 6px; padding: 10px; margin: 0; color: var(--text-primary); }
 .rt-err { color: var(--color-error); }
 .rt-ok { color: var(--color-success); }
 .rt-muted { color: var(--text-muted); }
@@ -21,7 +21,7 @@
 .rt-stat { background: var(--bg-stat); border-radius: 8px; padding: 10px 12px; }
 .rt-stat:hover { background: var(--bg-stat-hover); }
 .rt-stat b { display: block; font-size: 12px; color: var(--text-muted); font-weight: 500; }
-.rt-pattern { flex: 1; font-family: Menlo, Consolas, monospace; }
+.rt-pattern { flex: 1; font-family: var(--font-mono); }
 .rt-flag { display: inline-flex; gap: 4px; align-items: center; }
 .rt-mark { background: var(--color-warning); color: #000; border-radius: 2px; }
 .rt-gap { margin-top: 12px; }

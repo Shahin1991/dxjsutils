@@ -8,9 +8,9 @@
 .wc-btn:hover { opacity: 0.9; }
 .wc-btn.secondary { background: var(--bg-tertiary); color: var(--text-primary); border-color: var(--border-color); }
 .wc-btn:disabled { opacity: 0.5; cursor: not-allowed; }
-.wc-textarea { width: 100%; min-height: 140px; font-family: Menlo, Consolas, monospace; font-size: 13px; resize: vertical; }
+.wc-textarea { width: 100%; min-height: 140px; font-family: var(--font-mono); font-size: 13px; resize: vertical; }
 .wc-input { min-width: 0; }
-.wc-out { white-space: pre-wrap; word-break: break-all; font-family: Menlo, Consolas, monospace; font-size: 13px; background: var(--bg-input); border: 1px solid var(--border-color); border-radius: 6px; padding: 10px; margin: 0; color: var(--text-primary); }
+.wc-out { white-space: pre-wrap; word-break: break-all; font-family: var(--font-mono); font-size: 13px; background: var(--bg-input); border: 1px solid var(--border-color); border-radius: 6px; padding: 10px; margin: 0; color: var(--text-primary); }
 .wc-err { color: var(--color-error); }
 .wc-ok { color: var(--color-success); }
 .wc-muted { color: var(--text-muted); }
@@ -30,8 +30,8 @@
 .wc-dot.sel { fill: var(--color-error); }
 .wc-city { cursor: pointer; }
 .wc-detail { margin-top: 10px; }
-.wc-big { font-size: 32px; font-family: Menlo, Consolas, monospace; margin-top: 4px; }
+.wc-big { font-size: 32px; font-family: var(--font-mono); margin-top: 4px; }
 .wc-cities { margin-top: 16px; }
 .wc-card { display: flex; flex-direction: column; gap: 2px; text-align: left; padding: 10px 12px; background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 8px; color: var(--text-primary); }
 .wc-card.sel { border-color: var(--color-primary); }
-.wc-card b { font-family: Menlo, Consolas, monospace; font-size: 18px; }
+.wc-card b { font-family: var(--font-mono); font-size: 18px; }

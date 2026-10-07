@@ -1,5 +1,6 @@
 import React, { useMemo, useState } from 'react';
 import { TreeNode } from '../../components/TreeNode';
+import { CopyButton } from '../../components/CopyButton';
 
 const SAMPLE = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyLCJleHAiOjE5MTYyMzkwMjJ9.signature';
 
@@ -56,8 +57,8 @@ export function JwtDecoder() {
             </div>
           )}
           <div className="jwt-split">
-            <div className="jwt-panel"><strong>Header</strong><TreeNode value={result.header} /></div>
-            <div className="jwt-panel"><strong>Payload</strong><TreeNode value={result.payload} /></div>
+            <div className="jwt-panel"><strong>Header</strong> <CopyButton text={JSON.stringify(result.header, null, 2)} /><TreeNode value={result.header} /></div>
+            <div className="jwt-panel"><strong>Payload</strong> <CopyButton text={JSON.stringify(result.payload, null, 2)} /><TreeNode value={result.payload} /></div>
           </div>
         </>
       )}

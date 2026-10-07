@@ -8,9 +8,9 @@
 .hg-btn:hover { opacity: 0.9; }
 .hg-btn.secondary { background: var(--bg-tertiary); color: var(--text-primary); border-color: var(--border-color); }
 .hg-btn:disabled { opacity: 0.5; cursor: not-allowed; }
-.hg-textarea { width: 100%; min-height: 140px; font-family: Menlo, Consolas, monospace; font-size: 13px; resize: vertical; }
+.hg-textarea { width: 100%; min-height: 140px; font-family: var(--font-mono); font-size: 13px; resize: vertical; }
 .hg-input { min-width: 0; }
-.hg-out { white-space: pre-wrap; word-break: break-all; font-family: Menlo, Consolas, monospace; font-size: 13px; background: var(--bg-input); border: 1px solid var(--border-color); border-radius: 6px; padding: 10px; margin: 0; color: var(--text-primary); }
+.hg-out { white-space: pre-wrap; word-break: break-all; font-family: var(--font-mono); font-size: 13px; background: var(--bg-input); border: 1px solid var(--border-color); border-radius: 6px; padding: 10px; margin: 0; color: var(--text-primary); }
 .hg-err { color: var(--color-error); }
 .hg-ok { color: var(--color-success); }
 .hg-muted { color: var(--text-muted); }

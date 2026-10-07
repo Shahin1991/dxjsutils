@@ -1,4 +1,5 @@
 import React, { useMemo, useState } from 'react';
+import { CopyButton } from '../../components/CopyButton';
 
 const toIp = (n) => [n >>> 24, (n >>> 16) & 255, (n >>> 8) & 255, n & 255].join('.');
 const toBin = (n) => [24, 16, 8, 0].map((s) => ((n >>> s) & 255).toString(2).padStart(8, '0')).join('.');
@@ -64,7 +65,7 @@ export function CidrCalculator() {
       </div>
       {result.data && (
         <div className="ci-panel ci-grid">
-          {Object.entries(result.data).map(([k, v]) => <div key={k} className="ci-stat"><b>{k}</b><code>{v}</code></div>)}
+          {Object.entries(result.data).map(([k, v]) => <div key={k} className="ci-stat"><b>{k}</b><code>{v}</code><CopyButton text={String(v)} label="" /></div>)}
         </div>
       )}
     </div>

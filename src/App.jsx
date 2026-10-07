@@ -3,6 +3,9 @@ import { LeftNav } from './components/LeftNav';
 import { Welcome } from './components/Welcome';
 import { ErrorBoundary } from './components/ErrorBoundary';
 import { UTILITIES } from './config/utilities';
+import { HelpCenter, HelpDrawer } from './components/HelpPanel';
+import { CommandPalette } from './components/CommandPalette';
+import { readJSON, writeJSON } from './utils/storage';
 
 // Static import paths are required so webpack can split each utility into its own chunk.
 const UTILITY_COMPONENTS = {
@@ -45,38 +48,149 @@ const UTILITY_COMPONENTS = {
 
 function readTheme() {
   try {
-    return localStorage.getItem('theme') === 'light' ? 'light' : 'dark';
+    const saved = localStorage.getItem('theme');
+    if (saved === 'light' || saved === 'dark') return saved;
+    return window.matchMedia?.('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
   } catch (e) {
     return 'dark';
   }
 }
 
+const isDesktopWidth = () => window.innerWidth > 768;
+
+// Location hash <-> view: "#/help", "#/<utility-id>", anything else is Home.
+function parseHash() {
+  const h = window.location.hash.replace(/^#\/?/, '');
+  if (h === 'help') return { view: 'help', id: null };
+  if (UTILITIES.some((u) => u.id === h) && UTILITY_COMPONENTS[h]) return { view: 'utility', id: h };
+  return { view: 'home', id: null };
+}
+
+function initialRoute() {
+  const fromHash = parseHash();
+  if (fromHash.view !== 'home' || window.location.hash) return fromHash;
+  const last = readJSON('lastUtility', null);
+  return last && UTILITY_COMPONENTS[last] ? { view: 'utility', id: last } : fromHash;
+}
+
 function App() {
   const [theme, setTheme] = useState(readTheme);
-  const [currentUtilityId, setCurrentUtilityId] = useState(null);
-  const [navOpen, setNavOpen] = useState(false);
+  const [route, setRoute] = useState(initialRoute);
+  const [navOpen, setNavOpen] = useState(isDesktopWidth);
   const [utilityKey, setUtilityKey] = useState(0);
+  const [helpOpen, setHelpOpen] = useState(false);
+  const [paletteOpen, setPaletteOpen] = useState(false);
+  const [favorites, setFavorites] = useState(() => readJSON('favorites', []));
+  const [recents, setRecents] = useState(() => readJSON('recents', []));
+  const isElectron = Boolean(window.electron?.isElectron);
+  const currentUtilityId = route.view === 'utility' ? route.id : null;
+
+  useEffect(() => writeJSON('favorites', favorites), [favorites]);
+  useEffect(() => writeJSON('recents', recents), [recents]);
+
+  // Keep URL hash and remembered tool in sync with the current view.
+  useEffect(() => {
+    const target = route.view === 'utility' ? `#/${route.id}` : route.view === 'help' ? '#/help' : '';
+    if (window.location.hash !== target && (target || window.location.hash)) {
+      window.history.pushState(null, '', target || window.location.pathname + window.location.search);
+    }
+    if (route.view === 'utility') {
+      writeJSON('lastUtility', route.id);
+      setRecents((r) => [route.id, ...r.filter((x) => x !== route.id)].slice(0, 8));
+    }
+  }, [route]);
+
+  // Browser back/forward.
+  useEffect(() => {
+    const onPop = () => {
+      setRoute(parseHash());
+      setUtilityKey((k) => k + 1);
+    };
+    window.addEventListener('popstate', onPop);
+    return () => window.removeEventListener('popstate', onPop);
+  }, []);
+
+  // Global shortcuts: Ctrl/Cmd+K palette, ? or F1 help for the current tool.
+  useEffect(() => {
+    const onKey = (e) => {
+      if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'k') {
+        e.preventDefault();
+        setPaletteOpen((o) => !o);
+        return;
+      }
+      const t = e.target;
+      const typing = t && (t.tagName === 'INPUT' || t.tagName === 'TEXTAREA' || t.tagName === 'SELECT' || t.isContentEditable);
+      if (e.key === 'F1' || (e.key === '?' && !typing && !e.metaKey && !e.ctrlKey)) {
+        e.preventDefault();
+        setHelpOpen(true);
+      }
+    };
+    window.addEventListener('keydown', onKey);
+    return () => window.removeEventListener('keydown', onKey);
+  }, []);
+
+  const toggleFavorite = (id) =>
+    setFavorites((f) => (f.includes(id) ? f.filter((x) => x !== id) : [...f, id]));
 
   useEffect(() => {
-    try {
-      localStorage.setItem('theme', theme);
-    } catch (e) {
-      // ignore storage errors
-    }
     document.documentElement.classList.remove('dark', 'light');
     document.documentElement.classList.add(theme);
   }, [theme]);
 
-  const selectUtility = (id) => {
-    setCurrentUtilityId(id);
-    setUtilityKey((k) => k + 1); // force a full remount so no state leaks between utilities
-    setNavOpen(false);
+  const changeTheme = (next) => {
+    setTheme(next);
+    try {
+      localStorage.setItem('theme', next); // only persisted on an explicit choice
+    } catch (e) {
+      // ignore storage errors
+    }
   };
 
+  const navigate = (next) => {
+    setRoute(next);
+    setUtilityKey((k) => k + 1); // force a full remount so no state leaks between utilities
+    setHelpOpen(false);
+    setPaletteOpen(false);
+    if (!isDesktopWidth()) setNavOpen(false);
+  };
+
+  const selectUtility = (id) => navigate(id ? { view: 'utility', id } : { view: 'home', id: null });
   const goHome = () => selectUtility(null);
+  const goHelp = () => navigate({ view: 'help', id: null });
 
   const current = UTILITIES.find((u) => u.id === currentUtilityId);
   const ActiveUtility = currentUtilityId ? UTILITY_COMPONENTS[currentUtilityId] : null;
+
+  let content;
+  if (route.view === 'help') {
+    content = <HelpCenter onSelect={selectUtility} />;
+  } else if (ActiveUtility && current && (isElectron || !current.electronOnly)) {
+    content = (
+      <ErrorBoundary key={currentUtilityId}>
+        <Suspense
+          fallback={
+            <div className="loading">
+              <div className="spinner" />
+              <span>Loading…</span>
+            </div>
+          }
+        >
+          <ActiveUtility key={utilityKey} />
+        </Suspense>
+      </ErrorBoundary>
+    );
+  } else if (current) {
+    content = (
+      <div className="welcome">
+        <h1>
+          {current.icon} {current.name}
+        </h1>
+        <p className="welcome-sub">This tool needs the desktop app because it uses network and system features a browser can't access.</p>
+      </div>
+    );
+  } else {
+    content = <Welcome onSelect={selectUtility} />;
+  }
 
   return (
     <div className={`app-shell ${theme}`}>
@@ -88,46 +202,55 @@ function App() {
           <img src={`${process.env.PUBLIC_URL}/Ek_logo.png`} alt="" className="brand-logo" />
           <span className="brand-name">dxjsutils</span>
         </button>
-        {current && <span className="header-utility">/ {current.name}</span>}
-        <label className="theme-switch" title="Toggle theme">
-          <input
-            type="checkbox"
-            checked={theme === 'light'}
-            onChange={(e) => setTheme(e.target.checked ? 'light' : 'dark')}
-          />
-          <span className="theme-slider">
-            <span className="theme-icon sun">☀️</span>
-            <span className="theme-icon moon">🌙</span>
+        {current && (
+          <span className="header-utility">
+            /{' '}
+            <button type="button" className="header-crumb" onClick={() => setUtilityKey((k) => k + 1)} title="Reset this tool">
+              {current.name}
+            </button>
           </span>
-        </label>
+        )}
+        <div className="header-actions">
+          <button type="button" className="header-btn" onClick={() => setPaletteOpen(true)} title="Search tools (Ctrl/Cmd+K)">
+            🔍 <span className="header-btn-text">Search</span> <kbd>⌘K</kbd>
+          </button>
+          {current && (
+            <button type="button" className="header-btn" onClick={() => setHelpOpen(true)} title="Help for this tool (?)" aria-label="Help for this tool">
+              ?
+            </button>
+          )}
+          <label className="theme-switch" title="Toggle theme">
+            <input
+              type="checkbox"
+              checked={theme === 'light'}
+              onChange={(e) => changeTheme(e.target.checked ? 'light' : 'dark')}
+            />
+            <span className="theme-slider">
+              <span className="theme-icon sun">☀️</span>
+              <span className="theme-icon moon">🌙</span>
+            </span>
+          </label>
+        </div>
       </header>
       <div className="app-body">
         <LeftNav
+          view={route.view}
           currentUtilityId={currentUtilityId}
           onSelect={selectUtility}
           onHome={goHome}
+          onHelp={goHelp}
           open={navOpen}
           onClose={() => setNavOpen(false)}
+          favorites={favorites}
+          recents={recents}
+          onToggleFavorite={toggleFavorite}
         />
-        <main className="app-main">
-          {ActiveUtility ? (
-            <ErrorBoundary key={currentUtilityId}>
-              <Suspense
-                fallback={
-                  <div className="loading">
-                    <div className="spinner" />
-                    <span>Loading…</span>
-                  </div>
-                }
-              >
-                <ActiveUtility key={utilityKey} />
-              </Suspense>
-            </ErrorBoundary>
-          ) : (
-            <Welcome onSelect={selectUtility} />
-          )}
-        </main>
+        <main className="app-main">{content}</main>
       </div>
+      {helpOpen && (current ? (
+        <HelpDrawer utility={current} onClose={() => setHelpOpen(false)} onOpenCenter={goHelp} />
+      ) : null)}
+      {paletteOpen && <CommandPalette onSelect={selectUtility} onClose={() => setPaletteOpen(false)} isElectron={isElectron} />}
     </div>
   );
 }

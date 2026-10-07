@@ -8,9 +8,9 @@
 .jwt-btn:hover { opacity: 0.9; }
 .jwt-btn.secondary { background: var(--bg-tertiary); color: var(--text-primary); border-color: var(--border-color); }
 .jwt-btn:disabled { opacity: 0.5; cursor: not-allowed; }
-.jwt-textarea { width: 100%; min-height: 140px; font-family: Menlo, Consolas, monospace; font-size: 13px; resize: vertical; }
+.jwt-textarea { width: 100%; min-height: 140px; font-family: var(--font-mono); font-size: 13px; resize: vertical; }
 .jwt-input { min-width: 0; }
-.jwt-out { white-space: pre-wrap; word-break: break-all; font-family: Menlo, Consolas, monospace; font-size: 13px; background: var(--bg-input); border: 1px solid var(--border-color); border-radius: 6px; padding: 10px; margin: 0; color: var(--text-primary); }
+.jwt-out { white-space: pre-wrap; word-break: break-all; font-family: var(--font-mono); font-size: 13px; background: var(--bg-input); border: 1px solid var(--border-color); border-radius: 6px; padding: 10px; margin: 0; color: var(--text-primary); }
 .jwt-err { color: var(--color-error); }
 .jwt-ok { color: var(--color-success); }
 .jwt-muted { color: var(--text-muted); }

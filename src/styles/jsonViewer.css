@@ -8,9 +8,9 @@
 .jv-btn:hover { opacity: 0.9; }
 .jv-btn.secondary { background: var(--bg-tertiary); color: var(--text-primary); border-color: var(--border-color); }
 .jv-btn:disabled { opacity: 0.5; cursor: not-allowed; }
-.jv-textarea { width: 100%; min-height: 140px; font-family: Menlo, Consolas, monospace; font-size: 13px; resize: vertical; }
+.jv-textarea { width: 100%; min-height: 140px; font-family: var(--font-mono); font-size: 13px; resize: vertical; }
 .jv-input { min-width: 0; }
-.jv-out { white-space: pre-wrap; word-break: break-all; font-family: Menlo, Consolas, monospace; font-size: 13px; background: var(--bg-input); border: 1px solid var(--border-color); border-radius: 6px; padding: 10px; margin: 0; color: var(--text-primary); }
+.jv-out { white-space: pre-wrap; word-break: break-all; font-family: var(--font-mono); font-size: 13px; background: var(--bg-input); border: 1px solid var(--border-color); border-radius: 6px; padding: 10px; margin: 0; color: var(--text-primary); }
 .jv-err { color: var(--color-error); }
 .jv-ok { color: var(--color-success); }
 .jv-muted { color: var(--text-muted); }
