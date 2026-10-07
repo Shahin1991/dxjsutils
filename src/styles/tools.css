@@ -35,3 +35,13 @@
 .tl-pw-item { display: flex; gap: 10px; align-items: center; }
 .tl-pw-item .tl-password { flex: 1; }
 @media (max-width: 768px) { .tl-split { grid-template-columns: 1fr; } }
+
+/* Finance calculator */
+.fc-tabs { gap: 8px; }
+.fc-tabs .tl-btn { font-size: 13px; padding: 5px 10px; }
+.fc-form { display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 14px; }
+.fc-wide { grid-column: 1 / -1; }
+.fc-hint { display: block; margin-top: 2px; font-size: 12px; }
+.fc-text { font-size: 15px !important; }
+.fc-table-wrap { max-height: 50vh; overflow: auto; }
+.fc-table-wrap td:not(:first-child), .fc-table-wrap th:not(:first-child) { text-align: right; font-variant-numeric: tabular-nums; }

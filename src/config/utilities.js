@@ -42,4 +42,5 @@ export const UTILITIES = [
   { id: "json-converter", name: "JSON Converter", icon: "🔁", category: "Developer Tools", description: "Convert between JSON, CSV and YAML.", version: '1.0.0' },
   { id: "password-generator", name: "Password Generator", icon: "🔑", category: "Encoding & Security", description: "Generate strong random passwords with a strength meter.", version: '1.0.0' },
   { id: "text-stats", name: "Word Counter & Lorem Ipsum", icon: "🔢", category: "Productivity", description: "Count words and characters, and generate placeholder text.", version: '1.0.0' },
+  { id: "finance-calculator", name: "Finance Calculator", icon: "💰", category: "Productivity", description: "Loan payments, compound interest, NPV, IRR, ROI and more, powered by finance.js.", version: '1.0.0' },
 ];

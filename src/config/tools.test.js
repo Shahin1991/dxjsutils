@@ -64,7 +64,8 @@ test('new tools render without crashing', () => {
   const { JsonConverter } = require('../utilities/jsonConverter/JsonConverter');
   const { PasswordGenerator } = require('../utilities/passwordGenerator/PasswordGenerator');
   const { TextStats } = require('../utilities/textStats/TextStats');
-  [TextDiff, UrlTools, JsonConverter, PasswordGenerator, TextStats].forEach((C) => {
+  const { FinanceCalculator } = require('../utilities/financeCalculator/FinanceCalculator');
+  [TextDiff, UrlTools, JsonConverter, PasswordGenerator, TextStats, FinanceCalculator].forEach((C) => {
     const el = document.createElement('div');
     act(() => createRoot(el).render(React.createElement(C)));
     expect(el.querySelector('h2').textContent.length).toBeGreaterThan(0);
@@ -106,4 +107,40 @@ test('InstructionBanner types word by word, loops through the steps and can be h
   expect(el.querySelector('.instr-show')).not.toBeNull();
   expect(JSON.parse(localStorage.getItem('hideInstructions'))).toBe(true);
   jest.useRealTimers();
+});
+
+test('finance calculators match known financejs results and validate input', () => {
+  const { CALCULATORS, defaultValues, runCalculator, parseDatedFlows } = require('../utilities/financeCalculator/utils/calculators');
+  const calc = (id, over = {}) => {
+    const c = CALCULATORS.find((x) => x.id === id);
+    return runCalculator(c, { ...defaultValues(c), ...over });
+  };
+  const val = (r, label) => r.rows.find((x) => x.label === label).value;
+
+  // Loan: library example 20000 @ 7.5% over 5 years = 400.76/month
+  const loan = calc('loan', { principal: '20000', rate: '7.5', term: '5' });
+  expect(val(loan, 'Monthly payment')).toBe(400.76);
+  expect(loan.table.rows).toHaveLength(60);
+  expect(loan.table.rows[59][4]).toBeCloseTo(0, 6);
+  expect(val(calc('loan', { rate: '0', principal: '1200', term: '12', unit: 'months' }), 'Monthly payment')).toBe(100);
+
+  expect(val(calc('compound', { rate: '4.3', n: '4', principal: '1500', years: '6' }), 'Final balance')).toBe(1938.84);
+  expect(val(calc('npv', { rate: '10', initial: '-500000', flows: '200000, 300000, 200000' }), 'Net present value')).toBe(80015.03);
+  expect(val(calc('irr'), 'IRR')).toBeCloseTo(18.83, 1);
+  expect(val(calc('roi', { cost: '55000', earnings: '60000' }), 'ROI')).toBe(9.09);
+  expect(val(calc('cagr', { start: '10000', end: '19500', years: '3' }), 'CAGR')).toBe(24.93);
+  expect(val(calc('rule72', { rate: '10' }), 'Years to double')).toBeCloseTo(7.2, 5);
+  expect(val(calc('wacc'), 'WACC')).toBe(4.9);
+  expect(val(calc('payback', { initial: '-50', flows: '10, 13, 16, 19, 22' }), 'Payback period')).toBeCloseTo(3.42, 2);
+  expect(val(calc('inflation', { ret: '8', infl: '3' }), 'Real return')).toBeCloseTo(4.85, 2);
+  expect(val(calc('xirr', { flows: '2015-12-01, -1000\n2016-08-01, -100\n2016-08-19, 1200' }), 'XIRR (annualised)')).toBeCloseTo(14.11, 1);
+  expect(val(calc('xirr'), 'XIRR (annualised)')).toBeGreaterThan(0);
+
+  // Bad input gives a message, never a crash or a hang
+  expect(calc('loan', { principal: 'abc' }).error).toMatch(/must be a number/);
+  expect(calc('irr', { initial: '100', flows: '200' }).error).toMatch(/positive value and one negative/);
+  expect(calc('irr', { flows: '100, 200' }).error).toMatch(/No IRR found/);
+  expect(calc('payback', { initial: '-50', flows: '0' }).error).toBeTruthy();
+  expect(calc('cagr', { start: '0' }).error).toMatch(/greater than 0/);
+  expect(() => parseDatedFlows('nonsense')).toThrow();
 });

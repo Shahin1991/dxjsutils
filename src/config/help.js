@@ -279,6 +279,14 @@ export const HELP = {
     outputs: 'Counts, reading and speaking time, and Lorem Ipsum text.',
     tips: ['Reading time assumes about 200 words per minute.'],
   },
+  'finance-calculator': {
+    summary: 'Work out loan payments, investment growth and returns with a set of standard finance calculators.',
+    howTo: ['Pick a calculator from the tabs, e.g. Loan / Mortgage Payment or NPV.', 'Edit the numbers; results update instantly. Use Reset example to start over.', 'For cash-flow tools, type the flows separated by commas or spaces. Money you pay out is negative.', 'Copy the results, or expand the repayment schedule for loans.'],
+    inputs: 'Amounts, rates in percent, years and cash flows.',
+    outputs: 'The calculated figures, plus a month-by-month schedule for loans.',
+    example: 'Loan 250,000 at 6.5% over 25 years → about 1,688 a month',
+    tips: ['Rates are annual percentages: type 6.5 for 6.5%.', 'Included: loan, compound interest, future/present value, NPV, IRR, XIRR, ROI, payback, CAGR, Rule of 72, inflation-adjusted return, WACC and leverage ratio.', 'For information only. A lender may show slightly different figures.'],
+  },
 };
 
 export const GENERAL_HELP = {

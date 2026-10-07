@@ -49,6 +49,7 @@ const UTILITY_COMPONENTS = {
   "url-tools": lazy(() => import('./utilities/urlTools/UrlTools').then((m) => ({ default: m.UrlTools }))),
   "json-converter": lazy(() => import('./utilities/jsonConverter/JsonConverter').then((m) => ({ default: m.JsonConverter }))),
   "password-generator": lazy(() => import('./utilities/passwordGenerator/PasswordGenerator').then((m) => ({ default: m.PasswordGenerator }))),
+  "finance-calculator": lazy(() => import('./utilities/financeCalculator/FinanceCalculator').then((m) => ({ default: m.FinanceCalculator }))),
   "text-stats": lazy(() => import('./utilities/textStats/TextStats').then((m) => ({ default: m.TextStats }))),
 };
 
