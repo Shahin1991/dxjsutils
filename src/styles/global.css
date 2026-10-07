@@ -78,6 +78,8 @@ body,
 
 body {
   font-family: var(--font-ui);
+  font-size: 14px;
+  line-height: 1.5;
   background: var(--bg-primary);
   color: var(--text-primary);
   -webkit-font-smoothing: antialiased;
@@ -160,4 +162,12 @@ table,
 .ci-stat,
 .jwt-table {
   font-variant-numeric: tabular-nums;
+}
+
+h1 {
+  font-size: 1.6em;
+}
+
+h2 {
+  font-size: 1.25em;
 }
