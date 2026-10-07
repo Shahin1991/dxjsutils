@@ -4,6 +4,7 @@ import { Welcome } from './components/Welcome';
 import { ErrorBoundary } from './components/ErrorBoundary';
 import { UTILITIES } from './config/utilities';
 import { HelpCenter, HelpDrawer } from './components/HelpPanel';
+import { InstructionBanner } from './components/InstructionBanner';
 import { CommandPalette } from './components/CommandPalette';
 import { readJSON, writeJSON } from './utils/storage';
 
@@ -171,18 +172,21 @@ function App() {
     content = <HelpCenter onSelect={selectUtility} />;
   } else if (ActiveUtility && current && (isElectron || !current.electronOnly)) {
     content = (
-      <ErrorBoundary key={currentUtilityId}>
-        <Suspense
-          fallback={
-            <div className="loading">
-              <div className="spinner" />
-              <span>Loading…</span>
-            </div>
-          }
-        >
-          <ActiveUtility key={utilityKey} />
-        </Suspense>
-      </ErrorBoundary>
+      <>
+        <InstructionBanner key={`${currentUtilityId}-${utilityKey}`} utilityId={currentUtilityId} />
+        <ErrorBoundary key={currentUtilityId}>
+          <Suspense
+            fallback={
+              <div className="loading">
+                <div className="spinner" />
+                <span>Loading…</span>
+              </div>
+            }
+          >
+            <ActiveUtility key={utilityKey} />
+          </Suspense>
+        </ErrorBoundary>
+      </>
     );
   } else if (current) {
     content = (

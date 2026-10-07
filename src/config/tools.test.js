@@ -71,3 +71,39 @@ test('new tools render without crashing', () => {
     expect(el.textContent).not.toMatch(/⚠/);
   });
 });
+
+test('InstructionBanner types word by word, loops through the steps and can be hidden', () => {
+  jest.useFakeTimers();
+  const React = require('react');
+  const { createRoot } = require('react-dom/client');
+  const { act } = require('react-dom/test-utils');
+  const { InstructionBanner, buildLines } = require('../components/InstructionBanner');
+  const { HELP } = require('./help');
+  globalThis.IS_REACT_ACT_ENVIRONMENT = true;
+  window.matchMedia = () => ({ matches: false });
+  localStorage.clear();
+
+  const lines = buildLines(HELP.base64);
+  expect(lines[0]).toBe(HELP.base64.summary);
+  expect(lines[1]).toMatch(/^Step 1: /);
+
+  const el = document.createElement('div');
+  act(() => createRoot(el).render(React.createElement(InstructionBanner, { utilityId: 'base64' })));
+  const typed = () => el.querySelector('.instr-line').textContent;
+  expect(typed()).toBe('');
+  const tick = (ms) => act(() => { jest.advanceTimersByTime(ms); });
+  for (let i = 0; i < 3; i += 1) tick(90);
+  expect(typed().split(' ')).toHaveLength(3);
+  expect(HELP.base64.summary.startsWith(typed())).toBe(true);
+  // finish the first line, hold, then the next line starts
+  for (let i = 0; i < 40; i += 1) tick(90);
+  tick(2600);
+  tick(90);
+  expect(lines[1].startsWith(typed())).toBe(true);
+  expect(typed().startsWith('Step')).toBe(true);
+
+  act(() => el.querySelector('.instr-hide').click());
+  expect(el.querySelector('.instr-show')).not.toBeNull();
+  expect(JSON.parse(localStorage.getItem('hideInstructions'))).toBe(true);
+  jest.useRealTimers();
+});
