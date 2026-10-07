@@ -37,4 +37,9 @@ export const UTILITIES = [
   { id: "cheatsheet", name: "Cheatsheet", icon: "📚", category: "Reference", description: "Searchable command reference for Git, Docker, Linux and more.", version: '1.0.0' },
   { id: "image-tools", name: "Image Tools", icon: "🖼️", category: "Media", description: "Convert, compress and export images to PDF.", version: '1.0.0' },
   { id: "qr-code-generator", name: "QR Code Generator", icon: "🔳", category: "Media", description: "Generate QR codes for URLs, text and Wi-Fi.", version: '1.0.0' },
+  { id: "text-diff", name: "Text Diff", icon: "↔️", category: "Developer Tools", description: "Compare two texts line by line and see what changed.", version: '1.0.0' },
+  { id: "url-tools", name: "URL Encode / Decode", icon: "🔗", category: "Developer Tools", description: "Percent-encode, decode and break a URL into its parts.", version: '1.0.0' },
+  { id: "json-converter", name: "JSON Converter", icon: "🔁", category: "Developer Tools", description: "Convert between JSON, CSV and YAML.", version: '1.0.0' },
+  { id: "password-generator", name: "Password Generator", icon: "🔑", category: "Encoding & Security", description: "Generate strong random passwords with a strength meter.", version: '1.0.0' },
+  { id: "text-stats", name: "Word Counter & Lorem Ipsum", icon: "🔢", category: "Productivity", description: "Count words and characters, and generate placeholder text.", version: '1.0.0' },
 ];

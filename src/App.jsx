@@ -44,6 +44,11 @@ const UTILITY_COMPONENTS = {
   "cheatsheet": lazy(() => import('./utilities/cheatsheet/Cheatsheet').then((m) => ({ default: m.Cheatsheet }))),
   "image-tools": lazy(() => import('./utilities/imageTools/ImageTools').then((m) => ({ default: m.ImageTools }))),
   "qr-code-generator": lazy(() => import('./utilities/qrCodeGenerator/QrCodeGenerator').then((m) => ({ default: m.QrCodeGenerator }))),
+  "text-diff": lazy(() => import('./utilities/textDiff/TextDiff').then((m) => ({ default: m.TextDiff }))),
+  "url-tools": lazy(() => import('./utilities/urlTools/UrlTools').then((m) => ({ default: m.UrlTools }))),
+  "json-converter": lazy(() => import('./utilities/jsonConverter/JsonConverter').then((m) => ({ default: m.JsonConverter }))),
+  "password-generator": lazy(() => import('./utilities/passwordGenerator/PasswordGenerator').then((m) => ({ default: m.PasswordGenerator }))),
+  "text-stats": lazy(() => import('./utilities/textStats/TextStats').then((m) => ({ default: m.TextStats }))),
 };
 
 function readTheme() {

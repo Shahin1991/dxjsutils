@@ -242,6 +242,43 @@ export const HELP = {
     inputs: 'A URL, text or Wi-Fi details.',
     outputs: 'A QR code image.',
   },
+  'text-diff': {
+    summary: 'Compare two texts line by line and see exactly what was added or removed.',
+    howTo: ['Paste the original text on the left and the changed text on the right.', 'Green lines were added; red lines were removed.', 'Use the options to ignore case or whitespace, or show only the differences.', 'Swap swaps the two sides.'],
+    inputs: 'Two blocks of text.',
+    outputs: 'A line-numbered diff with counts of added, removed and unchanged lines.',
+    tips: ['Good for comparing config files, logs or copy edits. For YAML-aware comparison use YAML Comparator.'],
+  },
+  'url-tools': {
+    summary: 'Percent-encode text for use in URLs, decode it back, or split a URL into its parts.',
+    howTo: ['Choose Encode, Decode or Parse URL.', 'Paste your text or URL.', 'Copy the output, or read the parts and query parameters.'],
+    inputs: 'Text or a URL.',
+    outputs: 'Encoded or decoded text, or a table of URL parts and query parameters.',
+    example: 'hello world & more → hello%20world%20%26%20more',
+    tips: ['Encode (default) escapes everything, which is right for a single query value. Tick "Keep URL characters" to encode a whole URL without breaking : / ? & #.'],
+  },
+  'json-converter': {
+    summary: 'Convert data between JSON, CSV and YAML.',
+    howTo: ['Pick a direction such as JSON → CSV.', 'Paste your data (a sample is loaded for each direction).', 'Copy the converted output.'],
+    inputs: 'JSON, CSV or YAML text.',
+    outputs: 'The data in the target format.',
+    example: '[{"name":"Ada","age":36}] → name,age\nAda,36',
+    tips: ['Nested JSON objects become dotted CSV columns like role.title.', 'CSV numbers and true/false become real JSON values.'],
+  },
+  'password-generator': {
+    summary: 'Create strong random passwords with a strength estimate.',
+    howTo: ['Set the length with the slider.', 'Tick the character types to include.', 'Click Generate and copy the password. Use Count to make several at once.'],
+    inputs: 'Length and character options.',
+    outputs: 'Random passwords and a strength rating in bits of entropy.',
+    tips: ['Passwords are made with your browser\'s secure random generator and never leave your device.', 'Longer is stronger: 16+ characters is a good minimum.'],
+  },
+  'text-stats': {
+    summary: 'Count words, characters, sentences and paragraphs, and generate Lorem Ipsum placeholder text.',
+    howTo: ['Type or paste text to see live counts and reading time.', 'In the generator, choose paragraphs, sentences or words, and an amount.', 'Copy the placeholder text.'],
+    inputs: 'Your text, or an amount of placeholder text.',
+    outputs: 'Counts, reading and speaking time, and Lorem Ipsum text.',
+    tips: ['Reading time assumes about 200 words per minute.'],
+  },
 };
 
 export const GENERAL_HELP = {
