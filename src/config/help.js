@@ -286,7 +286,7 @@ export const GENERAL_HELP = {
     'Pick a tool from the sidebar, the Home screen or the command palette (Ctrl/Cmd+K).',
     'Star tools you use often; they appear under Favorites at the top of the sidebar.',
     'Press ? (or click the ? button in the header) for help on the tool you are using.',
-    'Everything runs on your device. Nothing you type is uploaded.',
+    'Your data stays in your browser. Tools run on your device, and nothing you type, paste or open is uploaded. The only exceptions are the desktop-app tools that exist to contact a server (DNS Lookup, Certificate Inspector, HTTP Tester, Currency Converter); they send only the request you ask for.',
   ],
   shortcuts: [
     ['Ctrl/Cmd + K', 'Open the command palette'],

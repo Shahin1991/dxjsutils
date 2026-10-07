@@ -27,6 +27,15 @@ export function Welcome({ onSelect }) {
         Welcome to dxjsutils
       </h1>
       <p className="welcome-sub">A toolbox of offline-capable utilities for everyday work.</p>
+      <aside className="privacy-note" aria-label="Privacy">
+        <span className="privacy-icon" aria-hidden="true">🔒</span>
+        <div>
+          <strong>Your data never leaves your browser.</strong> Every tool here runs entirely on your device, so the
+          text, tokens, files and passwords you work with are never uploaded, stored on a server or shared. No sign-up,
+          no tracking, no ads. In an era when personal data is bought and sold, that makes this a safe place to paste
+          things you would never put into a random website.
+        </div>
+      </aside>
       <input
         className="welcome-search"
         type="search"
