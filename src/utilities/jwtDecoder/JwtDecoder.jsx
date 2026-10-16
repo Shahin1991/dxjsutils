@@ -1,6 +1,8 @@
-import React, { useMemo, useState } from 'react';
+import React, { useMemo } from 'react';
 import { TreeNode } from '../../components/TreeNode';
 import { CopyButton } from '../../components/CopyButton';
+import { useToolState } from '../../utils/toolState';
+import { ClearableTextarea } from '../../components/ClearableTextarea';
 
 const SAMPLE = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyLCJleHAiOjE5MTYyMzkwMjJ9.signature';
 
@@ -14,7 +16,7 @@ function b64urlDecode(part) {
 const fmtTime = (s) => new Date(s * 1000).toISOString().replace('T', ' ').replace('.000Z', ' UTC');
 
 export function JwtDecoder() {
-  const [token, setToken] = useState(SAMPLE);
+  const [token, setToken] = useToolState('token', SAMPLE);
 
   const result = useMemo(() => {
     const t = token.trim().replace(/^Bearer\s+/i, '');
@@ -42,7 +44,7 @@ export function JwtDecoder() {
       <h2 className="jwt-title">🔓 JWT Decoder</h2>
       <p className="jwt-desc">Decoded locally; the signature is not verified.</p>
       <div className="jwt-panel">
-        <textarea className="jwt-textarea" value={token} onChange={(e) => setToken(e.target.value)} spellCheck={false} placeholder="Paste a JWT" />
+        <ClearableTextarea className="jwt-textarea" value={token} onChange={(e) => setToken(e.target.value)} spellCheck={false} placeholder="Paste a JWT" />
         {result?.error && <div className="jwt-err">⚠ {result.error}</div>}
       </div>
       {result?.header && (

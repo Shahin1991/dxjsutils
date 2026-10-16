@@ -1,11 +1,13 @@
-import React, { useMemo, useState } from 'react';
+import React, { useMemo } from 'react';
 import { CopyButton } from '../../components/CopyButton';
 import { decode, encodeComponent, encodeFull, parseUrl } from './utils/url';
+import { useToolState } from '../../utils/toolState';
+import { ClearableTextarea } from '../../components/ClearableTextarea';
 
 export function UrlTools() {
-  const [mode, setMode] = useState('encode');
-  const [full, setFull] = useState(false);
-  const [input, setInput] = useState('https://example.com/search?q=hello world&lang=en');
+  const [mode, setMode] = useToolState('mode', 'encode');
+  const [full, setFull] = useToolState('full', false);
+  const [input, setInput] = useToolState('input', 'https://example.com/search?q=hello world&lang=en');
 
   const result = useMemo(() => {
     try {
@@ -19,7 +21,7 @@ export function UrlTools() {
 
   return (
     <div className="tl-container">
-      <h2 className="tl-title">🔗 URL Encode / Decode</h2>
+      <h2 className="tl-title">🧷 URL Encode / Decode</h2>
       <p className="tl-desc">Percent-encode text, decode it back, or break a URL into its parts.</p>
       <div className="tl-panel">
         <div className="tl-row">
@@ -33,11 +35,11 @@ export function UrlTools() {
           )}
         </div>
         <label className="tl-label" htmlFor="url-in">Input</label>
-        <textarea id="url-in" className="tl-textarea" value={input} onChange={(e) => setInput(e.target.value)} spellCheck={false} />
+        <ClearableTextarea id="url-in" className="tl-textarea" value={input} onChange={(e) => setInput(e.target.value)} spellCheck={false} />
         {result.error && <div className="tl-err tl-gap">⚠ {result.error}</div>}
         {result.out !== undefined && !result.error && (
           <>
-            <label className="tl-label tl-gap">Output</label>
+            <div className="tl-label tl-gap">Output</div>
             <pre className="tl-out">{result.out}</pre>
             <div className="tl-gap"><CopyButton text={result.out} label="Copy output" /></div>
           </>

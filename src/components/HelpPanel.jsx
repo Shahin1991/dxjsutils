@@ -1,6 +1,7 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { CATEGORIES, UTILITIES } from '../config/utilities';
 import { GENERAL_HELP, HELP } from '../config/help';
+import { useFocusTrap } from '../utils/useFocusTrap';
 
 function HelpBody({ utility }) {
   const help = HELP[utility.id];
@@ -43,6 +44,8 @@ function HelpBody({ utility }) {
 
 // Slide-over drawer with help for the tool currently in use.
 export function HelpDrawer({ utility, onClose, onOpenCenter }) {
+  const ref = useRef(null);
+  useFocusTrap(ref);
   useEffect(() => {
     const onKey = (e) => e.key === 'Escape' && onClose();
     window.addEventListener('keydown', onKey);
@@ -52,7 +55,7 @@ export function HelpDrawer({ utility, onClose, onOpenCenter }) {
   return (
     <>
       <div className="help-backdrop" onClick={onClose} />
-      <aside className="help-drawer" role="dialog" aria-label={`Help: ${utility.name}`}>
+      <aside ref={ref} className="help-drawer" role="dialog" aria-modal="true" aria-label={`Help: ${utility.name}`} tabIndex={-1}>
         <header className="help-drawer-header">
           <h3>
             {utility.icon} {utility.name}

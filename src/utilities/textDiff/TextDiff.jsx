@@ -1,12 +1,14 @@
 import React, { useMemo, useState } from 'react';
 import { diffLines, summarize } from './utils/diff';
+import { useToolState } from '../../utils/toolState';
+import { ClearableTextarea } from '../../components/ClearableTextarea';
 
 const SAMPLE_A = 'apple\nbanana\ncherry\ndate';
 const SAMPLE_B = 'apple\nblueberry\ncherry\ndate\nelderberry';
 
 export function TextDiff() {
-  const [a, setA] = useState(SAMPLE_A);
-  const [b, setB] = useState(SAMPLE_B);
+  const [a, setA] = useToolState('a', SAMPLE_A);
+  const [b, setB] = useToolState('b', SAMPLE_B);
   const [ignoreCase, setIgnoreCase] = useState(false);
   const [ignoreWhitespace, setIgnoreWhitespace] = useState(false);
   const [onlyChanges, setOnlyChanges] = useState(false);
@@ -22,11 +24,11 @@ export function TextDiff() {
       <div className="tl-split">
         <div>
           <label className="tl-label" htmlFor="diff-a">Original</label>
-          <textarea id="diff-a" className="tl-textarea" value={a} onChange={(e) => setA(e.target.value)} spellCheck={false} />
+          <ClearableTextarea id="diff-a" className="tl-textarea" value={a} onChange={(e) => setA(e.target.value)} spellCheck={false} />
         </div>
         <div>
           <label className="tl-label" htmlFor="diff-b">Changed</label>
-          <textarea id="diff-b" className="tl-textarea" value={b} onChange={(e) => setB(e.target.value)} spellCheck={false} />
+          <ClearableTextarea id="diff-b" className="tl-textarea" value={b} onChange={(e) => setB(e.target.value)} spellCheck={false} />
         </div>
       </div>
       <div className="tl-panel">

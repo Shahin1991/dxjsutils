@@ -1,12 +1,15 @@
 import React, { useMemo, useState } from 'react';
 import { detectDelimiter, parseCsv } from './utils/csv';
+import { useToolState } from '../../utils/toolState';
+import { ClearableTextarea } from '../../components/ClearableTextarea';
+import { FileDrop } from '../../components/FileDrop';
 
 const SAMPLE = 'name,city,age\nAlice,Dubai,30\nBob,London,25\n"Carol, Jr.",Paris,41\n';
 const DELIMS = [['auto', 'Auto-detect'], [',', 'Comma'], [';', 'Semicolon'], ['\t', 'Tab'], ['|', 'Pipe']];
 
 export function CsvViewer() {
-  const [text, setText] = useState(SAMPLE);
-  const [delim, setDelim] = useState('auto');
+  const [text, setText] = useToolState('text', SAMPLE);
+  const [delim, setDelim] = useToolState('delim', 'auto');
   const [filter, setFilter] = useState('');
   const [sort, setSort] = useState({ col: null, dir: 1 });
 
@@ -30,10 +33,7 @@ export function CsvViewer() {
     return data;
   }, [rows, filter, sort]);
 
-  const onFile = (e) => {
-    const file = e.target.files[0];
-    if (file) file.text().then(setText);
-  };
+  const onFiles = ([file]) => file.text().then(setText);
 
   const clickHeader = (i) => setSort((s) => (s.col === i ? { col: i, dir: -s.dir } : { col: i, dir: 1 }));
 
@@ -41,9 +41,9 @@ export function CsvViewer() {
     <div className="cv-container">
       <h2 className="cv-title">📋 CSV Viewer</h2>
       <div className="cv-panel">
-        <textarea className="cv-textarea" value={text} onChange={(e) => setText(e.target.value)} spellCheck={false} />
+        <FileDrop accept=".csv,.tsv,.txt,text/csv" onFiles={onFiles} hint="Paste CSV below, drop a file here, or" />
+        <ClearableTextarea className="cv-textarea" value={text} onChange={(e) => setText(e.target.value)} spellCheck={false} />
         <div className="cv-row cv-gap">
-          <input type="file" accept=".csv,.tsv,.txt,text/csv" onChange={onFile} />
           <select value={delim} onChange={(e) => setDelim(e.target.value)}>{DELIMS.map(([v, l]) => <option key={l} value={v}>{l}</option>)}</select>
           <input type="search" placeholder="Filter rows…" value={filter} onChange={(e) => setFilter(e.target.value)} />
           <span className="cv-muted">{body.length} of {Math.max(rows.length - 1, 0)} rows · delimiter: {used === '\t' ? 'tab' : used}</span>

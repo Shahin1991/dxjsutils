@@ -1,6 +1,8 @@
-import React, { useMemo, useState } from 'react';
+import React, { useMemo } from 'react';
 import { CopyButton } from '../../components/CopyButton';
 import { MODES } from './utils/convert';
+import { useToolState } from '../../utils/toolState';
+import { ClearableTextarea } from '../../components/ClearableTextarea';
 
 const SAMPLES = {
   'json-csv': '[{"name":"Ada","role":{"title":"Engineer"}},{"name":"Linus","role":{"title":"Maintainer"}}]',
@@ -10,8 +12,8 @@ const SAMPLES = {
 };
 
 export function JsonConverter() {
-  const [mode, setMode] = useState('json-csv');
-  const [input, setInput] = useState(SAMPLES['json-csv']);
+  const [mode, setMode] = useToolState('mode', 'json-csv');
+  const [input, setInput] = useToolState('input', SAMPLES['json-csv']);
   const m = MODES[mode];
 
   const result = useMemo(() => {
@@ -30,7 +32,7 @@ export function JsonConverter() {
 
   return (
     <div className="tl-container">
-      <h2 className="tl-title">🔁 JSON Converter</h2>
+      <h2 className="tl-title">🔃 JSON Converter</h2>
       <p className="tl-desc">Convert between JSON, CSV and YAML.</p>
       <div className="tl-panel">
         <div className="tl-row">
@@ -39,7 +41,7 @@ export function JsonConverter() {
           ))}
         </div>
         <label className="tl-label" htmlFor="jc-in">{m.from} input</label>
-        <textarea id="jc-in" className="tl-textarea" value={input} onChange={(e) => setInput(e.target.value)} spellCheck={false} />
+        <ClearableTextarea id="jc-in" className="tl-textarea" value={input} onChange={(e) => setInput(e.target.value)} spellCheck={false} />
         <label className="tl-label tl-gap">{m.to} output</label>
         {result.error ? <div className="tl-err">⚠ {result.error}</div> : <pre className="tl-out">{result.out}</pre>}
         <div className="tl-gap"><CopyButton text={result.out} label="Copy output" /></div>

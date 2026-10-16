@@ -1,8 +1,9 @@
-import React, { useMemo, useState } from 'react';
+import React, { useMemo } from 'react';
 import { describeCron, nextRuns, parseCron } from './utils/cron';
+import { useToolState } from '../../utils/toolState';
 
 export function CronParser() {
-  const [expr, setExpr] = useState('*/15 9-17 * * MON-FRI');
+  const [expr, setExpr] = useToolState('expr', '*/15 9-17 * * MON-FRI');
 
   const result = useMemo(() => {
     try {

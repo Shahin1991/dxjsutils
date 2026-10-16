@@ -287,3 +287,62 @@ button:focus-visible,
 .privacy-icon {
   font-size: 20px;
 }
+
+/* One title bar per tool, rendered by App (each tool's own <h2> title is hidden to avoid repeating it) */
+.tool-head {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  max-width: 1000px;
+  margin: 0 auto 12px;
+}
+
+.tool-head h1 {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 0;
+  font-size: 1.4em;
+}
+
+.tool-head-badge {
+  font-size: 11px;
+  font-weight: 500;
+}
+
+.tool-view h2[class$='-title'] {
+  display: none;
+}
+
+.tool-fav {
+  margin-left: auto;
+  padding: 4px 12px;
+  background: var(--bg-tertiary);
+  border: 1px solid var(--border-color);
+  border-radius: 16px;
+  color: var(--text-secondary);
+  white-space: nowrap;
+}
+
+.tool-fav:hover {
+  border-color: var(--color-primary);
+}
+
+.tool-fav.on {
+  color: var(--color-warning);
+  border-color: var(--color-warning);
+}
+
+.desktop-only {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 16px;
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: 10px;
+}
+
+.card-badge {
+  margin-left: 8px;
+  vertical-align: middle;
+}

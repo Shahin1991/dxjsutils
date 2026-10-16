@@ -45,3 +45,13 @@
 .fc-text { font-size: 15px !important; }
 .fc-table-wrap { max-height: 50vh; overflow: auto; }
 .fc-table-wrap td:not(:first-child), .fc-table-wrap th:not(:first-child) { text-align: right; font-variant-numeric: tabular-nums; }
+
+/* Shared textarea with a corner Clear button (components/ClearableTextarea) */
+.clearable { position: relative; width: 100%; }
+.clearable > textarea { width: 100%; display: block; }
+.clearable-btn { position: absolute; top: 6px; right: 6px; padding: 2px 8px; font-size: 11px; background: var(--bg-tertiary); color: var(--text-muted); border: 1px solid var(--border-color); border-radius: 6px; opacity: 0.75; }
+.clearable-btn:hover, .clearable-btn:focus-visible { opacity: 1; color: var(--text-primary); border-color: var(--color-primary); }
+
+/* Shared drag-and-drop file picker (components/FileDrop) */
+.file-drop { display: flex; align-items: center; justify-content: center; gap: 12px; flex-wrap: wrap; padding: 18px; margin-bottom: 10px; border: 2px dashed var(--border-color); border-radius: 10px; color: var(--text-muted); text-align: center; transition: border-color 0.15s, background 0.15s; }
+.file-drop.over { border-color: var(--color-primary); background: var(--bg-tertiary); color: var(--text-primary); }

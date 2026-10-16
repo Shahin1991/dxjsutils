@@ -21,6 +21,11 @@ export class ErrorBoundary extends React.Component {
           <h2>⚠️ Something went wrong</h2>
           <p>This utility hit an unexpected error. Other utilities are unaffected.</p>
           <pre>{this.state.error.message}</pre>
+          {this.props.onReset && (
+            <button type="button" className="tl-btn" onClick={this.props.onReset}>
+              ↺ Reset this tool and try again
+            </button>
+          )}
         </div>
       );
     }

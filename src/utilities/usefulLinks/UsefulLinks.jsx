@@ -20,6 +20,7 @@ export function UsefulLinks() {
   const [title, setTitle] = useState('');
   const [url, setUrl] = useState('');
   const [editId, setEditId] = useState(null);
+  const [removed, setRemoved] = useState(null); // { link, index } for Undo
 
   const persist = (next) => {
     setLinks(next);
@@ -44,6 +45,18 @@ export function UsefulLinks() {
     reset();
   };
 
+  const remove = (l) => {
+    setRemoved({ link: l, index: links.indexOf(l) });
+    persist(links.filter((x) => x.id !== l.id));
+  };
+
+  const undo = () => {
+    const next = [...links];
+    next.splice(removed.index, 0, removed.link);
+    persist(next);
+    setRemoved(null);
+  };
+
   const edit = (l) => {
     setEditId(l.id);
     setTitle(l.title);
@@ -61,6 +74,12 @@ export function UsefulLinks() {
         {editId && <button type="button" className="ul-btn secondary" onClick={reset}>Cancel</button>}
       </form>
       <div className="ul-panel">
+        {removed && (
+          <p className="ul-muted" role="status">
+            Deleted “{removed.link.title}”.{' '}
+            <button type="button" className="ul-btn secondary" onClick={undo}>Undo</button>
+          </p>
+        )}
         {links.length === 0 && <p className="ul-muted">No links yet. Add one above.</p>}
         {links.map((l) => (
           <div key={l.id} className="ul-item">
@@ -69,7 +88,7 @@ export function UsefulLinks() {
               <span className="ul-muted"> {l.url}</span>
             </a>
             <button type="button" className="ul-btn secondary" onClick={() => edit(l)}>Edit</button>
-            <button type="button" className="ul-btn secondary" onClick={() => persist(links.filter((x) => x.id !== l.id))}>Delete</button>
+            <button type="button" className="ul-btn secondary" onClick={() => remove(l)} aria-label={`Delete ${l.title}`}>Delete</button>
           </div>
         ))}
       </div>

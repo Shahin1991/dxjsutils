@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { PDFDocument } from 'pdf-lib';
 import { downloadFile } from '../../utils/clipboard';
+import { FileDrop } from '../../components/FileDrop';
 
 const FORMATS = [['image/png', 'PNG', 'png'], ['image/jpeg', 'JPEG', 'jpg'], ['image/webp', 'WebP', 'webp']];
 
@@ -91,8 +92,8 @@ export function ImageTools() {
     setBusy(false);
   };
 
-  const pick = (e) => {
-    setFiles([...e.target.files]);
+  const pick = (picked) => {
+    setFiles(picked);
     setResults([]);
   };
 
@@ -103,7 +104,7 @@ export function ImageTools() {
       <h2 className="it-title">🖼️ Image Tools</h2>
       <p className="it-desc">Convert, compress and combine images into a PDF. Everything runs in your browser.</p>
       <div className="it-panel">
-        <input type="file" accept="image/*" multiple onChange={pick} />
+        <FileDrop accept="image/*" multiple onFiles={pick} hint="Drop images here or" />
         {files.length > 0 && <div className="it-muted it-gap">{files.length} file(s): {files.map((f) => `${f.name} (${kb(f.size)})`).join(', ')}</div>}
       </div>
       <div className="it-panel it-row">

@@ -54,8 +54,8 @@ export function ColorConverter() {
             </div>
           ))}
           <div>
-            <label className="co-label">Picker</label>
-            <input type="color" value={hex} onChange={(e) => apply(hexToRgb(e.target.value))} />
+            <label className="co-label" htmlFor="co-picker">Picker</label>
+            <input id="co-picker" type="color" value={hex} onChange={(e) => apply(hexToRgb(e.target.value))} />
           </div>
         </div>
       </div>

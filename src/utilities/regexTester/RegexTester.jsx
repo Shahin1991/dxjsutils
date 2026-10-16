@@ -1,11 +1,13 @@
-import React, { useMemo, useState } from 'react';
+import React, { useMemo } from 'react';
+import { useToolState } from '../../utils/toolState';
+import { ClearableTextarea } from '../../components/ClearableTextarea';
 
 const FLAGS = ['g', 'i', 'm', 's', 'u'];
 
 export function RegexTester() {
-  const [pattern, setPattern] = useState('(\\w+)@(\\w+)\\.com');
-  const [flags, setFlags] = useState(['g', 'i']);
-  const [text, setText] = useState('Contact: alice@example.com, bob@test.com');
+  const [pattern, setPattern] = useToolState('pattern', '(\\w+)@(\\w+)\\.com');
+  const [flags, setFlags] = useToolState('flags', ['g', 'i']);
+  const [text, setText] = useToolState('text', 'Contact: alice@example.com, bob@test.com');
 
   const { matches, error } = useMemo(() => {
     if (!pattern) return { matches: [], error: '' };
@@ -38,10 +40,10 @@ export function RegexTester() {
     <div className="rt-container">
       <h2 className="rt-title">🔍 Regex Tester</h2>
       <div className="rt-panel">
-        <label className="rt-label">Pattern</label>
+        <label className="rt-label" htmlFor="rt-pattern">Pattern</label>
         <div className="rt-row">
           <span>/</span>
-          <input className="rt-input rt-pattern" value={pattern} onChange={(e) => setPattern(e.target.value)} spellCheck={false} />
+          <input id="rt-pattern" className="rt-input rt-pattern" value={pattern} onChange={(e) => setPattern(e.target.value)} spellCheck={false} />
           <span>/{flags.join('')}</span>
         </div>
         <div className="rt-row">
@@ -52,9 +54,9 @@ export function RegexTester() {
         {error && <div className="rt-err">⚠ {error}</div>}
       </div>
       <div className="rt-panel">
-        <label className="rt-label">Test text</label>
-        <textarea className="rt-textarea" value={text} onChange={(e) => setText(e.target.value)} spellCheck={false} />
-        <label className="rt-label rt-gap">Highlighted ({matches.length} match{matches.length === 1 ? '' : 'es'})</label>
+        <label className="rt-label" htmlFor="rt-text">Test text</label>
+        <ClearableTextarea id="rt-text" className="rt-textarea" value={text} onChange={(e) => setText(e.target.value)} spellCheck={false} />
+        <div className="rt-label rt-gap">Highlighted ({matches.length} match{matches.length === 1 ? '' : 'es'})</div>
         <pre className="rt-out">{segments.map((s, i) => (s.hit ? <mark key={i} className="rt-mark">{s.t}</mark> : <span key={i}>{s.t}</span>))}</pre>
       </div>
       {matches.length > 0 && (

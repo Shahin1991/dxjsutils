@@ -1,6 +1,7 @@
 import React, { useMemo, useState } from 'react';
 import { FIELDS, generate, toCsv } from './utils/generators';
-import { copyText, downloadFile } from '../../utils/clipboard';
+import { downloadFile } from '../../utils/clipboard';
+import { CopyButton } from '../../components/CopyButton';
 
 export function FakeDataGenerator() {
   const [count, setCount] = useState(10);
@@ -26,7 +27,7 @@ export function FakeDataGenerator() {
           <label>Seed <input type="number" value={seed} onChange={(e) => setSeed(+e.target.value || 0)} /></label>
           <button type="button" className="fd-btn secondary" onClick={() => setSeed(Math.floor(Math.random() * 1e9))}>🎲 Random seed</button>
           <select value={format} onChange={(e) => setFormat(e.target.value)}><option value="json">JSON</option><option value="csv">CSV</option></select>
-          <button type="button" className="fd-btn" onClick={() => copyText(output)}>Copy</button>
+          <CopyButton text={output} label="Copy" className="fd-btn" />
           <button type="button" className="fd-btn" onClick={() => downloadFile(`fake-data.${format}`, output, format === 'json' ? 'application/json' : 'text/csv')}>Download</button>
         </div>
       </div>

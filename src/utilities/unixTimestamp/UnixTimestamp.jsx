@@ -1,6 +1,6 @@
 import React, { useMemo, useState } from 'react';
 import { COMMON_ZONES, formatInZone, toLocalInputValue, zonedToUtc } from '../../utils/timezone';
-import { copyText } from '../../utils/clipboard';
+import { CopyButton } from '../../components/CopyButton';
 
 const LOCAL_TZ = Intl.DateTimeFormat().resolvedOptions().timeZone;
 const SHOW = ['UTC', 'Asia/Dubai', 'Europe/London', 'America/New_York', 'America/Los_Angeles', 'Asia/Kolkata', 'Asia/Tokyo'];
@@ -56,8 +56,8 @@ export function UnixTimestamp() {
         </div>
         {fromDate && (
           <div className="ut-grid ut-gap">
-            <div className="ut-stat"><b>Seconds</b>{Math.floor(fromDate.getTime() / 1000)} <button type="button" className="ut-btn secondary" onClick={() => copyText(String(Math.floor(fromDate.getTime() / 1000)))}>Copy</button></div>
-            <div className="ut-stat"><b>Milliseconds</b>{fromDate.getTime()} <button type="button" className="ut-btn secondary" onClick={() => copyText(String(fromDate.getTime()))}>Copy</button></div>
+            <div className="ut-stat"><b>Seconds</b>{Math.floor(fromDate.getTime() / 1000)} <CopyButton text={String(Math.floor(fromDate.getTime() / 1000))} label="Copy" className="ut-btn secondary" /></div>
+            <div className="ut-stat"><b>Milliseconds</b>{fromDate.getTime()} <CopyButton text={String(fromDate.getTime())} label="Copy" className="ut-btn secondary" /></div>
           </div>
         )}
       </div>

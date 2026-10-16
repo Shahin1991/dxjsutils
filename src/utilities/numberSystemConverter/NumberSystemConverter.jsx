@@ -1,5 +1,5 @@
 import React, { useMemo, useState } from 'react';
-import { copyText } from '../../utils/clipboard';
+import { CopyButton } from '../../components/CopyButton';
 
 const DIGITS = '0123456789abcdefghijklmnopqrstuvwxyz';
 
@@ -62,7 +62,7 @@ export function NumberSystemConverter() {
         <div className="ns-panel">
           <table className="ns-table">
             <tbody>
-              {rows.map(([name, v]) => <tr key={name}><td>{name}</td><td><code>{v}</code></td><td><button type="button" className="ns-btn secondary" onClick={() => copyText(v)}>Copy</button></td></tr>)}
+              {rows.map(([name, v]) => <tr key={name}><td>{name}</td><td><code>{v}</code></td><td><CopyButton text={v} label="Copy" className="ns-btn secondary" /></td></tr>)}
             </tbody>
           </table>
         </div>

@@ -1,6 +1,7 @@
 import React, { useMemo, useState } from 'react';
 import { CopyButton } from '../../components/CopyButton';
 import { formatMinutes, lorem, textStats } from './utils/stats';
+import { ClearableTextarea } from '../../components/ClearableTextarea';
 
 export function TextStats() {
   const [text, setText] = useState('The quick brown fox jumps over the lazy dog. Paste or type your own text here!');
@@ -18,11 +19,11 @@ export function TextStats() {
 
   return (
     <div className="tl-container">
-      <h2 className="tl-title">🔢 Word Counter &amp; Lorem Ipsum</h2>
+      <h2 className="tl-title">📊 Word Counter &amp; Lorem Ipsum</h2>
       <p className="tl-desc">Count words and characters, and generate placeholder text.</p>
       <div className="tl-panel">
         <label className="tl-label" htmlFor="ts-in">Your text</label>
-        <textarea id="ts-in" className="tl-textarea" value={text} onChange={(e) => setText(e.target.value)} />
+        <ClearableTextarea id="ts-in" className="tl-textarea" value={text} onChange={(e) => setText(e.target.value)} />
         <div className="tl-grid tl-gap">
           {cards.map(([k, v]) => <div key={k} className="tl-stat"><b>{k}</b><span>{v}</span></div>)}
         </div>

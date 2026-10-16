@@ -1,24 +1,25 @@
 import React, { useMemo, useState } from 'react';
 import { UTILITIES, CATEGORIES } from '../config/utilities';
+import { searchUtilities } from '../utils/searchUtilities';
 
-export function Welcome({ onSelect }) {
+export function Welcome({ onSelect, favorites = [] }) {
   const [query, setQuery] = useState('');
   const [category, setCategory] = useState('All');
   const isElectron = Boolean(window.electron?.isElectron);
 
-  const grouped = useMemo(() => {
-    const q = query.trim().toLowerCase();
-    return CATEGORIES.map((cat) => ({
-      category: cat,
-      items: UTILITIES.filter(
-        (u) =>
-          (isElectron || !u.electronOnly) &&
-          u.category === cat &&
-          (category === 'All' || category === cat) &&
-          (!q || u.name.toLowerCase().includes(q) || u.description.toLowerCase().includes(q))
-      ),
-    })).filter((g) => g.items.length > 0);
-  }, [query, category, isElectron]);
+  // Same matching rules as the sidebar filter and command palette.
+  // Desktop-only tools are listed too (badged), so browser users know they exist.
+  const matches = useMemo(() => searchUtilities(query), [query]);
+  const grouped = useMemo(
+    () =>
+      CATEGORIES.map((cat) => ({
+        category: cat,
+        items: matches.filter((u) => u.category === cat && (category === 'All' || category === cat)),
+      })).filter((g) => g.items.length > 0),
+    [matches, category]
+  );
+  const favs = favorites.map((id) => UTILITIES.find((u) => u.id === id)).filter(Boolean);
+  const first = grouped[0]?.items[0];
 
   return (
     <div className="welcome">
@@ -39,16 +40,28 @@ export function Welcome({ onSelect }) {
       <input
         className="welcome-search"
         type="search"
-        placeholder="Search utilities…"
+        placeholder="Search utilities… (Enter opens the first match)"
+        aria-label="Search utilities"
         value={query}
         onChange={(e) => setQuery(e.target.value)}
+        onKeyDown={(e) => e.key === 'Enter' && first && onSelect(first.id)}
       />
+      {favs.length > 0 && !query.trim() && (
+        <div className="welcome-chips" aria-label="Your favorites">
+          {favs.map((u) => (
+            <button key={u.id} type="button" className="chip" onClick={() => onSelect(u.id)}>
+              ★ {u.icon} {u.name}
+            </button>
+          ))}
+        </div>
+      )}
       <div className="welcome-chips">
         {['All', ...CATEGORIES].map((c) => (
           <button
             key={c}
             type="button"
             className={`chip ${category === c ? 'active' : ''}`}
+            aria-pressed={category === c}
             onClick={() => setCategory(c)}
           >
             {c}
@@ -63,7 +76,10 @@ export function Welcome({ onSelect }) {
             {g.items.map((u) => (
               <button key={u.id} type="button" className="utility-card" onClick={() => onSelect(u.id)}>
                 <span className="card-icon">{u.icon}</span>
-                <span className="card-name">{u.name}</span>
+                <span className="card-name">
+                  {u.name}
+                  {u.electronOnly && !isElectron && <span className="nav-badge card-badge">Desktop</span>}
+                </span>
                 <span className="card-desc">{u.description}</span>
               </button>
             ))}

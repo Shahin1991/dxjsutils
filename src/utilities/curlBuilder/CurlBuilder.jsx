@@ -1,5 +1,5 @@
 import React, { useMemo, useState } from 'react';
-import { copyText } from '../../utils/clipboard';
+import { CopyButton } from '../../components/CopyButton';
 
 const METHODS = ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'HEAD', 'OPTIONS'];
 const q = (s) => `'${String(s).replace(/'/g, `'\\''`)}'`;
@@ -57,7 +57,7 @@ export function CurlBuilder() {
 
   return (
     <div className="cb-container">
-      <h2 className="cb-title">🔧 curl Builder</h2>
+      <h2 className="cb-title">🔧 cURL Builder</h2>
       <div className="cb-panel cb-row">
         <select value={method} onChange={(e) => setMethod(e.target.value)}>{METHODS.map((m) => <option key={m}>{m}</option>)}</select>
         <input className="cb-input cb-url" value={url} onChange={(e) => setUrl(e.target.value)} placeholder="https://…" />
@@ -81,7 +81,7 @@ export function CurlBuilder() {
       </div>
       <div className="cb-panel">
         <pre className="cb-out">{command}</pre>
-        <button type="button" className="cb-btn cb-gap" onClick={() => copyText(command)}>Copy command</button>
+        <CopyButton text={command} label="Copy command" className="cb-btn cb-gap" />
       </div>
     </div>
   );

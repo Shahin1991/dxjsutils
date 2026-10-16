@@ -31,14 +31,13 @@ export function LeftNav({
       <div key={u.id} className="nav-row">
         <button
           type="button"
-          className={`nav-item ${view === 'utility' && currentUtilityId === u.id ? 'active' : ''}`}
+          className={`nav-item ${view === 'utility' && currentUtilityId === u.id ? 'active' : ''} ${unavailable ? 'unavailable' : ''}`}
           onClick={() => onSelect(u.id)}
-          disabled={unavailable}
-          title={unavailable ? 'Available in the desktop app only' : u.description}
+          title={unavailable ? `${u.description} (desktop app only)` : u.description}
         >
           <span className="nav-icon">{u.icon}</span>
           <span className="nav-label">{u.name}</span>
-          {unavailable && <span className="nav-badge">Desktop</span>}
+          {unavailable && <span className="nav-badge" aria-label="desktop app only">Desktop</span>}
         </button>
         <button
           type="button"

@@ -12,29 +12,34 @@ export function buildLines(help) {
   return [help.summary, ...help.howTo.map((s, i) => `Step ${i + 1}: ${s}`)];
 }
 
-// Types the tool's instructions word by word, looping through every line.
+// Types the tool's instructions word by word once through every line, then rests on the summary.
 export function InstructionBanner({ utilityId }) {
   const help = HELP[utilityId];
   const lines = useMemo(() => (help ? buildLines(help) : []), [help]);
   const [hidden, setHidden] = useState(() => readJSON('hideInstructions', false));
   const [line, setLine] = useState(0);
   const [words, setWords] = useState(0);
+  const [finished, setFinished] = useState(false);
   const reduced = useMemo(prefersReducedMotion, []);
 
   const tokens = useMemo(() => (lines[line] || '').split(' '), [lines, line]);
 
   useEffect(() => {
-    if (hidden || reduced || lines.length === 0) return undefined;
+    if (hidden || reduced || finished || lines.length === 0) return undefined;
     const done = words >= tokens.length;
     const t = setTimeout(() => {
       if (!done) setWords((w) => w + 1);
-      else {
-        setLine((l) => (l + 1) % lines.length);
+      else if (line === lines.length - 1) {
+        setLine(0);
+        setWords(Infinity);
+        setFinished(true);
+      } else {
+        setLine((l) => l + 1);
         setWords(0);
       }
     }, done ? HOLD_MS : WORD_MS);
     return () => clearTimeout(t);
-  }, [hidden, reduced, lines, tokens, words]);
+  }, [hidden, reduced, finished, lines, line, tokens, words]);
 
   if (!help) return null;
 
@@ -52,7 +57,7 @@ export function InstructionBanner({ utilityId }) {
   }
 
   return (
-    <section className="instr" aria-label="How to use this tool">
+    <section className={`instr ${finished || reduced ? 'done' : ''}`} aria-label="How to use this tool">
       <span className="instr-icon" aria-hidden="true">✨</span>
       <div className="instr-body">
         {reduced ? (
@@ -68,7 +73,7 @@ export function InstructionBanner({ utilityId }) {
             <span className="sr-only">{lines.join(' ')}</span>
             <p className="instr-line" aria-hidden="true">
               {tokens.slice(0, words).join(' ')}
-              <span className="instr-caret" />
+              {!finished && <span className="instr-caret" />}
             </p>
             <div className="instr-dots" aria-hidden="true">
               {lines.map((_, i) => (
@@ -77,7 +82,7 @@ export function InstructionBanner({ utilityId }) {
                   type="button"
                   tabIndex={-1}
                   className={`instr-dot ${i === line ? 'on' : ''}`}
-                  onClick={() => { setLine(i); setWords(0); }}
+                  onClick={() => { setLine(i); setWords(Infinity); setFinished(true); }}
                   title={i === 0 ? 'Overview' : `Step ${i}`}
                 />
               ))}

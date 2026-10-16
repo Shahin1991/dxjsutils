@@ -55,12 +55,12 @@ export function DateDiffCalculator() {
       <p className="dd-desc">Find the difference between two dates and times.</p>
       <div className="dd-panel dd-row">
         <div>
-          <label className="dd-label">From</label>
-          <input type="datetime-local" value={start} onChange={(e) => setStart(e.target.value)} />
+          <label className="dd-label" htmlFor="dd-from">From</label>
+          <input id="dd-from" type="datetime-local" value={start} onChange={(e) => setStart(e.target.value)} />
         </div>
         <div>
-          <label className="dd-label">To</label>
-          <input type="datetime-local" value={end} onChange={(e) => setEnd(e.target.value)} />
+          <label className="dd-label" htmlFor="dd-to">To</label>
+          <input id="dd-to" type="datetime-local" value={end} onChange={(e) => setEnd(e.target.value)} />
         </div>
         <button type="button" className="dd-btn secondary" onClick={() => { setStart(nowLocal()); setEnd(nowLocal()); }}>
           Reset to now

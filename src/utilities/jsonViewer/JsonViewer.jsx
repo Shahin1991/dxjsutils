@@ -1,10 +1,12 @@
 import React, { useMemo, useState } from 'react';
 import { TreeNode } from '../../components/TreeNode';
+import { useToolState } from '../../utils/toolState';
+import { ClearableTextarea } from '../../components/ClearableTextarea';
 
 const SAMPLE = '{"name":"EK","active":true,"count":42,"tags":["a","b"],"nested":{"x":null,"y":[1,2,{"z":"deep"}]}}';
 
 export function JsonViewer() {
-  const [text, setText] = useState(SAMPLE);
+  const [text, setText] = useToolState('text', SAMPLE);
   const [signal, setSignal] = useState({ mode: 'expand', n: 0 });
 
   const { value, error } = useMemo(() => {
@@ -20,7 +22,7 @@ export function JsonViewer() {
     <div className="jv-container">
       <h2 className="jv-title">🌳 JSON Viewer</h2>
       <div className="jv-panel">
-        <textarea className="jv-textarea" value={text} onChange={(e) => setText(e.target.value)} spellCheck={false} placeholder="Paste JSON here" />
+        <ClearableTextarea className="jv-textarea" value={text} onChange={(e) => setText(e.target.value)} spellCheck={false} placeholder="Paste JSON here" />
         <div className="jv-row jv-gap">
           <button type="button" className="jv-btn secondary" onClick={() => setSignal((s) => ({ mode: 'expand', n: s.n + 1 }))}>Expand all</button>
           <button type="button" className="jv-btn secondary" onClick={() => setSignal((s) => ({ mode: 'collapse', n: s.n + 1 }))}>Collapse all</button>

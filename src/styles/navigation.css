@@ -106,9 +106,8 @@
   white-space: nowrap;
 }
 
-.nav-item:disabled {
-  opacity: 0.55;
-  cursor: not-allowed;
+.nav-item.unavailable:not(.active) .nav-label {
+  opacity: 0.6; /* still clickable: opens a screen explaining it needs the desktop app */
 }
 
 .nav-badge {
@@ -124,7 +123,7 @@
   border: none;
   padding: 4px 6px;
   color: var(--text-muted);
-  opacity: 0;
+  opacity: 0.25; /* faintly visible so favorites are discoverable without hovering */
 }
 
 .nav-row:hover .nav-star,
@@ -169,4 +168,11 @@
   .nav-star {
     opacity: 1;
   }
+}
+
+/* Keep the Desktop badge readable on highlighted rows */
+.nav-item.active .nav-badge,
+.palette-item.active .nav-badge {
+  color: #fff;
+  border-color: rgba(255, 255, 255, 0.6);
 }

@@ -1,5 +1,7 @@
-import React, { useMemo, useState } from 'react';
-import { copyText } from '../../utils/clipboard';
+import React, { useMemo } from 'react';
+import { CopyButton } from '../../components/CopyButton';
+import { useToolState } from '../../utils/toolState';
+import { ClearableTextarea } from '../../components/ClearableTextarea';
 
 function encode(text) {
   const bytes = new TextEncoder().encode(text);
@@ -17,8 +19,8 @@ function decode(b64) {
 }
 
 export function Base64Tool() {
-  const [mode, setMode] = useState('encode');
-  const [input, setInput] = useState('Hello, EK! مرحبا');
+  const [mode, setMode] = useToolState('mode', 'encode');
+  const [input, setInput] = useToolState('input', 'Hello, EK! مرحبا');
 
   const result = useMemo(() => {
     if (!input) return { out: '' };
@@ -38,11 +40,11 @@ export function Base64Tool() {
           <button type="button" className={`b64-btn ${mode === 'decode' ? '' : 'secondary'}`} onClick={() => setMode('decode')}>Decode</button>
           <button type="button" className="b64-btn secondary" onClick={() => { if (result.out !== undefined && !result.error) { setInput(result.out); setMode(mode === 'encode' ? 'decode' : 'encode'); } }}>⇅ Swap</button>
         </div>
-        <label className="b64-label">Input</label>
-        <textarea className="b64-textarea" value={input} onChange={(e) => setInput(e.target.value)} spellCheck={false} />
-        <label className="b64-label b64-gap">Output</label>
+        <label className="b64-label" htmlFor="b64-in">Input</label>
+        <ClearableTextarea id="b64-in" className="b64-textarea" value={input} onChange={(e) => setInput(e.target.value)} spellCheck={false} />
+        <div className="b64-label b64-gap">Output</div>
         {result.error ? <div className="b64-err">⚠ {result.error}</div> : <pre className="b64-out">{result.out}</pre>}
-        <button type="button" className="b64-btn b64-gap" disabled={!result.out} onClick={() => copyText(result.out)}>Copy output</button>
+        <CopyButton text={result.out} label="Copy output" className="b64-btn b64-gap" />
       </div>
     </div>
   );

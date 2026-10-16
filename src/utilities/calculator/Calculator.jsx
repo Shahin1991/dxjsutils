@@ -63,7 +63,10 @@ export function Calculator() {
     const onKey = (e) => {
       if (e.ctrlKey || e.metaKey || e.altKey) return;
       const t = e.target.tagName;
-      if (t === 'INPUT' || t === 'TEXTAREA') return;
+      if (t === 'INPUT' || t === 'TEXTAREA' || t === 'SELECT' || e.target.isContentEditable) return;
+      // Leave Enter/Space on focused buttons (sidebar, header) and keys inside open dialogs alone.
+      if (t === 'BUTTON' && !e.target.closest('.calc-keys') && (e.key === 'Enter' || e.key === ' ')) return;
+      if (document.querySelector('[role="dialog"]')) return;
       let k = null;
       if (/^[0-9.+\-*/%]$/.test(e.key)) k = e.key;
       else if (e.key === 'x' || e.key === 'X') k = '*';

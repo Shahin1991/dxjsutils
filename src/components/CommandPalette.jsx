@@ -1,18 +1,29 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { searchUtilities } from '../utils/searchUtilities';
+import { useFocusTrap } from '../utils/useFocusTrap';
 
-export function CommandPalette({ onSelect, onClose, isElectron }) {
+export function CommandPalette({ onSelect, onClose, isElectron, favorites = [], recents = [] }) {
   const [query, setQuery] = useState('');
   const [index, setIndex] = useState(0);
   const inputRef = useRef(null);
+  const listRef = useRef(null);
+  const dialogRef = useRef(null);
+  useFocusTrap(dialogRef);
 
-  const results = useMemo(
-    () => searchUtilities(query, { isElectron }).slice(0, 12),
-    [query, isElectron]
-  );
+  const results = useMemo(() => {
+    const all = searchUtilities(query);
+    if (query.trim()) return all.slice(0, 12);
+    // No query yet: lead with the tools the user actually uses.
+    const pinned = [...favorites, ...recents];
+    const rank = (u) => (pinned.includes(u.id) ? pinned.indexOf(u.id) : pinned.length);
+    return [...all].sort((a, b) => rank(a) - rank(b)).slice(0, 12);
+  }, [query, favorites, recents]);
 
   useEffect(() => inputRef.current?.focus(), []);
   useEffect(() => setIndex(0), [query]);
+  useEffect(() => {
+    listRef.current?.children[index]?.scrollIntoView({ block: 'nearest' });
+  }, [index]);
 
   const onKeyDown = (e) => {
     if (e.key === 'Escape') onClose();
@@ -29,7 +40,7 @@ export function CommandPalette({ onSelect, onClose, isElectron }) {
 
   return (
     <div className="palette-backdrop" onClick={onClose}>
-      <div className="palette" role="dialog" aria-label="Command palette" onClick={(e) => e.stopPropagation()}>
+      <div ref={dialogRef} className="palette" role="dialog" aria-modal="true" aria-label="Command palette" onClick={(e) => e.stopPropagation()}>
         <input
           ref={inputRef}
           className="palette-input"
@@ -38,12 +49,17 @@ export function CommandPalette({ onSelect, onClose, isElectron }) {
           value={query}
           onChange={(e) => setQuery(e.target.value)}
           onKeyDown={onKeyDown}
+          role="combobox"
+          aria-expanded="true"
+          aria-controls="palette-list"
+          aria-activedescendant={results[index] ? `palette-${results[index].id}` : undefined}
         />
-        <ul className="palette-list" role="listbox">
+        <ul className="palette-list" role="listbox" id="palette-list" ref={listRef}>
           {results.length === 0 && <li className="palette-empty">No tools match “{query}”.</li>}
           {results.map((u, i) => (
             <li
               key={u.id}
+              id={`palette-${u.id}`}
               role="option"
               aria-selected={i === index}
               className={`palette-item ${i === index ? 'active' : ''}`}
@@ -52,7 +68,8 @@ export function CommandPalette({ onSelect, onClose, isElectron }) {
             >
               <span className="nav-icon">{u.icon}</span>
               <span className="palette-name">{u.name}</span>
-              <span className="palette-cat">{u.category}</span>
+              {u.electronOnly && !isElectron && <span className="nav-badge">Desktop</span>}
+              <span className="palette-cat">{favorites.includes(u.id) ? '★ ' : ''}{u.category}</span>
             </li>
           ))}
         </ul>

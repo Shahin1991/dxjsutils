@@ -1,5 +1,7 @@
-import React, { useMemo, useState } from 'react';
-import { copyText } from '../../utils/clipboard';
+import React, { useMemo } from 'react';
+import { CopyButton } from '../../components/CopyButton';
+import { useToolState } from '../../utils/toolState';
+import { ClearableTextarea } from '../../components/ClearableTextarea';
 
 function words(s) {
   return s
@@ -22,7 +24,7 @@ const CONVERTERS = [
 ];
 
 export function StringTools() {
-  const [input, setInput] = useState('hello world_example-text');
+  const [input, setInput] = useToolState('input', 'hello world_example-text');
 
   const converted = useMemo(() => {
     const w = words(input);
@@ -52,7 +54,7 @@ export function StringTools() {
     <div className="st-container">
       <h2 className="st-title">🔤 String Tools</h2>
       <div className="st-panel">
-        <textarea className="st-textarea" value={input} onChange={(e) => setInput(e.target.value)} spellCheck={false} />
+        <ClearableTextarea className="st-textarea" value={input} onChange={(e) => setInput(e.target.value)} spellCheck={false} />
         <div className="st-row st-gap">
           {utilities.map(([name, fn]) => <button key={name} type="button" className="st-btn secondary" onClick={() => setInput(fn(input))}>{name}</button>)}
         </div>
@@ -67,7 +69,7 @@ export function StringTools() {
               <tr key={name}>
                 <td>{name}</td>
                 <td><code>{val}</code></td>
-                <td><button type="button" className="st-btn secondary" onClick={() => copyText(val)}>Copy</button></td>
+                <td><CopyButton text={val} label="Copy" className="st-btn secondary" /></td>
               </tr>
             ))}
           </tbody>

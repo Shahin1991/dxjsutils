@@ -1,12 +1,14 @@
 import React, { useMemo, useState } from 'react';
 import { compareYaml } from './utils/envParse';
+import { useToolState } from '../../utils/toolState';
+import { ClearableTextarea } from '../../components/ClearableTextarea';
 
 const A = 'env:\n  - name: DB_HOST\n    value: localhost\n  - name: DB_PORT\n    value: "5432"\n  - name: LOG_LEVEL\n    value: info\n';
 const B = 'env:\n  - name: DB_HOST\n    value: db.prod.internal\n  - name: DB_PORT\n    value: "5432"\n  - name: FEATURE_X\n    value: "true"\n';
 
 export function YamlComparator() {
-  const [left, setLeft] = useState(A);
-  const [right, setRight] = useState(B);
+  const [left, setLeft] = useToolState('left', A);
+  const [right, setRight] = useToolState('right', B);
   const [onlyDiff, setOnlyDiff] = useState(false);
 
   const { rows, mode } = useMemo(() => compareYaml(left, right), [left, right]);
@@ -18,8 +20,8 @@ export function YamlComparator() {
       <h2 className="yc-title">🔄 YAML Comparator</h2>
       <p className="yc-desc">Compares <code>env:</code>/<code>environment:</code> sections (falls back to top-level keys).</p>
       <div className="yc-split">
-        <div><label className="yc-label">Left (A)</label><textarea className="yc-textarea" value={left} onChange={(e) => setLeft(e.target.value)} spellCheck={false} /></div>
-        <div><label className="yc-label">Right (B)</label><textarea className="yc-textarea" value={right} onChange={(e) => setRight(e.target.value)} spellCheck={false} /></div>
+        <div><label className="yc-label" htmlFor="yc-left">Left (A)</label><ClearableTextarea id="yc-left" className="yc-textarea" value={left} onChange={(e) => setLeft(e.target.value)} spellCheck={false} /></div>
+        <div><label className="yc-label" htmlFor="yc-right">Right (B)</label><ClearableTextarea id="yc-right" className="yc-textarea" value={right} onChange={(e) => setRight(e.target.value)} spellCheck={false} /></div>
       </div>
       <div className="yc-panel">
         <div className="yc-row">

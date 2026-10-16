@@ -326,3 +326,14 @@
     animation: none;
   }
 }
+
+.instr.done .instr-icon {
+  animation: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .instr-icon,
+  .instr-caret {
+    animation: none;
+  }
+}

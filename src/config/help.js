@@ -292,13 +292,16 @@ export const HELP = {
 export const GENERAL_HELP = {
   gettingStarted: [
     'Pick a tool from the sidebar, the Home screen or the command palette (Ctrl/Cmd+K).',
-    'Star tools you use often; they appear under Favorites at the top of the sidebar.',
+    'Star tools you use often (☆ Favorite next to the tool title, or the star in the sidebar). They appear at the top of the sidebar, on Home and in the command palette.',
     'Press ? (or click the ? button in the header) for help on the tool you are using.',
+    'What you type is kept while you switch between tools (in memory only, cleared when you reload). Use ✕ Clear on an input to empty it, or ↺ Reset in the header to start a tool fresh with its sample data.',
+    'Tools marked Desktop need the desktop app because they make network or system calls a browser blocks. You can still open them to read what they do.',
     'Your data stays in your browser. Tools run on your device, and nothing you type, paste or open is uploaded. The only exceptions are the desktop-app tools that exist to contact a server (DNS Lookup, Certificate Inspector, HTTP Tester, Currency Converter); they send only the request you ask for.',
   ],
   shortcuts: [
     ['Ctrl/Cmd + K', 'Open the command palette'],
-    ['?  or  F1', 'Help for the current tool'],
-    ['Esc', 'Close the palette or help drawer'],
+    ['?  or  F1', 'Help for the current tool (or the Help page from Home)'],
+    ['Esc', 'Close the palette, help drawer or mobile menu'],
+    ['Enter (Home search)', 'Open the first matching tool'],
   ],
 };

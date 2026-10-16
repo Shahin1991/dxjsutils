@@ -1,6 +1,8 @@
-import React, { useMemo, useRef, useState } from 'react';
+import React, { useMemo, useRef } from 'react';
 import { marked } from 'marked';
 import { downloadFile } from '../../utils/clipboard';
+import { useToolState } from '../../utils/toolState';
+import { ClearableTextarea } from '../../components/ClearableTextarea';
 
 const SAMPLE = '# Hello Markdown\n\nWrite **bold**, *italic* and `code`.\n\n- item one\n- item two\n\n[Link](https://example.com)\n';
 
@@ -19,7 +21,7 @@ function sanitize(html) {
 }
 
 export function MarkdownEditor() {
-  const [text, setText] = useState(SAMPLE);
+  const [text, setText] = useToolState('text', SAMPLE);
   const ref = useRef(null);
 
   const html = useMemo(() => sanitize(marked.parse(text, { breaks: true })), [text]);
@@ -54,7 +56,7 @@ export function MarkdownEditor() {
         <button type="button" className="md-btn" onClick={() => downloadFile('document.md', text, 'text/markdown')}>Export .md</button>
       </div>
       <div className="md-split">
-        <textarea ref={ref} className="md-textarea md-editor" value={text} onChange={(e) => setText(e.target.value)} spellCheck={false} />
+        <ClearableTextarea ref={ref} className="md-textarea md-editor" value={text} onChange={(e) => setText(e.target.value)} spellCheck={false} />
         <div className="md-preview" dangerouslySetInnerHTML={{ __html: html }} />
       </div>
     </div>

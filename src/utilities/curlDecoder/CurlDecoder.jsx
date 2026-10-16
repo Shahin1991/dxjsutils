@@ -1,5 +1,7 @@
-import React, { useMemo, useState } from 'react';
+import React, { useMemo } from 'react';
 import { parseCurl } from './utils/parseCurl';
+import { useToolState } from '../../utils/toolState';
+import { ClearableTextarea } from '../../components/ClearableTextarea';
 
 const SAMPLE = `curl -X POST 'https://api.example.com/v1/users?active=true&page=2' \\
   -H 'Content-Type: application/json' \\
@@ -12,7 +14,7 @@ function Section({ title, children }) {
 }
 
 export function CurlDecoder() {
-  const [input, setInput] = useState(SAMPLE);
+  const [input, setInput] = useToolState('input', SAMPLE);
 
   const result = useMemo(() => {
     if (!input.trim()) return null;
@@ -29,7 +31,7 @@ export function CurlDecoder() {
     <div className="cd-container">
       <h2 className="cd-title">🔁 cURL Decoder</h2>
       <div className="cd-panel">
-        <textarea className="cd-textarea" value={input} onChange={(e) => setInput(e.target.value)} spellCheck={false} placeholder="Paste a curl command" />
+        <ClearableTextarea className="cd-textarea" value={input} onChange={(e) => setInput(e.target.value)} spellCheck={false} placeholder="Paste a curl command" />
         {result?.error && <div className="cd-err cd-body">⚠ {result.error}</div>}
       </div>
       {p && (

@@ -7,6 +7,7 @@ import { HelpCenter, HelpDrawer } from './components/HelpPanel';
 import { InstructionBanner } from './components/InstructionBanner';
 import { CommandPalette } from './components/CommandPalette';
 import { readJSON, writeJSON } from './utils/storage';
+import { ToolIdContext, clearToolState } from './utils/toolState';
 
 // Static import paths are required so webpack can split each utility into its own chunk.
 const UTILITY_COMPONENTS = {
@@ -64,6 +65,7 @@ function readTheme() {
 }
 
 const isDesktopWidth = () => window.innerWidth > 768;
+const isMac = /Mac|iPhone|iPad/.test(navigator.platform || navigator.userAgent);
 
 // Location hash <-> view: "#/help", "#/<utility-id>", anything else is Home.
 function parseHash() {
@@ -129,8 +131,11 @@ function App() {
       const typing = t && (t.tagName === 'INPUT' || t.tagName === 'TEXTAREA' || t.tagName === 'SELECT' || t.isContentEditable);
       if (e.key === 'F1' || (e.key === '?' && !typing && !e.metaKey && !e.ctrlKey)) {
         e.preventDefault();
-        setHelpOpen(true);
+        if (window.location.hash.replace(/^#\/?/, '') && window.location.hash !== '#/help') setHelpOpen(true);
+        else setRoute({ view: 'help', id: null });
+        return;
       }
+      if (e.key === 'Escape' && !isDesktopWidth()) setNavOpen(false);
     };
     window.addEventListener('keydown', onKey);
     return () => window.removeEventListener('keydown', onKey);
@@ -143,6 +148,23 @@ function App() {
     document.documentElement.classList.remove('dark', 'light');
     document.documentElement.classList.add(theme);
   }, [theme]);
+
+  // Follow the OS light/dark setting live, until the user makes an explicit choice.
+  useEffect(() => {
+    const mq = window.matchMedia?.('(prefers-color-scheme: light)');
+    if (!mq) return undefined;
+    const onChange = (e) => {
+      let saved = null;
+      try {
+        saved = localStorage.getItem('theme');
+      } catch (err) {
+        // ignore storage errors
+      }
+      if (!saved) setTheme(e.matches ? 'light' : 'dark');
+    };
+    mq.addEventListener?.('change', onChange);
+    return () => mq.removeEventListener?.('change', onChange);
+  }, []);
 
   const changeTheme = (next) => {
     setTheme(next);
@@ -164,18 +186,42 @@ function App() {
   const selectUtility = (id) => navigate(id ? { view: 'utility', id } : { view: 'home', id: null });
   const goHome = () => selectUtility(null);
   const goHelp = () => navigate({ view: 'help', id: null });
+  const resetTool = () => {
+    clearToolState(currentUtilityId);
+    setUtilityKey((k) => k + 1);
+  };
 
   const current = UTILITIES.find((u) => u.id === currentUtilityId);
   const ActiveUtility = currentUtilityId ? UTILITY_COMPONENTS[currentUtilityId] : null;
+
+  const isFav = current ? favorites.includes(current.id) : false;
+  const toolHead = current && (
+    <div className="tool-head">
+      <h1>
+        <span aria-hidden="true">{current.icon}</span> {current.name}
+        {current.electronOnly && <span className="nav-badge tool-head-badge">Desktop</span>}
+      </h1>
+      <button
+        type="button"
+        className={`tool-fav ${isFav ? 'on' : ''}`}
+        onClick={() => toggleFavorite(current.id)}
+        aria-pressed={isFav}
+        title={isFav ? 'Remove from favorites' : 'Add to favorites'}
+      >
+        {isFav ? '★ Favorited' : '☆ Favorite'}
+      </button>
+    </div>
+  );
 
   let content;
   if (route.view === 'help') {
     content = <HelpCenter onSelect={selectUtility} />;
   } else if (ActiveUtility && current && (isElectron || !current.electronOnly)) {
     content = (
-      <>
-        <InstructionBanner key={`${currentUtilityId}-${utilityKey}`} utilityId={currentUtilityId} />
-        <ErrorBoundary key={currentUtilityId}>
+      <div className="tool-view">
+        {toolHead}
+        <InstructionBanner key={`banner-${currentUtilityId}-${utilityKey}`} utilityId={currentUtilityId} />
+        <ErrorBoundary key={`tool-${currentUtilityId}-${utilityKey}`} onReset={resetTool}>
           <Suspense
             fallback={
               <div className="loading">
@@ -184,22 +230,38 @@ function App() {
               </div>
             }
           >
-            <ActiveUtility key={utilityKey} />
+            <ToolIdContext.Provider value={currentUtilityId}>
+              <ActiveUtility key={utilityKey} />
+            </ToolIdContext.Provider>
           </Suspense>
         </ErrorBoundary>
-      </>
+      </div>
     );
   } else if (current) {
     content = (
-      <div className="welcome">
-        <h1>
-          {current.icon} {current.name}
-        </h1>
-        <p className="welcome-sub">This tool needs the desktop app because it uses network and system features a browser can't access.</p>
+      <div className="tool-view">
+        {toolHead}
+        <div className="desktop-only">
+          <p>
+            <strong>{current.description}</strong>
+          </p>
+          <p className="welcome-sub">
+            This tool needs the dxjsutils desktop app: it makes network or system calls that a browser blocks for security
+            reasons. Everything else in the toolbox works right here.
+          </p>
+          <div className="tl-row">
+            <button type="button" className="tl-btn" onClick={() => setHelpOpen(true)}>
+              What does it do?
+            </button>
+            <button type="button" className="tl-btn secondary" onClick={goHome}>
+              Back to all tools
+            </button>
+          </div>
+        </div>
       </div>
     );
   } else {
-    content = <Welcome onSelect={selectUtility} />;
+    content = <Welcome onSelect={selectUtility} favorites={favorites} />;
   }
 
   return (
@@ -212,18 +274,15 @@ function App() {
           <img src={`${process.env.PUBLIC_URL}/logo.svg`} alt="" className="brand-logo" />
           <span className="brand-name">dxjsutils</span>
         </button>
-        {current && (
-          <span className="header-utility">
-            /{' '}
-            <button type="button" className="header-crumb" onClick={() => setUtilityKey((k) => k + 1)} title="Reset this tool">
-              {current.name}
-            </button>
-          </span>
-        )}
         <div className="header-actions">
           <button type="button" className="header-btn" onClick={() => setPaletteOpen(true)} title="Search tools (Ctrl/Cmd+K)">
-            🔍 <span className="header-btn-text">Search</span> <kbd>⌘K</kbd>
+            🔍 <span className="header-btn-text">Search</span> <kbd>{isMac ? '⌘K' : 'Ctrl K'}</kbd>
           </button>
+          {current && (
+            <button type="button" className="header-btn" onClick={resetTool} title="Clear inputs and start this tool fresh">
+              ↺ <span className="header-btn-text">Reset</span>
+            </button>
+          )}
           {current && (
             <button type="button" className="header-btn" onClick={() => setHelpOpen(true)} title="Help for this tool (?)" aria-label="Help for this tool">
               ?
@@ -232,6 +291,7 @@ function App() {
           <label className="theme-switch" title="Toggle theme">
             <input
               type="checkbox"
+              aria-label="Light theme"
               checked={theme === 'light'}
               onChange={(e) => changeTheme(e.target.checked ? 'light' : 'dark')}
             />
@@ -260,7 +320,7 @@ function App() {
       {helpOpen && (current ? (
         <HelpDrawer utility={current} onClose={() => setHelpOpen(false)} onOpenCenter={goHelp} />
       ) : null)}
-      {paletteOpen && <CommandPalette onSelect={selectUtility} onClose={() => setPaletteOpen(false)} isElectron={isElectron} />}
+      {paletteOpen && <CommandPalette onSelect={selectUtility} onClose={() => setPaletteOpen(false)} isElectron={isElectron} favorites={favorites} recents={recents} />}
     </div>
   );
 }

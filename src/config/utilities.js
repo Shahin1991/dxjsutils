@@ -19,7 +19,7 @@ export const UTILITIES = [
   { id: "yaml-sorter", name: "YAML Key Sorter", icon: "🔀", category: "Developer Tools", description: "Sort YAML keys alphabetically.", version: '1.0.0' },
   { id: "code-formatter", name: "Code Formatter", icon: "✨", category: "Developer Tools", description: "Pretty-print JSON, XML, HTML, CSS and SQL.", version: '1.0.0' },
   { id: "curl-decoder", name: "cURL Decoder", icon: "🔁", category: "Developer Tools", description: "Break a curl command into readable parts.", version: '1.0.0' },
-  { id: "curl-builder", name: "curl Builder", icon: "🔧", category: "Developer Tools", description: "Build a curl command from a form.", version: '1.0.0' },
+  { id: "curl-builder", name: "cURL Builder", icon: "🔧", category: "Developer Tools", description: "Build a curl command from a form.", version: '1.0.0' },
   { id: "csv-viewer", name: "CSV Viewer", icon: "📋", category: "Developer Tools", description: "View CSV as a sortable, searchable table.", version: '1.0.0' },
   { id: "unix-timestamp", name: "Unix Timestamp", icon: "⏱️", category: "Developer Tools", description: "Convert between epoch and human-readable dates.", version: '1.0.0' },
   { id: "cidr-calculator", name: "IP / CIDR Calculator", icon: "🌐", category: "Developer Tools", description: "Compute network details for an IPv4 CIDR.", version: '1.0.0' },
@@ -38,9 +38,12 @@ export const UTILITIES = [
   { id: "image-tools", name: "Image Tools", icon: "🖼️", category: "Media", description: "Convert, compress and export images to PDF.", version: '1.0.0' },
   { id: "qr-code-generator", name: "QR Code Generator", icon: "🔳", category: "Media", description: "Generate QR codes for URLs, text and Wi-Fi.", version: '1.0.0' },
   { id: "text-diff", name: "Text Diff", icon: "↔️", category: "Developer Tools", description: "Compare two texts line by line and see what changed.", version: '1.0.0' },
-  { id: "url-tools", name: "URL Encode / Decode", icon: "🔗", category: "Developer Tools", description: "Percent-encode, decode and break a URL into its parts.", version: '1.0.0' },
-  { id: "json-converter", name: "JSON Converter", icon: "🔁", category: "Developer Tools", description: "Convert between JSON, CSV and YAML.", version: '1.0.0' },
+  { id: "url-tools", name: "URL Encode / Decode", icon: "🧷", category: "Developer Tools", description: "Percent-encode, decode and break a URL into its parts.", version: '1.0.0' },
+  { id: "json-converter", name: "JSON Converter", icon: "🔃", category: "Developer Tools", description: "Convert between JSON, CSV and YAML.", version: '1.0.0' },
   { id: "password-generator", name: "Password Generator", icon: "🔑", category: "Encoding & Security", description: "Generate strong random passwords with a strength meter.", version: '1.0.0' },
-  { id: "text-stats", name: "Word Counter & Lorem Ipsum", icon: "🔢", category: "Productivity", description: "Count words and characters, and generate placeholder text.", version: '1.0.0' },
+  { id: "text-stats", name: "Word Counter & Lorem Ipsum", icon: "📊", category: "Productivity", description: "Count words and characters, and generate placeholder text.", version: '1.0.0' },
   { id: "finance-calculator", name: "Finance Calculator", icon: "💰", category: "Productivity", description: "Loan payments, compound interest, NPV, IRR, ROI and more, powered by finance.js.", version: '1.0.0' },
 ];
+
+// Alphabetical within each category so long lists (Developer Tools) are easy to scan.
+UTILITIES.sort((a, b) => a.name.localeCompare(b.name));

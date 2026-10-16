@@ -23,16 +23,16 @@ export function TimezoneConverter() {
 
   return (
     <div className="tz-container">
-      <h2 className="tz-title">🌐 Timezone Converter</h2>
+      <h2 className="tz-title">🕒 Timezone Converter</h2>
       <p className="tz-desc">Convert a date/time from one timezone to many others at once.</p>
       <div className="tz-panel tz-row">
         <div>
-          <label className="tz-label">Date &amp; time</label>
-          <input type="datetime-local" value={value} onChange={(e) => setValue(e.target.value)} />
+          <label className="tz-label" htmlFor="tz-when">Date &amp; time</label>
+          <input id="tz-when" type="datetime-local" value={value} onChange={(e) => setValue(e.target.value)} />
         </div>
         <div>
-          <label className="tz-label">Source timezone</label>
-          <select value={source} onChange={(e) => changeSource(e.target.value)}>
+          <label className="tz-label" htmlFor="tz-source">Source timezone</label>
+          <select id="tz-source" value={source} onChange={(e) => changeSource(e.target.value)}>
             {zones.map((z) => <option key={z.tz} value={z.tz}>{z.label}</option>)}
           </select>
         </div>

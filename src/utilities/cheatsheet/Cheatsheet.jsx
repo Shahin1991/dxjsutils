@@ -1,6 +1,6 @@
 import React, { useMemo, useState } from 'react';
 import { CHEATSHEET } from './utils/data';
-import { copyText } from '../../utils/clipboard';
+import { CopyButton } from '../../components/CopyButton';
 
 export function Cheatsheet() {
   const [query, setQuery] = useState('');
@@ -31,7 +31,7 @@ export function Cheatsheet() {
                 <tr key={cmd}>
                   <td><code>{cmd}</code></td>
                   <td>{desc}</td>
-                  <td><button type="button" className="cs-btn secondary" onClick={() => copyText(cmd)}>Copy</button></td>
+                  <td><CopyButton text={cmd} label="Copy" className="cs-btn secondary" /></td>
                 </tr>
               ))}
             </tbody>
