@@ -52,6 +52,18 @@ const UTILITY_COMPONENTS = {
   "password-generator": lazy(() => import('./utilities/passwordGenerator/PasswordGenerator').then((m) => ({ default: m.PasswordGenerator }))),
   "finance-calculator": lazy(() => import('./utilities/financeCalculator/FinanceCalculator').then((m) => ({ default: m.FinanceCalculator }))),
   "text-stats": lazy(() => import('./utilities/textStats/TextStats').then((m) => ({ default: m.TextStats }))),
+  "unit-converter": lazy(() => import('./utilities/unitConverter/UnitConverter').then((m) => ({ default: m.UnitConverter }))),
+  "percentage-calculator": lazy(() => import('./utilities/percentageCalculator/PercentageCalculator').then((m) => ({ default: m.PercentageCalculator }))),
+  "stopwatch": lazy(() => import('./utilities/stopwatch/Stopwatch').then((m) => ({ default: m.Stopwatch }))),
+  "working-days": lazy(() => import('./utilities/workingDays/WorkingDays').then((m) => ({ default: m.WorkingDays }))),
+  "line-tools": lazy(() => import('./utilities/lineTools/LineTools').then((m) => ({ default: m.LineTools }))),
+  "json-to-typescript": lazy(() => import('./utilities/jsonToTypescript/JsonToTypescript').then((m) => ({ default: m.JsonToTypescript }))),
+  "chmod-calculator": lazy(() => import('./utilities/chmodCalculator/ChmodCalculator').then((m) => ({ default: m.ChmodCalculator }))),
+  "text-encoders": lazy(() => import('./utilities/textEncoders/TextEncoders').then((m) => ({ default: m.TextEncoders }))),
+  "hmac-generator": lazy(() => import('./utilities/hmacGenerator/HmacGenerator').then((m) => ({ default: m.HmacGenerator }))),
+  "text-encryption": lazy(() => import('./utilities/textEncryption/TextEncryption').then((m) => ({ default: m.TextEncryption }))),
+  "http-status-codes": lazy(() => import('./utilities/httpStatusCodes/HttpStatusCodes').then((m) => ({ default: m.HttpStatusCodes }))),
+  "pdf-tools": lazy(() => import('./utilities/pdfTools/PdfTools').then((m) => ({ default: m.PdfTools }))),
 };
 
 function readTheme() {
