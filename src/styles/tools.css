@@ -1,4 +1,4 @@
-/* Shared styles for the newer tools (Text Diff, URL Tools, Password, JSON Converter, Word Counter) */
+/* Shared styles for the newer tools (Text Diff, URL Tools, Password, JSON Converter, Word Counter and later) */
 .tl-container { max-width: 1000px; margin: 0 auto; }
 .tl-title { color: var(--text-primary); margin: 0 0 6px; }
 .tl-desc { color: var(--text-secondary); margin: 0 0 8px; }
@@ -55,3 +55,43 @@
 /* Shared drag-and-drop file picker (components/FileDrop) */
 .file-drop { display: flex; align-items: center; justify-content: center; gap: 12px; flex-wrap: wrap; padding: 18px; margin-bottom: 10px; border: 2px dashed var(--border-color); border-radius: 10px; color: var(--text-muted); text-align: center; transition: border-color 0.15s, background 0.15s; }
 .file-drop.over { border-color: var(--color-primary); background: var(--bg-tertiary); color: var(--text-primary); }
+
+/* Unit Converter */
+.uc-form { display: grid; grid-template-columns: 1fr 1fr auto 1fr; gap: 12px; align-items: end; }
+.uc-form input, .uc-form select { width: 100%; }
+.uc-swap { font-size: 16px; }
+.uc-result { flex: 1; }
+.uc-hl { background: var(--bg-tertiary); }
+@media (max-width: 768px) { .uc-form { grid-template-columns: 1fr; } }
+
+/* Percentage & VAT */
+.pc-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 0 16px; }
+.pc-inputs { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.pc-inputs input { width: 100%; }
+.pc-result { margin-bottom: 4px; }
+.pc-value { font-size: 22px; font-weight: 600; font-variant-numeric: tabular-nums; }
+
+/* Stopwatch & Timer */
+.sw-display { font-family: var(--font-mono); font-size: 44px; font-variant-numeric: tabular-nums; text-align: center; padding: 18px 0; color: var(--text-primary); }
+.sw-done { color: var(--color-warning, #f5a623); }
+
+/* PDF Tools */
+.pdf-actions { display: flex; gap: 6px; justify-content: flex-end; }
+.pdf-actions .tl-btn { padding: 2px 8px; }
+
+/* HTTP Status Codes */
+.hs-code { width: 64px; font-family: var(--font-mono); font-size: 15px; }
+.hs-2 { color: var(--color-success); }
+.hs-3 { color: var(--color-primary); }
+.hs-4 { color: var(--color-warning, #f5a623); }
+.hs-5 { color: var(--color-error); }
+
+/* JSON to TypeScript */
+.j2t-area { min-height: 320px; max-height: 60vh; overflow: auto; }
+
+/* Chmod Calculator */
+.cm-grid th, .cm-grid td { text-align: center; }
+.cm-grid tbody th { text-align: left; }
+.cm-grid input { width: 18px; height: 18px; }
+.cm-input { width: 130px; font-family: var(--font-mono); font-size: 16px; }
+.cm-cmd { flex: 1; font-size: 16px; }

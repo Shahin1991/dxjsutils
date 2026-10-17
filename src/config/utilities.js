@@ -43,6 +43,18 @@ export const UTILITIES = [
   { id: "password-generator", name: "Password Generator", icon: "🔑", category: "Encoding & Security", description: "Generate strong random passwords with a strength meter.", version: '1.0.0' },
   { id: "text-stats", name: "Word Counter & Lorem Ipsum", icon: "📊", category: "Productivity", description: "Count words and characters, and generate placeholder text.", version: '1.0.0' },
   { id: "finance-calculator", name: "Finance Calculator", icon: "💰", category: "Productivity", description: "Loan payments, compound interest, NPV, IRR, ROI and more, powered by finance.js.", version: '1.0.0' },
+  { id: "unit-converter", name: "Unit Converter", icon: "📏", category: "Productivity", description: "Convert length, weight, temperature, speed, data size, pressure and more.", version: '1.0.0' },
+  { id: "percentage-calculator", name: "Percentage & VAT Calculator", icon: "💯", category: "Productivity", description: "Percentages, % change, add or remove UAE VAT, discounts and margins.", version: '1.0.0' },
+  { id: "stopwatch", name: "Stopwatch & Timer", icon: "⏲️", category: "Productivity", description: "Stopwatch with laps and a countdown timer with Pomodoro presets.", version: '1.0.0' },
+  { id: "working-days", name: "Working Days Calculator", icon: "🗓️", category: "Productivity", description: "Count business days or add working days, skipping weekends and UAE holidays.", version: '1.0.0' },
+  { id: "line-tools", name: "Line Tools", icon: "🧾", category: "Developer Tools", description: "Sort, de-duplicate, shuffle, prefix and join lists of lines.", version: '1.0.0' },
+  { id: "json-to-typescript", name: "JSON to TypeScript", icon: "🟦", category: "Developer Tools", description: "Generate TypeScript interfaces from a JSON sample.", version: '1.0.0' },
+  { id: "chmod-calculator", name: "Chmod Calculator", icon: "🗝️", category: "Developer Tools", description: "Convert Unix permissions between checkboxes, octal and rwx notation.", version: '1.0.0' },
+  { id: "text-encoders", name: "Text Encoders", icon: "🔡", category: "Encoding & Security", description: "HTML entities, Unicode/JSON escapes, hex, binary, ROT13, Morse and NATO phonetic.", version: '1.0.0' },
+  { id: "hmac-generator", name: "HMAC Generator", icon: "🔏", category: "Encoding & Security", description: "Sign messages with HMAC-SHA256/512/1/MD5 and verify signatures.", version: '1.0.0' },
+  { id: "text-encryption", name: "Text Encryption", icon: "🛡️", category: "Encoding & Security", description: "Encrypt and decrypt text with a passphrase (AES-256-GCM).", version: '1.0.0' },
+  { id: "http-status-codes", name: "HTTP Status Codes & MIME Types", icon: "🚦", category: "Reference", description: "Searchable reference of HTTP status codes and common MIME types.", version: '1.0.0' },
+  { id: "pdf-tools", name: "PDF Tools", icon: "📄", category: "Media", description: "Merge PDFs, extract, reorder, remove and rotate pages.", version: '1.0.0' },
 ];
 
 // Alphabetical within each category so long lists (Developer Tools) are easy to scan.
