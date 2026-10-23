@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 const fmtName = (o) => (o ? Object.entries(o).map(([k, v]) => `${k}=${Array.isArray(v) ? v.join(', ') : v}`).join(', ') : '—');
 
 function CertInspectorInner() {
-  const [host, setHost] = useState('emirates.com');
+  const [host, setHost] = useState('example.com');
   const [port, setPort] = useState('443');
   const [data, setData] = useState(null);
   const [error, setError] = useState('');

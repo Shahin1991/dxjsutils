@@ -1,5 +1,5 @@
 import React, { useMemo, useState } from 'react';
-import { CATEGORIES, UTILITIES } from '../config/utilities';
+import { AVAILABLE_UTILITIES, CATEGORIES } from '../config/utilities';
 import { searchUtilities } from '../utils/searchUtilities';
 
 export function LeftNav({
@@ -14,30 +14,27 @@ export function LeftNav({
   recents,
   onToggleFavorite,
 }) {
-  const isElectron = Boolean(window.electron?.isElectron);
   const [query, setQuery] = useState('');
   const [collapsedCats, setCollapsedCats] = useState({});
 
   const searching = query.trim().length > 0;
-  const byId = useMemo(() => Object.fromEntries(UTILITIES.map((u) => [u.id, u])), []);
+  const byId = useMemo(() => Object.fromEntries(AVAILABLE_UTILITIES.map((u) => [u.id, u])), []);
   const favs = favorites.map((id) => byId[id]).filter(Boolean);
   const recent = recents.map((id) => byId[id]).filter((u) => u && !favorites.includes(u.id)).slice(0, 4);
   const matches = useMemo(() => searchUtilities(query), [query]);
 
   const renderItem = (u) => {
-    const unavailable = u.electronOnly && !isElectron;
     const isFav = favorites.includes(u.id);
     return (
       <div key={u.id} className="nav-row">
         <button
           type="button"
-          className={`nav-item ${view === 'utility' && currentUtilityId === u.id ? 'active' : ''} ${unavailable ? 'unavailable' : ''}`}
+          className={`nav-item ${view === 'utility' && currentUtilityId === u.id ? 'active' : ''}`}
           onClick={() => onSelect(u.id)}
-          title={unavailable ? `${u.description} (desktop app only)` : u.description}
+          title={u.description}
         >
           <span className="nav-icon">{u.icon}</span>
           <span className="nav-label">{u.name}</span>
-          {unavailable && <span className="nav-badge" aria-label="desktop app only">Desktop</span>}
         </button>
         <button
           type="button"
@@ -94,7 +91,7 @@ export function LeftNav({
               </>
             )}
             {CATEGORIES.map((cat) => {
-              const items = UTILITIES.filter((u) => u.category === cat);
+              const items = AVAILABLE_UTILITIES.filter((u) => u.category === cat);
               const isCollapsed = collapsedCats[cat];
               return (
                 <div key={cat}>

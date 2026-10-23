@@ -1,8 +1,8 @@
-import { UTILITIES } from '../config/utilities';
+import { IS_ELECTRON, UTILITIES } from '../config/utilities';
 
 // Returns utilities whose name/description/category match every word in the query.
 // Name matches are ranked ahead of description-only matches.
-export function searchUtilities(query, { isElectron = true, list = UTILITIES } = {}) {
+export function searchUtilities(query, { isElectron = IS_ELECTRON, list = UTILITIES } = {}) {
   const words = query.trim().toLowerCase().split(/\s+/).filter(Boolean);
   const available = list.filter((u) => isElectron || !u.electronOnly);
   if (words.length === 0) return available;

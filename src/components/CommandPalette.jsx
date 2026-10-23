@@ -2,7 +2,7 @@ import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { searchUtilities } from '../utils/searchUtilities';
 import { useFocusTrap } from '../utils/useFocusTrap';
 
-export function CommandPalette({ onSelect, onClose, isElectron, favorites = [], recents = [] }) {
+export function CommandPalette({ onSelect, onClose, favorites = [], recents = [] }) {
   const [query, setQuery] = useState('');
   const [index, setIndex] = useState(0);
   const inputRef = useRef(null);
@@ -68,7 +68,6 @@ export function CommandPalette({ onSelect, onClose, isElectron, favorites = [], 
             >
               <span className="nav-icon">{u.icon}</span>
               <span className="palette-name">{u.name}</span>
-              {u.electronOnly && !isElectron && <span className="nav-badge">Desktop</span>}
               <span className="palette-cat">{favorites.includes(u.id) ? '★ ' : ''}{u.category}</span>
             </li>
           ))}

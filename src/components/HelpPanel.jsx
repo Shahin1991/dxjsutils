@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react';
-import { CATEGORIES, UTILITIES } from '../config/utilities';
+import { AVAILABLE_UTILITIES, CATEGORIES } from '../config/utilities';
 import { GENERAL_HELP, HELP } from '../config/help';
 import { useFocusTrap } from '../utils/useFocusTrap';
 
@@ -82,7 +82,7 @@ export function HelpCenter({ onSelect, initialId }) {
     const q = query.trim().toLowerCase();
     return CATEGORIES.map((category) => ({
       category,
-      items: UTILITIES.filter((u) => {
+      items: AVAILABLE_UTILITIES.filter((u) => {
         if (u.category !== category) return false;
         if (!q) return true;
         const h = HELP[u.id];

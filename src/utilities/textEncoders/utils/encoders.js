@@ -103,7 +103,7 @@ export const ENCODERS = {
       if (!MORSE_REV[code]) throw new Error(`Unknown Morse code "${code}"`);
       return MORSE_REV[code];
     }).join('')).join(' '),
-    sample: 'SOS Emirates 2026',
+    sample: 'SOS Hello 2026',
   },
   nato: {
     label: 'NATO phonetic',
@@ -111,6 +111,6 @@ export const ENCODERS = {
       .map((w) => [...w].map((c) => NATO[c] || c).join(' ')).join(' / '),
     decode: (s) => s.trim().split(/\s*\/\s*/).map((w) => w.split(/\s+/).filter(Boolean)
       .map((word) => NATO_REV[word.toLowerCase().replace(/-/g, '')] ?? NATO_REV[word.toLowerCase()] ?? word).join('')).join(' '),
-    sample: 'EK202 DXB',
+    sample: 'AB202 DXB',
   },
 };

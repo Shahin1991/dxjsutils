@@ -106,17 +106,7 @@
   white-space: nowrap;
 }
 
-.nav-item.unavailable:not(.active) .nav-label {
-  opacity: 0.6; /* still clickable: opens a screen explaining it needs the desktop app */
-}
 
-.nav-badge {
-  font-size: 10px;
-  padding: 1px 6px;
-  border-radius: 8px;
-  border: 1px solid var(--border-color);
-  color: var(--text-muted);
-}
 
 .nav-star {
   background: none;
@@ -170,9 +160,3 @@
   }
 }
 
-/* Keep the Desktop badge readable on highlighted rows */
-.nav-item.active .nav-badge,
-.palette-item.active .nav-badge {
-  color: #fff;
-  border-color: rgba(255, 255, 255, 0.6);
-}

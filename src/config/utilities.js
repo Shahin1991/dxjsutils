@@ -1,5 +1,5 @@
 // Single source of truth for the sidebar, Welcome screen and App.jsx routing map.
-export const CATEGORIES = ['Productivity', 'Developer Tools', 'Encoding & Security', 'Reference', 'Media'];
+export const CATEGORIES = ['Productivity', 'Developer Tools', 'Encoding & Security', 'Aviation', 'Reference', 'Media'];
 
 export const UTILITIES = [
   { id: "calculator", name: "Calculator", icon: "🧮", category: "Productivity", description: "Standard calculator with full keyboard support.", version: '1.0.0' },
@@ -55,7 +55,27 @@ export const UTILITIES = [
   { id: "text-encryption", name: "Text Encryption", icon: "🛡️", category: "Encoding & Security", description: "Encrypt and decrypt text with a passphrase (AES-256-GCM).", version: '1.0.0' },
   { id: "http-status-codes", name: "HTTP Status Codes & MIME Types", icon: "🚦", category: "Reference", description: "Searchable reference of HTTP status codes and common MIME types.", version: '1.0.0' },
   { id: "pdf-tools", name: "PDF Tools", icon: "📄", category: "Media", description: "Merge PDFs, extract, reorder, remove and rotate pages.", version: '1.0.0' },
+  { id: "spreadsheet-viewer", name: "Spreadsheet Viewer", icon: "📗", category: "Productivity", description: "Open Excel, ODS and CSV files; convert sheets to CSV, JSON or XLSX.", version: '1.0.0' },
+  { id: "meeting-planner", name: "Meeting Planner", icon: "🤝", category: "Productivity", description: "Find meeting times that suit everyone across time zones.", version: '1.0.0' },
+  { id: "mind-map", name: "Mind Map", icon: "🧠", category: "Productivity", description: "Brainstorm visually with a keyboard-friendly mind map; export PNG, SVG or Markdown.", version: '1.0.0' },
+  { id: "diagram-editor", name: "Diagram Editor", icon: "📈", category: "Productivity", description: "Flowcharts, sequence, Gantt and more from text (Mermaid).", version: '1.0.0' },
+  { id: "json-diff", name: "JSON Diff", icon: "🧮", category: "Developer Tools", description: "Compare two JSON documents field by field.", version: '1.0.0' },
+  { id: "jsonpath-tester", name: "JSONPath & XPath Tester", icon: "🎯", category: "Developer Tools", description: "Run JSONPath queries on JSON or XPath on XML.", version: '1.0.0' },
+  { id: "code-playground", name: "Code Playground", icon: "🧑‍💻", category: "Developer Tools", description: "HTML, CSS and JavaScript with a live sandboxed preview and console.", version: '1.0.0' },
+  { id: "jwt-encoder", name: "JWT Encoder & Verifier", icon: "🔐", category: "Encoding & Security", description: "Sign test JWTs and verify signatures (HS, RS, PS, ES).", version: '1.0.0' },
+  { id: "file-checksum", name: "File Checksum", icon: "🧾", category: "Encoding & Security", description: "MD5, SHA-1/256/512 and CRC32 of files, with match check.", version: '1.0.0' },
+  { id: "totp-generator", name: "2FA Code Generator", icon: "🔢", category: "Encoding & Security", description: "Time-based one-time codes (TOTP) for testing login flows.", version: '1.0.0' },
+  { id: "bcrypt-tool", name: "Bcrypt Hash & Verify", icon: "🧂", category: "Encoding & Security", description: "Hash passwords with bcrypt or check a password against a hash.", version: '1.0.0' },
+  { id: "metar-decoder", name: "METAR / TAF Decoder", icon: "🌦️", category: "Aviation", description: "Decode aviation weather reports and forecasts into plain English.", version: '1.0.0' },
+  { id: "boarding-pass", name: "Boarding Pass Decoder", icon: "🎫", category: "Aviation", description: "Decode IATA boarding pass barcode data (BCBP).", version: '1.0.0' },
+  { id: "pdf-sign", name: "Sign & Fill PDF", icon: "✒️", category: "Media", description: "Add signatures, text and dates to PDFs and fill form fields.", version: '1.0.0' },
+  { id: "image-metadata", name: "Image Metadata", icon: "🕵️", category: "Media", description: "View and remove hidden photo data such as GPS location.", version: '1.0.0' },
 ];
 
 // Alphabetical within each category so long lists (Developer Tools) are easy to scan.
 UTILITIES.sort((a, b) => a.name.localeCompare(b.name));
+
+export const IS_ELECTRON = typeof window !== 'undefined' && Boolean(window.electron?.isElectron);
+
+// The tools this build can run. In a browser, desktop-only tools are hidden everywhere (nav, Home, palette, Help, routes).
+export const AVAILABLE_UTILITIES = UTILITIES.filter((u) => IS_ELECTRON || !u.electronOnly);

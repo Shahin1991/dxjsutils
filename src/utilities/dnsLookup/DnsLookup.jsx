@@ -10,7 +10,7 @@ function renderRecord(type, r) {
 }
 
 function DnsLookupInner() {
-  const [host, setHost] = useState('emirates.com');
+  const [host, setHost] = useState('example.com');
   const [types, setTypes] = useState(['A', 'AAAA', 'MX', 'TXT', 'NS']);
   const [results, setResults] = useState(null);
   const [loading, setLoading] = useState(false);

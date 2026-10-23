@@ -262,7 +262,7 @@ ipcMain.handle('mock-server-start', async (_event, port, routes = []) => {
           });
         }
         const respond = () => {
-          const headers = { 'X-Mocked-By': 'EK-Mock-Server' };
+          const headers = { 'X-Mocked-By': 'dxjsutils-Mock-Server' };
           if (route) {
             headers['Content-Type'] = route.contentType || 'application/json';
             (route.headers || []).forEach((h) => {

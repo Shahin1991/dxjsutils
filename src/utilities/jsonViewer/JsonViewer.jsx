@@ -3,7 +3,7 @@ import { TreeNode } from '../../components/TreeNode';
 import { useToolState } from '../../utils/toolState';
 import { ClearableTextarea } from '../../components/ClearableTextarea';
 
-const SAMPLE = '{"name":"EK","active":true,"count":42,"tags":["a","b"],"nested":{"x":null,"y":[1,2,{"z":"deep"}]}}';
+const SAMPLE = '{"name":"dxjsutils","active":true,"count":42,"tags":["a","b"],"nested":{"x":null,"y":[1,2,{"z":"deep"}]}}';
 
 export function JsonViewer() {
   const [text, setText] = useToolState('text', SAMPLE);

@@ -20,7 +20,7 @@ function decode(b64) {
 
 export function Base64Tool() {
   const [mode, setMode] = useToolState('mode', 'encode');
-  const [input, setInput] = useToolState('input', 'Hello, EK! مرحبا');
+  const [input, setInput] = useToolState('input', 'Hello, world! مرحبا');
 
   const result = useMemo(() => {
     if (!input) return { out: '' };

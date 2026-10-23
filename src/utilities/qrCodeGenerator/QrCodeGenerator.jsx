@@ -6,8 +6,8 @@ const esc = (s) => s.replace(/([\\;,:"])/g, '\\$1');
 
 export function QrCodeGenerator() {
   const [type, setType] = useState('url');
-  const [url, setUrl] = useState('https://www.emirates.com');
-  const [text, setText] = useState('Hello from EK');
+  const [url, setUrl] = useState('https://example.com');
+  const [text, setText] = useState('Hello from dxjsutils');
   const [ssid, setSsid] = useState('');
   const [wifiPass, setWifiPass] = useState('');
   const [security, setSecurity] = useState('WPA');

@@ -1,4 +1,4 @@
-import { UTILITIES } from './utilities';
+import { AVAILABLE_UTILITIES, UTILITIES } from './utilities';
 import { HELP } from './help';
 import { searchUtilities } from '../utils/searchUtilities';
 
@@ -22,5 +22,6 @@ test('searchUtilities ranks name matches first and hides desktop-only tools in b
   expect(searchUtilities('base64')[0].id).toBe('base64');
   expect(searchUtilities('dns', { isElectron: false }).some((u) => u.id === 'dns-lookup')).toBe(false);
   expect(searchUtilities('dns', { isElectron: true }).some((u) => u.id === 'dns-lookup')).toBe(true);
-  expect(searchUtilities('')).toHaveLength(UTILITIES.length);
+  expect(searchUtilities('')).toHaveLength(AVAILABLE_UTILITIES.length);
+  expect(AVAILABLE_UTILITIES.some((u) => u.electronOnly)).toBe(false); // tests run as a browser
 });

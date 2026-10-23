@@ -5,7 +5,7 @@ import { useToolState } from '../../utils/toolState';
 import { jsonToTs } from './utils/toTs';
 
 const SAMPLE = `{
-  "flightNumber": "EK202",
+  "flightNumber": "XX202",
   "departure": { "airport": "DXB", "time": "2026-10-17T02:30:00Z" },
   "passengers": [
     { "name": "Ada", "seat": "12A", "meal": "VGML" },

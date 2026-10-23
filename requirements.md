@@ -2,7 +2,7 @@
 
 ## 1. Project Summary
 
-Build a cross-platform desktop productivity toolbox called **dxjsutils** for Emirates (EK) employees. It is a single offline-capable application that bundles 30+ independent utilities (developer tools, productivity helpers, encoding/security tools, reference material, and media tools) behind one unified shell with sidebar navigation, light/dark theming, and a home/welcome screen. Ship it both as a browser-runnable React app and as a packaged Electron desktop app (macOS/Windows/Linux).
+Build a cross-platform desktop productivity toolbox called **dxjsutils**. It is a single offline-capable application that bundles 30+ independent utilities (developer tools, productivity helpers, encoding/security tools, reference material, and media tools) behind one unified shell with sidebar navigation, light/dark theming, and a home/welcome screen. Ship it both as a browser-runnable React app and as a packaged Electron desktop app (macOS/Windows/Linux).
 
 ## 2. Tech Stack
 
@@ -60,7 +60,7 @@ utils/ # utility-local business logic, pure functions (optional)
 Define two themes entirely via CSS custom properties scoped under `.app-shell.dark` and `.app-shell.light` (dark is default, applied to `:root` as well). Variables to define: `--bg-primary`, `--bg-secondary`, `--bg-tertiary`, `--bg-card`, `--bg-input`, `--bg-input-focus`, `--bg-stat`, `--bg-stat-hover`, `--bg-progress`, `--bg-header`, `--bg-table`, `--bg-table-hover`, `--bg-ongoing`, `--bg-ongoing-hover`, `--text-primary`, `--text-secondary`, `--text-muted`, `--border-color`, `--border-color-light`, `--color-primary`, `--color-secondary`, `--color-accent`, `--color-success`, `--color-error`, `--color-warning`, `--shadow-box`.
 
 - **Dark theme**: GitHub-dark-inspired palette — background `#0d1117`/`#161b22`/`#1c2230`, text `#f0f6fc`, accent blue `#58a6ff`.
-- **Light theme ("Emirates" branded)**: light grey surfaces (`#e8edf2`/`#f2f4f7`), dark charcoal text `#1a1a2e`, Emirates red primary `#af0e20`, teal secondary `#00796b`.
+- **Light theme**: light grey surfaces (`#e8edf2`/`#f2f4f7`), dark charcoal text `#1a1a2e`, red primary `#af0e20`, teal secondary `#00796b`.
 
 Persist the chosen theme in `localStorage` under key `theme`. Toggle via a checkbox-styled switch (☀️/🌙 icons) in the header. All utility CSS must reference the variables — never hardcode colors — so every utility re-themes automatically with zero utility-specific code.
 
@@ -92,7 +92,7 @@ Expose via `contextBridge.exposeInMainWorld('electron', { ... })` **only** these
 - `certInspect(host, port)` → opens a raw `tls.connect` (ignore cert errors with `rejectUnauthorized: false` since this is an inspection tool), returns `getPeerCertificate(true)`, negotiated protocol, and cipher name
 - `httpRequest(opts: {method,url,headers,body,followRedirects,timeout})` → raw `http`/`https` request (bypasses browser CORS entirely), manually follows 301/302/303/307/308 redirects when requested, returns status/statusText/headers/body/size/duration
 - `currencyRates(from)` → fetches `https://cdn.jsdelivr.net/npm/@fawazahmed0/currency-api@latest/v1/currencies/{from}.json` from the main process (bypasses CORS), follows redirects manually
-- `startMockServer(port, routes)` / `stopMockServer()` → spins up/tears down a real local `http.createServer` that matches incoming requests against a routes array (`{method, path, enabled, status, body, contentType, headers:[{key,value,enabled}], delay, name}`), supports exact path match, trailing-`*` prefix match, and `path: '*'` catch-all, supports `ANY` method, adds `X-Mocked-By: EK-Mock-Server` response header, applies per-route artificial delay
+- `startMockServer(port, routes)` / `stopMockServer()` → spins up/tears down a real local `http.createServer` that matches incoming requests against a routes array (`{method, path, enabled, status, body, contentType, headers:[{key,value,enabled}], delay, name}`), supports exact path match, trailing-`*` prefix match, and `path: '*'` catch-all, supports `ANY` method, adds `X-Mocked-By: dxjsutils-Mock-Server` response header, applies per-route artificial delay
 - `onMockRequest(cb)` / `offMockRequest()` → subscribe/unsubscribe to a `mock-server-request` event the main process pushes to the renderer (`webContents.send`) every time the mock server receives a request, so the UI can show a live log
 - Also in preload: a `keydown` listener that intercepts Cmd/Ctrl+V on focused `<textarea>`/`<input>` elements and manually inserts clipboard text at the cursor via `ipcRenderer.invoke('clipboard-read')`, dispatching synthetic `input`/`change` events (works around Electron clipboard/paste quirks).
 

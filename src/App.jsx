@@ -2,7 +2,7 @@ import React, { lazy, Suspense, useEffect, useState } from 'react';
 import { LeftNav } from './components/LeftNav';
 import { Welcome } from './components/Welcome';
 import { ErrorBoundary } from './components/ErrorBoundary';
-import { UTILITIES } from './config/utilities';
+import { AVAILABLE_UTILITIES } from './config/utilities';
 import { HelpCenter, HelpDrawer } from './components/HelpPanel';
 import { InstructionBanner } from './components/InstructionBanner';
 import { CommandPalette } from './components/CommandPalette';
@@ -64,6 +64,21 @@ const UTILITY_COMPONENTS = {
   "text-encryption": lazy(() => import('./utilities/textEncryption/TextEncryption').then((m) => ({ default: m.TextEncryption }))),
   "http-status-codes": lazy(() => import('./utilities/httpStatusCodes/HttpStatusCodes').then((m) => ({ default: m.HttpStatusCodes }))),
   "pdf-tools": lazy(() => import('./utilities/pdfTools/PdfTools').then((m) => ({ default: m.PdfTools }))),
+  "spreadsheet-viewer": lazy(() => import('./utilities/spreadsheetViewer/SpreadsheetViewer').then((m) => ({ default: m.SpreadsheetViewer }))),
+  "meeting-planner": lazy(() => import('./utilities/meetingPlanner/MeetingPlanner').then((m) => ({ default: m.MeetingPlanner }))),
+  "mind-map": lazy(() => import('./utilities/mindMap/MindMap').then((m) => ({ default: m.MindMap }))),
+  "diagram-editor": lazy(() => import('./utilities/diagramEditor/DiagramEditor').then((m) => ({ default: m.DiagramEditor }))),
+  "json-diff": lazy(() => import('./utilities/jsonDiff/JsonDiff').then((m) => ({ default: m.JsonDiff }))),
+  "jsonpath-tester": lazy(() => import('./utilities/jsonPathTester/JsonPathTester').then((m) => ({ default: m.JsonPathTester }))),
+  "code-playground": lazy(() => import('./utilities/codePlayground/CodePlayground').then((m) => ({ default: m.CodePlayground }))),
+  "jwt-encoder": lazy(() => import('./utilities/jwtEncoder/JwtEncoder').then((m) => ({ default: m.JwtEncoder }))),
+  "file-checksum": lazy(() => import('./utilities/fileChecksum/FileChecksum').then((m) => ({ default: m.FileChecksum }))),
+  "totp-generator": lazy(() => import('./utilities/totpGenerator/TotpGenerator').then((m) => ({ default: m.TotpGenerator }))),
+  "bcrypt-tool": lazy(() => import('./utilities/bcryptTool/BcryptTool').then((m) => ({ default: m.BcryptTool }))),
+  "metar-decoder": lazy(() => import('./utilities/metarDecoder/MetarDecoder').then((m) => ({ default: m.MetarDecoder }))),
+  "boarding-pass": lazy(() => import('./utilities/boardingPass/BoardingPass').then((m) => ({ default: m.BoardingPass }))),
+  "pdf-sign": lazy(() => import('./utilities/pdfSign/PdfSign').then((m) => ({ default: m.PdfSign }))),
+  "image-metadata": lazy(() => import('./utilities/imageMetadata/ImageMetadata').then((m) => ({ default: m.ImageMetadata }))),
 };
 
 function readTheme() {
@@ -83,7 +98,7 @@ const isMac = /Mac|iPhone|iPad/.test(navigator.platform || navigator.userAgent);
 function parseHash() {
   const h = window.location.hash.replace(/^#\/?/, '');
   if (h === 'help') return { view: 'help', id: null };
-  if (UTILITIES.some((u) => u.id === h) && UTILITY_COMPONENTS[h]) return { view: 'utility', id: h };
+  if (AVAILABLE_UTILITIES.some((u) => u.id === h) && UTILITY_COMPONENTS[h]) return { view: 'utility', id: h };
   return { view: 'home', id: null };
 }
 
@@ -91,7 +106,7 @@ function initialRoute() {
   const fromHash = parseHash();
   if (fromHash.view !== 'home' || window.location.hash) return fromHash;
   const last = readJSON('lastUtility', null);
-  return last && UTILITY_COMPONENTS[last] ? { view: 'utility', id: last } : fromHash;
+  return last && UTILITY_COMPONENTS[last] && AVAILABLE_UTILITIES.some((u) => u.id === last) ? { view: 'utility', id: last } : fromHash;
 }
 
 function App() {
@@ -103,7 +118,6 @@ function App() {
   const [paletteOpen, setPaletteOpen] = useState(false);
   const [favorites, setFavorites] = useState(() => readJSON('favorites', []));
   const [recents, setRecents] = useState(() => readJSON('recents', []));
-  const isElectron = Boolean(window.electron?.isElectron);
   const currentUtilityId = route.view === 'utility' ? route.id : null;
 
   useEffect(() => writeJSON('favorites', favorites), [favorites]);
@@ -203,7 +217,7 @@ function App() {
     setUtilityKey((k) => k + 1);
   };
 
-  const current = UTILITIES.find((u) => u.id === currentUtilityId);
+  const current = AVAILABLE_UTILITIES.find((u) => u.id === currentUtilityId);
   const ActiveUtility = currentUtilityId ? UTILITY_COMPONENTS[currentUtilityId] : null;
 
   const isFav = current ? favorites.includes(current.id) : false;
@@ -211,7 +225,6 @@ function App() {
     <div className="tool-head">
       <h1>
         <span aria-hidden="true">{current.icon}</span> {current.name}
-        {current.electronOnly && <span className="nav-badge tool-head-badge">Desktop</span>}
       </h1>
       <button
         type="button"
@@ -228,7 +241,7 @@ function App() {
   let content;
   if (route.view === 'help') {
     content = <HelpCenter onSelect={selectUtility} />;
-  } else if (ActiveUtility && current && (isElectron || !current.electronOnly)) {
+  } else if (ActiveUtility && current) {
     content = (
       <div className="tool-view">
         {toolHead}
@@ -247,29 +260,6 @@ function App() {
             </ToolIdContext.Provider>
           </Suspense>
         </ErrorBoundary>
-      </div>
-    );
-  } else if (current) {
-    content = (
-      <div className="tool-view">
-        {toolHead}
-        <div className="desktop-only">
-          <p>
-            <strong>{current.description}</strong>
-          </p>
-          <p className="welcome-sub">
-            This tool needs the dxjsutils desktop app: it makes network or system calls that a browser blocks for security
-            reasons. Everything else in the toolbox works right here.
-          </p>
-          <div className="tl-row">
-            <button type="button" className="tl-btn" onClick={() => setHelpOpen(true)}>
-              What does it do?
-            </button>
-            <button type="button" className="tl-btn secondary" onClick={goHome}>
-              Back to all tools
-            </button>
-          </div>
-        </div>
       </div>
     );
   } else {
@@ -332,7 +322,7 @@ function App() {
       {helpOpen && (current ? (
         <HelpDrawer utility={current} onClose={() => setHelpOpen(false)} onOpenCenter={goHelp} />
       ) : null)}
-      {paletteOpen && <CommandPalette onSelect={selectUtility} onClose={() => setPaletteOpen(false)} isElectron={isElectron} favorites={favorites} recents={recents} />}
+      {paletteOpen && <CommandPalette onSelect={selectUtility} onClose={() => setPaletteOpen(false)} favorites={favorites} recents={recents} />}
     </div>
   );
 }

@@ -99,7 +99,7 @@ test('text encoders round-trip and reject bad input', () => {
   expect(ENCODERS.html.decode('&#169; &#x1F680; &euro; &bogus;')).toBe('© 🚀 € &bogus;');
   expect(ENCODERS.hex.encode('é')).toBe('c3 a9');
   expect(ENCODERS.hex.decode('0x48 0x69')).toBe('Hi');
-  expect(ENCODERS.nato.encode('EK 2')).toBe('Echo Kilo / Two');
+  expect(ENCODERS.nato.encode('AB 2')).toBe('Alfa Bravo / Two');
   expect(ENCODERS.nato.decode('alpha x-ray')).toBe('AX');
   expect(ENCODERS.morse.encode('SOS')).toBe('... --- ...');
   expect(() => ENCODERS.hex.decode('zz')).toThrow();

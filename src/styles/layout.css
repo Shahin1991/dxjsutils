@@ -305,10 +305,6 @@ button:focus-visible,
   font-size: 1.4em;
 }
 
-.tool-head-badge {
-  font-size: 11px;
-  font-weight: 500;
-}
 
 .tool-view h2[class$='-title'] {
   display: none;
@@ -333,16 +329,4 @@ button:focus-visible,
   border-color: var(--color-warning);
 }
 
-.desktop-only {
-  max-width: 1000px;
-  margin: 0 auto;
-  padding: 16px;
-  background: var(--bg-card);
-  border: 1px solid var(--border-color);
-  border-radius: 10px;
-}
 
-.card-badge {
-  margin-left: 8px;
-  vertical-align: middle;
-}

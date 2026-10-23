@@ -1,14 +1,12 @@
 import React, { useMemo, useState } from 'react';
-import { UTILITIES, CATEGORIES } from '../config/utilities';
+import { AVAILABLE_UTILITIES, CATEGORIES } from '../config/utilities';
 import { searchUtilities } from '../utils/searchUtilities';
 
 export function Welcome({ onSelect, favorites = [] }) {
   const [query, setQuery] = useState('');
   const [category, setCategory] = useState('All');
-  const isElectron = Boolean(window.electron?.isElectron);
 
   // Same matching rules as the sidebar filter and command palette.
-  // Desktop-only tools are listed too (badged), so browser users know they exist.
   const matches = useMemo(() => searchUtilities(query), [query]);
   const grouped = useMemo(
     () =>
@@ -18,7 +16,7 @@ export function Welcome({ onSelect, favorites = [] }) {
       })).filter((g) => g.items.length > 0),
     [matches, category]
   );
-  const favs = favorites.map((id) => UTILITIES.find((u) => u.id === id)).filter(Boolean);
+  const favs = favorites.map((id) => AVAILABLE_UTILITIES.find((u) => u.id === id)).filter(Boolean);
   const first = grouped[0]?.items[0];
 
   return (
@@ -76,10 +74,7 @@ export function Welcome({ onSelect, favorites = [] }) {
             {g.items.map((u) => (
               <button key={u.id} type="button" className="utility-card" onClick={() => onSelect(u.id)}>
                 <span className="card-icon">{u.icon}</span>
-                <span className="card-name">
-                  {u.name}
-                  {u.electronOnly && !isElectron && <span className="nav-badge card-badge">Desktop</span>}
-                </span>
+                <span className="card-name">{u.name}</span>
                 <span className="card-desc">{u.description}</span>
               </button>
             ))}
