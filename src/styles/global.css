@@ -1,60 +1,74 @@
+/* Airfield signage palette.
+   Location sign (yellow on black) = where you are; direction sign (black on yellow) = primary action;
+   mandatory red = errors and destructive actions; centreline green = success; edge blue = secondary. */
+:root {
+  --sign-yellow: #ffc72c;
+  --sign-black: #000000;
+  --sign-red: #c8102e;
+  --sign-white: #ffffff;
+}
+
 :root,
 .app-shell.dark {
-  --bg-primary: #0d1117;
-  --bg-secondary: #161b22;
-  --bg-tertiary: #1c2230;
-  --bg-card: #161b22;
-  --bg-input: #0d1117;
-  --bg-input-focus: #131a24;
-  --bg-stat: #1c2230;
-  --bg-stat-hover: #232b3b;
-  --bg-progress: #21262d;
-  --bg-header: #161b22;
-  --bg-table: #161b22;
-  --bg-table-hover: #1c2230;
-  --bg-ongoing: #12261e;
-  --bg-ongoing-hover: #17332a;
-  --text-primary: #f0f6fc;
-  --text-secondary: #c9d1d9;
-  --text-muted: #8b949e;
-  --border-color: #30363d;
-  --border-color-light: #21262d;
-  --color-primary: #58a6ff;
-  --color-secondary: #3fb9a8;
-  --color-accent: #58a6ff;
-  --color-success: #3fb950;
-  --color-error: #f85149;
-  --color-warning: #d29922;
-  --shadow-box: 0 4px 16px rgba(0, 0, 0, 0.45);
+  --bg-primary: #1e2124;
+  --bg-secondary: #17191b;
+  --bg-tertiary: #2b2f33;
+  --bg-card: #25292c;
+  --bg-input: #17191b;
+  --bg-input-focus: #1b1e20;
+  --bg-stat: #2b2f33;
+  --bg-stat-hover: #33383c;
+  --bg-progress: #33383c;
+  --bg-header: #17191b;
+  --bg-table: #25292c;
+  --bg-table-hover: #2b2f33;
+  --bg-ongoing: #18301f;
+  --bg-ongoing-hover: #1d3a26;
+  --text-primary: #eeefe9;
+  --text-secondary: #c7cac6;
+  --text-muted: #969b9a;
+  --border-color: #3d4246;
+  --border-color-light: #2f3337;
+  --color-primary: #ffc72c;
+  --on-primary: #000000;
+  --color-secondary: #5b9bff;
+  --color-accent: #ffc72c;
+  --color-success: #34b86a;
+  --color-error: #f0464c;
+  --color-warning: #ff8f3d;
+  --focus-ring: #ffc72c;
+  --shadow-box: 0 16px 48px rgba(0, 0, 0, 0.55);
 }
 
 .app-shell.light {
-  --bg-primary: #e8edf2;
-  --bg-secondary: #f2f4f7;
-  --bg-tertiary: #dde3ea;
-  --bg-card: #ffffff;
+  --bg-primary: #e2e4e3;
+  --bg-secondary: #d3d6d5;
+  --bg-tertiary: #ced2d1;
+  --bg-card: #f7f8f7;
   --bg-input: #ffffff;
-  --bg-input-focus: #fdfdfe;
-  --bg-stat: #f2f4f7;
-  --bg-stat-hover: #e8edf2;
-  --bg-progress: #d6dde5;
-  --bg-header: #ffffff;
-  --bg-table: #ffffff;
-  --bg-table-hover: #f2f4f7;
-  --bg-ongoing: #e3f3ef;
-  --bg-ongoing-hover: #d3ece6;
-  --text-primary: #1a1a2e;
-  --text-secondary: #3a3a52;
-  --text-muted: #6b6b80;
-  --border-color: #cfd6de;
-  --border-color-light: #e1e6ec;
-  --color-primary: #af0e20;
-  --color-secondary: #00796b;
-  --color-accent: #af0e20;
-  --color-success: #2e7d32;
-  --color-error: #c62828;
-  --color-warning: #b26a00;
-  --shadow-box: 0 4px 16px rgba(26, 26, 46, 0.12);
+  --bg-input-focus: #ffffff;
+  --bg-stat: #eceeed;
+  --bg-stat-hover: #e2e4e3;
+  --bg-progress: #c4c9c8;
+  --bg-header: #000000;
+  --bg-table: #f7f8f7;
+  --bg-table-hover: #eceeed;
+  --bg-ongoing: #dcefe2;
+  --bg-ongoing-hover: #cde8d6;
+  --text-primary: #16191a;
+  --text-secondary: #363b3d;
+  --text-muted: #5c6366;
+  --border-color: #a9b0b0;
+  --border-color-light: #c4c9c8;
+  --color-primary: #000000;
+  --on-primary: #ffc72c;
+  --color-secondary: #1f5fd1;
+  --color-accent: #000000;
+  --color-success: #1e7f45;
+  --color-error: #c8102e;
+  --color-warning: #b05400;
+  --focus-ring: #1f5fd1;
+  --shadow-box: 0 16px 48px rgba(22, 25, 26, 0.22);
 }
 
 *,
@@ -72,8 +86,11 @@ body,
 }
 
 :root {
-  --font-ui: 'Inter Variable', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-  --font-mono: 'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, Consolas, monospace;
+  --font-ui: 'Atkinson Hyperlegible Next Variable', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  --font-mono: 'Atkinson Hyperlegible Mono', ui-monospace, 'SF Mono', Menlo, Consolas, monospace;
+  /* Sign legends: heavy, slightly tightened, like painted airfield sign lettering. */
+  --font-sign-weight: 700;
+  --radius: 3px;
 }
 
 body {
@@ -102,8 +119,14 @@ select,
 textarea {
   background: var(--bg-input);
   border: 1px solid var(--border-color);
-  border-radius: 6px;
+  border-radius: var(--radius);
   padding: 8px 10px;
+}
+
+textarea,
+code,
+pre {
+  font-variant-numeric: slashed-zero;
 }
 
 input:focus,
@@ -143,7 +166,7 @@ textarea:focus {
   padding: 24px;
   background: var(--bg-card);
   border: 1px solid var(--color-error);
-  border-radius: 10px;
+  border-radius: var(--radius);
 }
 
 .error-boundary pre {
@@ -164,10 +187,14 @@ table,
   font-variant-numeric: tabular-nums;
 }
 
+/* Scale: 14 / 17 / 21 / 28 (roughly a major third), tight leading on headings. */
 h1 {
-  font-size: 1.6em;
+  font-size: 1.5em;
+  line-height: 1.15;
+  letter-spacing: -0.01em;
 }
 
 h2 {
-  font-size: 1.25em;
+  font-size: 1.214em;
+  line-height: 1.2;
 }

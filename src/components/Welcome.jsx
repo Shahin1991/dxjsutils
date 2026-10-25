@@ -2,9 +2,19 @@ import React, { useMemo, useState } from 'react';
 import { AVAILABLE_UTILITIES, CATEGORIES } from '../config/utilities';
 import { searchUtilities } from '../utils/searchUtilities';
 
+const ALL = 'All tools';
+
+function SignArrow({ dir }) {
+  return (
+    <svg className="sign-arrow" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+      <path d={dir === 'left' ? 'M20 12H5M11 5l-7 7 7 7' : 'M4 12h15M13 5l7 7-7 7'} />
+    </svg>
+  );
+}
+
 export function Welcome({ onSelect, favorites = [] }) {
   const [query, setQuery] = useState('');
-  const [category, setCategory] = useState('All');
+  const [category, setCategory] = useState(ALL);
 
   // Same matching rules as the sidebar filter and command palette.
   const matches = useMemo(() => searchUtilities(query), [query]);
@@ -12,70 +22,100 @@ export function Welcome({ onSelect, favorites = [] }) {
     () =>
       CATEGORIES.map((cat) => ({
         category: cat,
-        items: matches.filter((u) => u.category === cat && (category === 'All' || category === cat)),
+        items: matches.filter((u) => u.category === cat && (category === ALL || category === cat)),
       })).filter((g) => g.items.length > 0),
     [matches, category]
   );
   const favs = favorites.map((id) => AVAILABLE_UTILITIES.find((u) => u.id === id)).filter(Boolean);
   const first = grouped[0]?.items[0];
+  const searching = query.trim().length > 0;
+
+  // Like an airfield sign array: the current category is the location sign,
+  // the others are direction signs pointing the way they sit along the row.
+  const signs = [ALL, ...CATEGORIES.filter((c) => AVAILABLE_UTILITIES.some((u) => u.category === c))];
+  const here = signs.indexOf(category);
 
   return (
     <div className="welcome">
-      <h1 className="welcome-title">
-        <img src={`${process.env.PUBLIC_URL}/logo.svg`} alt="" className="welcome-logo" />
-        Welcome to dxjsutils
-      </h1>
-      <p className="welcome-sub">A toolbox of offline-capable utilities for everyday work.</p>
-      <aside className="privacy-note" aria-label="Privacy">
-        <span className="privacy-icon" aria-hidden="true">🔒</span>
-        <div>
-          <strong>Your data never leaves your browser.</strong> Every tool here runs entirely on your device, so the
-          text, tokens, files and passwords you work with are never uploaded, stored on a server or shared. No sign-up,
-          no tracking, no ads. In an era when personal data is bought and sold, that makes this a safe place to paste
-          things you would never put into a random website.
+      <header className="welcome-hero">
+        <h1 className="welcome-title">{AVAILABLE_UTILITIES.length} tools, all running on this device</h1>
+        <p className="welcome-sub">
+          Text, tokens, files and passwords you work with here are processed locally and never uploaded. No sign-up, no
+          tracking, no ads.
+        </p>
+        <input
+          className="welcome-search"
+          type="search"
+          placeholder="Find a tool, e.g. jwt, timestamp, pdf"
+          aria-label="Search utilities"
+          value={query}
+          onChange={(e) => setQuery(e.target.value)}
+          onKeyDown={(e) => e.key === 'Enter' && first && onSelect(first.id)}
+        />
+        <div className="sign-array" role="group" aria-label="Filter by category">
+          {signs.map((c, i) => {
+            const isHere = i === here;
+            const dir = i < here ? 'left' : 'right';
+            return (
+              <button
+                key={c}
+                type="button"
+                className={`sign ${isHere ? 'sign-location' : 'sign-direction'}`}
+                aria-pressed={isHere}
+                onClick={() => setCategory(c)}
+              >
+                {!isHere && dir === 'left' && <SignArrow dir="left" />}
+                <span>{c}</span>
+                {!isHere && dir === 'right' && <SignArrow dir="right" />}
+              </button>
+            );
+          })}
         </div>
-      </aside>
-      <input
-        className="welcome-search"
-        type="search"
-        placeholder="Search utilities… (Enter opens the first match)"
-        aria-label="Search utilities"
-        value={query}
-        onChange={(e) => setQuery(e.target.value)}
-        onKeyDown={(e) => e.key === 'Enter' && first && onSelect(first.id)}
-      />
-      {favs.length > 0 && !query.trim() && (
-        <div className="welcome-chips" aria-label="Your favorites">
-          {favs.map((u) => (
-            <button key={u.id} type="button" className="chip" onClick={() => onSelect(u.id)}>
-              ★ {u.icon} {u.name}
-            </button>
-          ))}
-        </div>
+      </header>
+
+      {favs.length > 0 && !searching && (
+        <section className="welcome-favs" aria-label="Your favorites">
+          <h2>Favorites</h2>
+          <div className="welcome-fav-list">
+            {favs.map((u) => (
+              <button key={u.id} type="button" className="fav-link" onClick={() => onSelect(u.id)}>
+                <span aria-hidden="true">{u.icon}</span> {u.name}
+              </button>
+            ))}
+          </div>
+        </section>
       )}
-      <div className="welcome-chips">
-        {['All', ...CATEGORIES].map((c) => (
-          <button
-            key={c}
-            type="button"
-            className={`chip ${category === c ? 'active' : ''}`}
-            aria-pressed={category === c}
-            onClick={() => setCategory(c)}
-          >
-            {c}
-          </button>
-        ))}
-      </div>
-      {grouped.length === 0 && <p className="welcome-empty">No utilities match your search.</p>}
+
+      {grouped.length === 0 && (
+        <p className="welcome-empty">
+          No tools match “{query.trim()}”. Try a shorter word{category !== ALL ? `, or switch to ${ALL}` : ''}.
+        </p>
+      )}
       {grouped.map((g) => (
         <section key={g.category} className="welcome-group">
-          <h2>{g.category}</h2>
+          <h2>
+            {g.category} <span className="welcome-count">{g.items.length}</span>
+          </h2>
           <div className="welcome-grid">
             {g.items.map((u) => (
-              <button key={u.id} type="button" className="utility-card" onClick={() => onSelect(u.id)}>
-                <span className="card-icon">{u.icon}</span>
-                <span className="card-name">{u.name}</span>
-                <span className="card-desc">{u.description}</span>
+              <button
+                key={u.id}
+                type="button"
+                className={`utility-card ${searching && u === first ? 'is-first' : ''}`}
+                onClick={() => onSelect(u.id)}
+              >
+                <span className="card-icon" aria-hidden="true">
+                  {u.icon}
+                </span>
+                <span className="card-text">
+                  <span className="card-name">{u.name}</span>
+                  <span className="card-desc">{u.description}</span>
+                </span>
+                {searching && u === first && (
+                  <kbd className="card-enter" title="Press Enter to open">
+                    Enter
+                  </kbd>
+                )}
               </button>
             ))}
           </div>

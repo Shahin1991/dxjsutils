@@ -7,7 +7,7 @@
 .cal-day:hover { background: var(--bg-table-hover); }
 .cal-day.weekend { background: var(--bg-stat); }
 .cal-day.holiday { background: var(--bg-ongoing); }
-.cal-day.today .cal-num { background: var(--color-primary); color: #fff; border-radius: 50%; padding: 1px 6px; }
+.cal-day.today .cal-num { background: var(--color-primary); color: var(--on-primary); border-radius: 50%; padding: 1px 6px; }
 .cal-day.selected { outline: 2px solid var(--color-primary); outline-offset: -2px; }
 .cal-empty { border: 1px solid var(--border-color-light); opacity: 0.4; }
 .cal-num { font-size: 13px; }

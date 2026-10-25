@@ -143,7 +143,7 @@
 .uu-panel,
 .wc-panel,
 .yc-panel,
-.ys-panel { background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 10px; padding: 16px; margin-top: 16px; }
+.ys-panel { background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 4px; padding: 16px; margin-top: 16px; }
 
 .b64-row,
 .calc-row,
@@ -251,7 +251,7 @@
 .uu-btn,
 .wc-btn,
 .yc-btn,
-.ys-btn { padding: 7px 14px; background: var(--color-primary); color: #fff; border: 1px solid var(--color-primary); border-radius: 6px; }
+.ys-btn { padding: 7px 14px; background: var(--color-primary); color: var(--on-primary); border: 1px solid var(--color-primary); border-radius: var(--radius); font-weight: 700; }
 
 .b64-btn:hover,
 .calc-btn:hover,
@@ -467,7 +467,7 @@
 .uu-out,
 .wc-out,
 .yc-out,
-.ys-out { white-space: pre-wrap; word-break: break-all; font-family: var(--font-mono); font-size: 13px; background: var(--bg-input); border: 1px solid var(--border-color); border-radius: 6px; padding: 10px; margin: 0; color: var(--text-primary); }
+.ys-out { white-space: pre-wrap; word-break: break-all; font-family: var(--font-mono); font-size: 13px; background: var(--bg-input); border: 1px solid var(--border-color); border-radius: var(--radius); padding: 10px; margin: 0; color: var(--text-primary); }
 
 .b64-err,
 .calc-err,
@@ -790,7 +790,7 @@
 .uu-stat,
 .wc-stat,
 .yc-stat,
-.ys-stat { background: var(--bg-stat); border-radius: 8px; padding: 10px 12px; }
+.ys-stat { background: var(--bg-stat); border-radius: var(--radius); padding: 10px 12px; }
 
 .b64-stat:hover,
 .calc-stat:hover,

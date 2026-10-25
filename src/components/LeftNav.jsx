@@ -72,7 +72,7 @@ export function LeftNav({
 
         {searching ? (
           <>
-            <div className="nav-section-label">RESULTS</div>
+            <div className="nav-section-label">Results</div>
             {matches.length === 0 && <div className="nav-empty">No tools match.</div>}
             {matches.map(renderItem)}
           </>
@@ -80,13 +80,13 @@ export function LeftNav({
           <>
             {favs.length > 0 && (
               <>
-                <div className="nav-section-label">FAVORITES</div>
+                <div className="nav-section-label">Favorites</div>
                 {favs.map(renderItem)}
               </>
             )}
             {recent.length > 0 && (
               <>
-                <div className="nav-section-label">RECENT</div>
+                <div className="nav-section-label">Recent</div>
                 {recent.map(renderItem)}
               </>
             )}
@@ -101,7 +101,7 @@ export function LeftNav({
                     aria-expanded={!isCollapsed}
                     onClick={() => setCollapsedCats((c) => ({ ...c, [cat]: !c[cat] }))}
                   >
-                    <span>{isCollapsed ? '▸' : '▾'}</span> {cat.toUpperCase()}
+                    <span className="nav-caret" aria-hidden="true">{isCollapsed ? '▸' : '▾'}</span> {cat}
                     <span className="nav-count">{items.length}</span>
                   </button>
                   {!isCollapsed && items.map(renderItem)}

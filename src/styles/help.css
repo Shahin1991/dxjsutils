@@ -79,7 +79,7 @@
   white-space: pre-wrap;
   word-break: break-word;
   background: var(--bg-tertiary);
-  border-radius: 6px;
+  border-radius: var(--radius);
   font-size: 13px;
 }
 
@@ -105,7 +105,7 @@
   margin-bottom: 8px;
   background: var(--bg-card);
   border: 1px solid var(--border-color);
-  border-radius: 8px;
+  border-radius: var(--radius);
 }
 
 .help-item-head {
@@ -142,7 +142,7 @@
   width: min(560px, 92vw);
   background: var(--bg-secondary);
   border: 1px solid var(--border-color);
-  border-radius: 10px;
+  border-radius: 4px;
   box-shadow: var(--shadow-box);
   overflow: hidden;
 }
@@ -169,13 +169,13 @@
   align-items: center;
   gap: 10px;
   padding: 8px 10px;
-  border-radius: 6px;
+  border-radius: var(--radius);
   cursor: pointer;
 }
 
 .palette-item.active {
   background: var(--color-primary);
-  color: #fff;
+  color: var(--on-primary);
 }
 
 .palette-name {
@@ -189,7 +189,7 @@
 }
 
 .palette-item.active .palette-cat {
-  color: #fff;
+  color: var(--on-primary);
 }
 
 .palette-empty {
@@ -201,7 +201,7 @@
   padding: 4px 10px;
   background: var(--bg-tertiary);
   border: 1px solid var(--border-color);
-  border-radius: 6px;
+  border-radius: var(--radius);
   color: var(--text-secondary);
   font-size: 13px;
 }
@@ -224,11 +224,10 @@
   margin: 0 auto 16px;
   padding: 12px 40px 12px 16px;
   color: var(--text-primary);
-  background: linear-gradient(120deg, var(--bg-card), var(--bg-tertiary));
+  background: var(--bg-card);
   border: 1px solid var(--border-color);
-  border-left: 4px solid var(--color-primary);
-  border-radius: 10px;
-  box-shadow: var(--shadow-box);
+  border-left: 4px solid var(--color-secondary);
+  border-radius: var(--radius);
 }
 
 .instr-icon {
@@ -244,6 +243,7 @@
 .instr-line {
   min-height: 3em; /* reserve two lines so the page doesn't jump while typing */
   margin: 0;
+  max-width: 75ch;
   font-weight: 500;
 }
 
@@ -299,7 +299,7 @@
   text-align: left;
   background: none;
   border: 1px dashed var(--border-color);
-  border-radius: 8px;
+  border-radius: var(--radius);
   color: var(--text-muted);
 }
 

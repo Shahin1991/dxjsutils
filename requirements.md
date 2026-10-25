@@ -59,8 +59,10 @@ utils/ # utility-local business logic, pure functions (optional)
 
 Define two themes entirely via CSS custom properties scoped under `.app-shell.dark` and `.app-shell.light` (dark is default, applied to `:root` as well). Variables to define: `--bg-primary`, `--bg-secondary`, `--bg-tertiary`, `--bg-card`, `--bg-input`, `--bg-input-focus`, `--bg-stat`, `--bg-stat-hover`, `--bg-progress`, `--bg-header`, `--bg-table`, `--bg-table-hover`, `--bg-ongoing`, `--bg-ongoing-hover`, `--text-primary`, `--text-secondary`, `--text-muted`, `--border-color`, `--border-color-light`, `--color-primary`, `--color-secondary`, `--color-accent`, `--color-success`, `--color-error`, `--color-warning`, `--shadow-box`.
 
-- **Dark theme**: GitHub-dark-inspired palette — background `#0d1117`/`#161b22`/`#1c2230`, text `#f0f6fc`, accent blue `#58a6ff`.
-- **Light theme**: light grey surfaces (`#e8edf2`/`#f2f4f7`), dark charcoal text `#1a1a2e`, red primary `#af0e20`, teal secondary `#00796b`.
+The visual identity borrows from ICAO airfield signage, and each sign type keeps its meaning: a **location sign** (yellow `#ffc72c` legend and border on black) marks where you are (the active nav item, the tool title bar, the logo); a **direction sign** (black on yellow, with an arrow) marks a way to go (dark-theme primary buttons, the Welcome category sign array); **mandatory red** marks errors and destructive actions; **centreline green** marks success; **taxiway-edge blue** is the secondary color. The fixed sign colors live in `--sign-yellow`, `--sign-black`, `--sign-red` and `--sign-white`, and `--on-primary` is the text color on a `--color-primary` fill. The header is a black sign band in both themes. Type is Atkinson Hyperlegible Next (UI) and Atkinson Hyperlegible Mono (code), bundled through Fontsource so the app stays offline.
+
+- **Dark theme** (night apron): asphalt surfaces `#1e2124`/`#17191b`/`#25292c`, text `#eeefe9`, primary signal yellow `#ffc72c` with black text, secondary edge blue `#5b9bff`.
+- **Light theme** (day concrete): concrete surfaces `#e2e4e3`/`#d3d6d5`/`#f7f8f7`, text `#16191a`, primary sign black `#000000` with yellow text, secondary edge blue `#1f5fd1`.
 
 Persist the chosen theme in `localStorage` under key `theme`. Toggle via a checkbox-styled switch (☀️/🌙 icons) in the header. All utility CSS must reference the variables — never hardcode colors — so every utility re-themes automatically with zero utility-specific code.
 

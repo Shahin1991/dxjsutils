@@ -6,14 +6,19 @@
   color: var(--text-primary);
 }
 
+/* The header is a black sign band in both themes, so it carries its own colors. */
 .app-header {
+  --hdr-text: #eeefe9;
+  --hdr-muted: #a6abaa;
+  --hdr-line: #3d4246;
+  --hdr-hover: #1c1f21;
   display: flex;
   align-items: center;
   gap: 12px;
   height: 56px;
   padding: 0 16px;
-  background: var(--bg-header);
-  border-bottom: 1px solid var(--border-color);
+  background: var(--sign-black);
+  color: var(--hdr-text);
   flex-shrink: 0;
 }
 
@@ -21,34 +26,39 @@
 .brand {
   background: none;
   border: none;
-  color: var(--text-primary);
+  color: var(--hdr-text);
 }
 
 .nav-toggle {
   font-size: 20px;
   padding: 4px 8px;
+  border-radius: var(--radius);
+}
+
+.nav-toggle:hover {
+  background: var(--hdr-hover);
 }
 
 .brand {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 10px;
   padding: 0;
 }
 
 .brand-logo {
-  height: 32px;
-  border-radius: 8px;
+  height: 30px;
   width: auto;
 }
 
 .brand-name {
-  font-weight: 700;
-  font-size: 16px;
+  font-weight: 800;
+  font-size: 17px;
+  letter-spacing: -0.01em;
 }
 
 .header-utility {
-  color: var(--text-muted);
+  color: var(--hdr-muted);
 }
 
 .theme-switch {
@@ -56,8 +66,7 @@
   position: relative;
   display: inline-block;
   width: 60px;
-  height: 32px;
-  border-radius: 8px;
+  height: 30px;
 }
 
 .theme-switch input {
@@ -74,9 +83,9 @@
   align-items: center;
   justify-content: space-between;
   padding: 0 7px;
-  background: var(--bg-tertiary);
-  border: 1px solid var(--border-color);
-  border-radius: 28px;
+  background: var(--hdr-hover);
+  border: 1px solid var(--hdr-line);
+  border-radius: var(--radius);
   font-size: 13px;
   cursor: pointer;
 }
@@ -86,15 +95,20 @@
   position: absolute;
   top: 3px;
   left: 3px;
-  width: 20px;
-  height: 20px;
-  border-radius: 50%;
-  background: var(--color-primary);
+  width: 22px;
+  height: 22px;
+  border-radius: 2px;
+  background: var(--sign-yellow);
   transition: transform 0.2s;
 }
 
 .theme-switch input:checked + .theme-slider::before {
-  transform: translateX(32px);
+  transform: translateX(30px);
+}
+
+.theme-switch input:focus-visible + .theme-slider {
+  outline: 2px solid var(--sign-yellow);
+  outline-offset: 2px;
 }
 
 .theme-icon {
@@ -111,90 +125,7 @@
 .app-main {
   flex: 1;
   overflow-y: auto;
-  padding: 20px 24px;
-}
-
-/* Welcome */
-.welcome {
-  max-width: 1100px;
-  margin: 0 auto;
-}
-
-.welcome-sub,
-.welcome-empty {
-  color: var(--text-muted);
-}
-
-.welcome-search {
-  width: 100%;
-  max-width: 480px;
-  margin: 12px 0;
-}
-
-.welcome-chips {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-  margin-bottom: 20px;
-}
-
-.chip {
-  padding: 6px 14px;
-  border-radius: 16px;
-  border: 1px solid var(--border-color);
-  background: var(--bg-card);
-  color: var(--text-secondary);
-}
-
-.chip.active {
-  background: var(--color-primary);
-  border-color: var(--color-primary);
-  color: #fff;
-}
-
-.welcome-group h2 {
-  margin: 24px 0 12px;
-  font-size: 16px;
-  color: var(--text-secondary);
-}
-
-.welcome-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-  gap: 12px;
-}
-
-.utility-card {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 6px;
-  padding: 16px;
-  text-align: left;
-  background: var(--bg-card);
-  border: 1px solid var(--border-color);
-  border-radius: 10px;
-  box-shadow: var(--shadow-box);
-  transition: transform 0.15s, border-color 0.15s;
-}
-
-.utility-card:hover {
-  transform: translateY(-2px);
-  border-color: var(--color-primary);
-}
-
-.card-icon {
-  font-size: 26px;
-}
-
-.card-name {
-  font-weight: 600;
-  color: var(--text-primary);
-}
-
-.card-desc {
-  font-size: 13px;
-  color: var(--text-muted);
+  padding: 24px 28px 48px;
 }
 
 @media (max-width: 768px) {
@@ -208,7 +139,7 @@
   margin-left: auto;
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 8px;
 }
 
 .header-actions .theme-switch {
@@ -219,27 +150,29 @@
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  padding: 4px 10px;
-  background: var(--bg-tertiary);
-  border: 1px solid var(--border-color);
-  border-radius: 6px;
-  color: var(--text-secondary);
+  height: 30px;
+  padding: 0 10px;
+  background: none;
+  border: 1px solid var(--hdr-line);
+  border-radius: var(--radius);
+  color: var(--hdr-text);
 }
 
 .header-btn:hover {
-  border-color: var(--color-primary);
+  background: var(--hdr-hover);
+  border-color: var(--hdr-muted);
 }
 
 .header-btn kbd {
   font-size: 11px;
-  color: var(--text-muted);
+  color: var(--hdr-muted);
 }
 
 .header-crumb {
   background: none;
   border: none;
   padding: 0;
-  color: var(--text-secondary);
+  color: var(--hdr-muted);
 }
 
 .header-crumb:hover {
@@ -248,8 +181,12 @@
 
 button:focus-visible,
 [role='option']:focus-visible {
-  outline: 2px solid var(--color-primary);
+  outline: 2px solid var(--focus-ring);
   outline-offset: 2px;
+}
+
+.app-header button:focus-visible {
+  outline-color: var(--sign-yellow);
 }
 
 @media (max-width: 768px) {
@@ -259,15 +196,256 @@ button:focus-visible,
   }
 }
 
-.welcome-title {
-  display: flex;
-  align-items: center;
-  gap: 14px;
+/* Welcome */
+.welcome {
+  max-width: 1100px;
+  margin: 0 auto;
 }
 
-.welcome-logo {
-  width: 48px;
-  height: 48px;
+.welcome-hero {
+  padding: 8px 0 28px;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.welcome-title {
+  margin: 0 0 10px;
+  font-size: 2em;
+  font-weight: 800;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+}
+
+.welcome-sub {
+  max-width: 62ch;
+  margin: 0 0 20px;
+  font-size: 15px;
+}
+
+.welcome-sub,
+.welcome-empty {
+  color: var(--text-secondary);
+}
+
+.welcome-search {
+  display: block;
+  width: 100%;
+  max-width: 560px;
+  margin: 12px 0;
+  padding: 11px 14px;
+  font-size: 15px;
+}
+
+.welcome .welcome-search {
+  margin: 0 0 20px;
+}
+
+/* Category filter drawn as an airfield sign array: panels butt together on a black frame. */
+.sign-array {
+  display: inline-flex;
+  flex-wrap: wrap;
+  gap: 3px;
+  max-width: 100%;
+  padding: 3px;
+  background: var(--sign-black);
+  border-radius: var(--radius);
+}
+
+.sign {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  min-height: 42px;
+  padding: 0 13px;
+  border: none;
+  border-radius: 2px;
+  font-size: 14.5px;
+  font-weight: 800;
+  letter-spacing: -0.005em;
+  white-space: nowrap;
+}
+
+.sign-direction {
+  background: var(--sign-yellow);
+  color: var(--sign-black);
+}
+
+.sign-direction:hover {
+  background: #ffd659;
+}
+
+.sign-location {
+  background: var(--sign-black);
+  color: var(--sign-yellow);
+  box-shadow: inset 0 0 0 3px var(--sign-yellow);
+  cursor: default;
+}
+
+/* Neighbouring panels are yellow, so focus is drawn inside the panel instead of as an outline. */
+.sign:focus-visible {
+  outline: none;
+}
+
+.sign-direction:focus-visible {
+  box-shadow: inset 0 0 0 3px var(--sign-black), inset 0 0 0 5px var(--sign-white);
+}
+
+.sign-location:focus-visible {
+  box-shadow: inset 0 0 0 3px var(--sign-yellow), inset 0 0 0 5px var(--sign-white);
+}
+
+.sign-arrow {
+  width: 17px;
+  height: 17px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 3;
+  stroke-linecap: square;
+  stroke-linejoin: miter;
+}
+
+@media (max-width: 600px) {
+  .sign-array {
+    display: flex;
+  }
+
+  .sign {
+    flex: 1 1 auto;
+    justify-content: center;
+    min-height: 40px;
+    padding: 0 12px;
+    font-size: 14px;
+  }
+}
+
+.welcome-favs h2,
+.welcome-group h2 {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  margin: 32px 0 8px;
+  font-size: 17px;
+  font-weight: 800;
+  color: var(--text-primary);
+}
+
+.welcome-count {
+  font-size: 13px;
+  font-weight: 400;
+  color: var(--text-muted);
+  font-variant-numeric: tabular-nums;
+}
+
+.welcome-fav-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.fav-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius);
+  color: var(--text-primary);
+  font-weight: 600;
+}
+
+.fav-link:hover {
+  border-color: var(--color-primary);
+}
+
+.welcome-empty {
+  margin: 28px 0;
+}
+
+/* The tool directory: rows, not cards. */
+.welcome-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  column-gap: 28px;
+  border-top: 1px solid var(--border-color-light);
+}
+
+.utility-card {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  width: 100%;
+  padding: 12px 8px;
+  text-align: left;
+  background: none;
+  border: none;
+  border-bottom: 1px solid var(--border-color-light);
+  border-radius: 0;
+  color: inherit;
+}
+
+.utility-card:hover {
+  background: var(--bg-card);
+}
+
+.utility-card:hover .card-name {
+  text-decoration: underline;
+  text-decoration-thickness: 2px;
+  text-underline-offset: 3px;
+}
+
+.utility-card.is-first {
+  background: var(--bg-card);
+  box-shadow: inset 3px 0 0 var(--color-primary);
+}
+
+.card-icon {
+  flex-shrink: 0;
+  width: 26px;
+  font-size: 20px;
+  line-height: 1.3;
+  text-align: center;
+}
+
+.card-text {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.card-name {
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.card-desc {
+  font-size: 13px;
+  line-height: 1.4;
+  color: var(--text-muted);
+}
+
+.card-enter {
+  margin-left: auto;
+  padding: 1px 6px;
+  font-size: 11px;
+  color: var(--text-muted);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius);
+}
+
+/* Shared by the Help center, which reuses the Welcome layout. */
+.chip {
+  padding: 6px 14px;
+  border-radius: var(--radius);
+  border: 1px solid var(--border-color);
+  background: var(--bg-card);
+  color: var(--text-secondary);
+}
+
+.chip.active {
+  background: var(--color-primary);
+  border-color: var(--color-primary);
+  color: var(--on-primary);
 }
 
 .privacy-note {
@@ -280,7 +458,7 @@ button:focus-visible,
   background: var(--bg-card);
   border: 1px solid var(--border-color);
   border-left: 4px solid var(--color-success);
-  border-radius: 8px;
+  border-radius: var(--radius);
   color: var(--text-secondary);
 }
 
@@ -288,23 +466,31 @@ button:focus-visible,
   font-size: 20px;
 }
 
-/* One title bar per tool, rendered by App (each tool's own <h2> title is hidden to avoid repeating it) */
+/* One title bar per tool, rendered by App (each tool's own <h2> title is hidden to avoid repeating it).
+   The title is a location sign: it tells you which tool you are in. */
 .tool-head {
   display: flex;
   align-items: center;
   gap: 12px;
   max-width: 1000px;
-  margin: 0 auto 12px;
+  margin: 0 auto 16px;
 }
 
 .tool-head h1 {
-  display: flex;
+  display: inline-flex;
   align-items: center;
   gap: 10px;
+  min-width: 0;
   margin: 0;
-  font-size: 1.4em;
+  padding: 8px 16px;
+  font-size: 1.43em;
+  font-weight: 800;
+  letter-spacing: -0.01em;
+  background: var(--sign-black);
+  color: var(--sign-yellow);
+  border-radius: var(--radius);
+  box-shadow: inset 0 0 0 3px var(--sign-yellow);
 }
-
 
 .tool-view h2[class$='-title'] {
   display: none;
@@ -312,16 +498,17 @@ button:focus-visible,
 
 .tool-fav {
   margin-left: auto;
-  padding: 4px 12px;
-  background: var(--bg-tertiary);
+  padding: 6px 12px;
+  background: none;
   border: 1px solid var(--border-color);
-  border-radius: 16px;
+  border-radius: var(--radius);
   color: var(--text-secondary);
   white-space: nowrap;
 }
 
 .tool-fav:hover {
-  border-color: var(--color-primary);
+  border-color: var(--text-muted);
+  color: var(--text-primary);
 }
 
 .tool-fav.on {
@@ -329,4 +516,9 @@ button:focus-visible,
   border-color: var(--color-warning);
 }
 
-
+@media (max-width: 600px) {
+  .tool-head h1 {
+    font-size: 1.2em;
+    padding: 6px 12px;
+  }
+}

@@ -5,5 +5,5 @@
 .calc-keys { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; }
 .calc-key { padding: 14px 0; font-size: 18px; border: 1px solid var(--border-color); border-radius: 8px; background: var(--bg-tertiary); color: var(--text-primary); }
 .calc-key:hover { background: var(--bg-stat-hover); }
-.calc-key.op { background: var(--color-primary); color: #fff; border-color: var(--color-primary); }
+.calc-key.op { background: var(--color-primary); color: var(--on-primary); border-color: var(--color-primary); }
 .calc-key.active { outline: 2px solid var(--text-primary); }

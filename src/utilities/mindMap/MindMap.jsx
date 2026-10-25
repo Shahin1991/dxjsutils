@@ -10,7 +10,7 @@ import {
 } from './utils/mindmap';
 
 const STORE = 'mindMaps';
-const FONT = 'Inter Variable, Inter, "Segoe UI", Arial, sans-serif';
+const FONT = '"Atkinson Hyperlegible Next Variable", "Segoe UI", Arial, sans-serif';
 const SIZES = [17, 14.5, 13];
 
 function loadStore() {
