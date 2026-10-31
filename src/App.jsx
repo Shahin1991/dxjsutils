@@ -66,6 +66,7 @@ const UTILITY_COMPONENTS = {
   "pdf-tools": lazy(() => import('./utilities/pdfTools/PdfTools').then((m) => ({ default: m.PdfTools }))),
   "spreadsheet-viewer": lazy(() => import('./utilities/spreadsheetViewer/SpreadsheetViewer').then((m) => ({ default: m.SpreadsheetViewer }))),
   "meeting-planner": lazy(() => import('./utilities/meetingPlanner/MeetingPlanner').then((m) => ({ default: m.MeetingPlanner }))),
+  "chart-maker": lazy(() => import('./utilities/chartMaker/ChartMaker').then((m) => ({ default: m.ChartMaker }))),
   "mind-map": lazy(() => import('./utilities/mindMap/MindMap').then((m) => ({ default: m.MindMap }))),
   "diagram-editor": lazy(() => import('./utilities/diagramEditor/DiagramEditor').then((m) => ({ default: m.DiagramEditor }))),
   "json-diff": lazy(() => import('./utilities/jsonDiff/JsonDiff').then((m) => ({ default: m.JsonDiff }))),

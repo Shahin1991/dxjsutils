@@ -69,6 +69,7 @@ export const UTILITIES = [
   { id: "metar-decoder", name: "METAR / TAF Decoder", icon: "🌦️", category: "Aviation", description: "Decode aviation weather reports and forecasts into plain English.", version: '1.0.0' },
   { id: "boarding-pass", name: "Boarding Pass Decoder", icon: "🎫", category: "Aviation", description: "Decode IATA boarding pass barcode data (BCBP).", version: '1.0.0' },
   { id: "pdf-sign", name: "Sign & Fill PDF", icon: "✒️", category: "Media", description: "Add signatures, text and dates to PDFs and fill form fields.", version: '1.0.0' },
+  { id: "chart-maker", name: "Chart Maker", icon: "📉", category: "Productivity", description: "Chart a spreadsheet, CSV or JSON as line, bar, area or scatter; export PNG or SVG.", version: '1.0.0' },
   { id: "image-metadata", name: "Image Metadata", icon: "🕵️", category: "Media", description: "View and remove hidden photo data such as GPS location.", version: '1.0.0' },
 ];
 

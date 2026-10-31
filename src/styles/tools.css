@@ -242,3 +242,32 @@
 .mm-help kbd { font-size: 11px; }
 .mp-alt td { box-shadow: inset 0 0 0 1px rgba(245, 166, 35, 0.7); }
 .mp-alt td:first-child { font-weight: 700; }
+
+/* Chart Maker */
+.cmk-container { max-width: 1400px; }
+.cmk-text { min-height: 140px; }
+.cmk-controls .tl-row:last-child { margin-bottom: 0; }
+.cmk-types { gap: 8px; }
+.cmk-types .tl-btn { padding: 5px 12px; }
+.cmk-fields { display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: 12px; margin-bottom: 12px; }
+.cmk-fields select, .cmk-fields input { width: 100%; }
+.cmk-ys { border: 0; margin: 0 0 10px; padding: 0; display: flex; flex-wrap: wrap; gap: 8px; }
+.cmk-ys legend { padding: 0; width: 100%; }
+.cmk-chip { display: inline-flex; align-items: center; gap: 6px; padding: 4px 10px; border: 1px solid var(--border-color); border-radius: var(--radius); background: var(--bg-input); cursor: pointer; }
+.cmk-chip.on { border-color: var(--color-primary); }
+.cmk-chip.off { opacity: 0.5; cursor: not-allowed; }
+.cmk-chip:focus-within { outline: 2px solid var(--focus-ring); outline-offset: 1px; }
+.cmk-push { margin-left: auto; }
+.cmk-chart { position: relative; width: 100%; border-radius: var(--radius); }
+.cmk-chart svg { max-width: 100%; height: auto; touch-action: pan-y; }
+.cmk-chart:focus-visible { outline: 2px solid var(--focus-ring); outline-offset: 2px; }
+.cmk-tip { position: absolute; z-index: 2; pointer-events: none; transform: translateY(-50%); min-width: 120px; max-width: 280px; padding: 8px 10px; background: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: var(--radius); box-shadow: var(--shadow-box); font-size: 12px; }
+.cmk-tip-title { color: var(--text-muted); margin-bottom: 4px; word-break: break-word; }
+.cmk-tip-row { display: flex; align-items: center; gap: 8px; line-height: 1.6; }
+.cmk-tip-row strong { color: var(--text-primary); font-size: 13px; font-variant-numeric: tabular-nums; }
+.cmk-tip-name { color: var(--text-secondary); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.cmk-key { flex: none; width: 12px; height: 2px; border-radius: 1px; }
+.cmk-note { margin: 8px 0 0; font-size: 12px; }
+.cmk-table-wrap { margin-top: 12px; max-height: 50vh; overflow: auto; border: 1px solid var(--border-color); border-radius: var(--radius); }
+.cmk-table thead th { position: sticky; top: 0; background: var(--bg-tertiary); }
+.cmk-table td.num { text-align: right; font-variant-numeric: tabular-nums; }
