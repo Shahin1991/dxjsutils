@@ -71,19 +71,8 @@ function valueExtent(model, chart) {
   return [lo, hi];
 }
 
-/*
- Pure geometry for one chart: positions of every mark, tick and label, in SVG user units.
- The renderer draws this as-is; hover maths reuses its scales.
-*/
-export function layoutChart(model, { chart, width, zero = true, labels = false, title = '', subtitle = '', theme }) {
-  const W = Math.max(320, Math.round(width || 800));
-  const horizontal = chart === 'bar';
-  const band = model.kind === 'band';
-  const k = model.series.length;
-  const color = (s) => seriesColor(theme, model.series[s].slot);
-  const fmtFull = (v) => formatNumber(v);
-
-  // ---- Header: title, subtitle and (for 2+ series) the legend ----
+// Title, subtitle and (optionally) a wrapping legend. Returns where the plot can start.
+export function headerLayout(series, { W, title, subtitle, theme, legend: withLegend }) {
   let top = P;
   const header = [];
   if (title) {
@@ -95,22 +84,37 @@ export function layoutChart(model, { chart, width, zero = true, labels = false, 
     top += 20;
   }
   const legend = [];
-  if (k >= 2) {
+  if (withLegend) {
     let lx = P;
     let ly = top + 8;
-    model.series.forEach((s, i) => {
+    series.forEach((s, i) => {
       const text = truncate(s.name, 28);
       const w = 22 + textWidth(text) + 18;
       if (lx + w > W - P && lx > P) {
         lx = P;
         ly += 20;
       }
-      legend.push({ i, x: lx, y: ly, text, color: color(i) });
+      legend.push({ i, x: lx, y: ly, text, color: seriesColor(theme, s.slot) });
       lx += w;
     });
     top = ly + 14;
   }
-  top += 12;
+  return { header, legend, top: top + 12 };
+}
+
+/*
+ Pure geometry for one chart: positions of every mark, tick and label, in SVG user units.
+ The renderer draws this as-is; hover maths reuses its scales.
+*/
+export function layoutChart(model, { chart, width, zero = true, labels = false, title = '', subtitle = '', theme }) {
+  const W = Math.max(320, Math.round(width || 800));
+  const horizontal = chart === 'bar';
+  const band = model.kind === 'band';
+  const k = model.series.length;
+  const color = (s) => seriesColor(theme, model.series[s].slot);
+  const fmtFull = (v) => formatNumber(v);
+  const { header, legend, top: headTop } = headerLayout(model.series, { W, title, subtitle, theme, legend: k >= 2 });
+  let top = headTop;
 
   // ---- Value scale ----
   let [vMin, vMax] = valueExtent(model, chart);

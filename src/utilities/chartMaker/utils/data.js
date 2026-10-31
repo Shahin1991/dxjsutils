@@ -9,6 +9,9 @@ export const CHART_TYPES = [
   { id: 'stacked', label: 'Stacked column', band: true },
   { id: 'bar', label: 'Bar', band: true },
   { id: 'scatter', label: 'Scatter' },
+  // Animated: one frame per X value (a date, period or step), played in order.
+  { id: 'bar-race', label: 'Bar race', band: true, race: true },
+  { id: 'line-race', label: 'Line race', band: true, race: true },
 ];
 
 export const AGGREGATIONS = [
@@ -22,11 +25,14 @@ export const AGGREGATIONS = [
 // Validated categorical order has 8 slots; scatter puts every pair side by side, and only the first 3 stay distinct.
 export const MAX_SERIES = 8;
 export const MAX_SCATTER_SERIES = 3;
+// A bar race ranks many entries and labels every bar by name, so it can hold far more than 8.
+export const MAX_RACE_ENTRIES = 100;
 export const MAX_BARS = 60;
 export const MAX_POINTS = 5000;
 export const OTHER = 'Other';
 
-export const seriesCap = (chart) => (chart === 'scatter' ? MAX_SCATTER_SERIES : MAX_SERIES);
+export const seriesCap = (chart) => (chart === 'scatter' ? MAX_SCATTER_SERIES : chart === 'bar-race' ? MAX_RACE_ENTRIES : MAX_SERIES);
+export const isRace = (chart) => Boolean(CHART_TYPES.find((t) => t.id === chart)?.race);
 
 // ---------- Reading input ----------
 
@@ -175,21 +181,45 @@ export function inferColumns({ headers, rows }) {
 
 // ---------- Defaults ----------
 
-export function defaultConfig(columns) {
-  const x = (columns.find((c) => c.type === 'date') || columns.find((c) => c.type === 'text' && c.filled) || columns[0] || {}).index ?? 0;
-  const ys = columns.filter((c) => c.type === 'number' && c.index !== x).slice(0, 3).map((c) => c.index);
+// The column that best reads as time: a date, else whole years (2019, 2020...).
+export const timeColumn = (columns) => columns.find((c) => c.type === 'date') || columns.find((c) => c.type === 'number' && c.year);
+
+/*
+ "Long" data repeats each X once per group: Year, City, Passengers. When X repeats and a text
+ column names the groups, return that column so each group becomes its own series.
+*/
+export function longGroupColumn(table, columns, x) {
+  if (!table || !columns[x]) return null;
+  const distinctX = new Set(table.rows.map((r) => String(r[x]))).size;
+  if (distinctX >= table.rows.length) return null;
+  const g = columns.find((c) => {
+    if (c.type !== 'text' || c.index === x || !c.filled) return false;
+    const n = new Set(table.rows.map((r) => r[c.index])).size;
+    return n >= 2 && n <= MAX_RACE_ENTRIES && n * distinctX >= table.rows.length * 0.5;
+  });
+  return g ? g.index : null;
+}
+
+export function defaultConfig(columns, table = null) {
+  const x = (timeColumn(columns) || columns.find((c) => c.type === 'text' && c.filled) || columns[0] || {}).index ?? 0;
+  const groupBy = longGroupColumn(table, columns, x);
+  const values = columns.filter((c) => c.type === 'number' && c.index !== x && !(c.year && columns[x]?.type === 'text'));
+  const ys = (values.filter((c) => !c.year).length ? values.filter((c) => !c.year) : values).slice(0, groupBy != null ? 1 : 3).map((c) => c.index);
   const xType = columns[x]?.type;
   return {
     chart: xType === 'date' || xType === 'number' ? 'line' : 'column',
     x,
     ys,
     slots: Object.fromEntries(ys.map((c, i) => [c, i])),
-    groupBy: null,
+    groupBy,
     agg: ys.length ? 'sum' : 'count',
     sort: 'natural',
     zero: true,
     labels: false,
     title: '',
+    topN: 10,
+    cumulative: false,
+    stepMs: 'auto',
   };
 }
 
@@ -326,9 +356,10 @@ export function buildModel(table, columns, cfg) {
     if (!g) {
       g = { x: xv, vals: series.map(() => []), counts: series.map(() => 0) };
       groups.set(xv, g);
-    } else dupes = true;
+    }
     seriesOf(r).forEach(([s, raw]) => {
       g.counts[s] += 1;
+      if (g.counts[s] > 1) dupes = true; // two rows landed on the same point and were combined
       const y = toNumber(raw);
       if (y != null) g.vals[s].push(y);
     });
@@ -340,10 +371,11 @@ export function buildModel(table, columns, cfg) {
   }));
 
   const total = (r) => r.values.reduce((a, v) => a + (v || 0), 0);
-  if (continuous || (xCol.type !== 'text' && cfg.sort === 'natural')) rows.sort((a, b) => a.x - b.x);
-  else if (cfg.sort === 'desc') rows.sort((a, b) => total(b) - total(a));
-  else if (cfg.sort === 'asc') rows.sort((a, b) => total(a) - total(b));
-  else if (cfg.sort === 'label') rows.sort((a, b) => String(a.label).localeCompare(String(b.label), undefined, { numeric: true }));
+  const sort = isRace(chart) ? 'natural' : cfg.sort; // frames always play in time order
+  if (continuous || (xCol.type !== 'text' && sort === 'natural')) rows.sort((a, b) => a.x - b.x);
+  else if (sort === 'desc') rows.sort((a, b) => total(b) - total(a));
+  else if (sort === 'asc') rows.sort((a, b) => total(a) - total(b));
+  else if (sort === 'label') rows.sort((a, b) => String(a.label).localeCompare(String(b.label), undefined, { numeric: true }));
 
   if (!continuous && (chart === 'column' || chart === 'stacked' || chart === 'bar') && rows.length > MAX_BARS) {
     notes.push(`Showing ${MAX_BARS} of ${rows.length.toLocaleString()} categories. Order by value to see the largest, or pick a column with fewer distinct values.`);

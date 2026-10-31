@@ -271,3 +271,10 @@
 .cmk-table-wrap { margin-top: 12px; max-height: 50vh; overflow: auto; border: 1px solid var(--border-color); border-radius: var(--radius); }
 .cmk-table thead th { position: sticky; top: 0; background: var(--bg-tertiary); }
 .cmk-table td.num { text-align: right; font-variant-numeric: tabular-nums; }
+.cmk-sep { width: 1px; height: 24px; background: var(--border-color); margin: 0 4px; }
+.cmk-opts select { width: auto; padding: 4px 8px; }
+.cmk-player { display: flex; align-items: center; gap: 12px; margin-bottom: 8px; flex-wrap: wrap; }
+.cmk-player .tl-btn { min-width: 96px; }
+.cmk-scrub { flex: 1; min-width: 160px; padding: 0; accent-color: var(--color-secondary); }
+.cmk-period { font-variant-numeric: tabular-nums; white-space: nowrap; }
+.cmk-rec { color: var(--text-secondary); font-variant-numeric: tabular-nums; }

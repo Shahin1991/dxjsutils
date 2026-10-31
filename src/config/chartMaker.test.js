@@ -53,7 +53,7 @@ test('column types and defaults', () => {
   const cfg = defaultConfig(columns);
   expect(cfg.x).toBe(0);
   expect(cfg.chart).toBe('line');
-  expect(cfg.ys).toEqual([2, 3]);
+  expect(cfg.ys).toEqual([2]); // a year column is time, not a value to plot
   expect(defaultConfig(load('name,score\na,1\nb,2').columns).chart).toBe('column');
 });
 
@@ -175,4 +175,109 @@ test('Chart Maker renders the sample, switches type, and reads values from the k
   act(() => [...el.querySelectorAll('label')].find((l) => l.textContent.includes('Show data table')).querySelector('input').click());
   expect(el.querySelector('.cmk-table').textContent).toContain('DXB–SYD');
   act(() => root.unmount());
+});
+
+describe('animated races', () => {
+  const { raceFrames, ranks, barRaceScene, lineRaceScene, stepDuration, videoFormat, frameLabel } = require('../utilities/chartMaker/utils/race');
+  const raceData = () => {
+    const { table, columns } = load('year,team,points\n2021,A,10\n2021,B,30\n2022,A,50\n2022,B,35\n2023,A,60\n2023,C,90');
+    const cfg = { ...defaultConfig(columns), chart: 'bar-race', x: 0, ys: [2], groupBy: 1 };
+    return buildModel(table, columns, cfg);
+  };
+
+  test('frames carry missing values forward, or keep a running total', () => {
+    const model = raceData();
+    expect(model.series.map((s) => s.name)).toEqual(['A', 'B', 'C']);
+    expect(raceFrames(model).map((f) => f.values)).toEqual([[10, 30, null], [50, 35, null], [60, 35, 90]]);
+    expect(raceFrames(model, { cumulative: true }).map((f) => f.values)).toEqual([[10, 30, 0], [60, 65, 0], [120, 65, 90]]);
+    expect(ranks([10, 30, null])).toEqual([1, 0, 2]);
+    expect(frameLabel(raceFrames(model), 1.4)).toBe('2022');
+    expect(frameLabel(raceFrames(model), 1.6)).toBe('2023');
+  });
+
+  test('a race holds far more than 8 entries without folding them away', () => {
+    const lines = ['t,name,v'];
+    for (let i = 0; i < 30; i += 1) lines.push(`1,N${i},${i}`, `2,N${i},${30 - i}`);
+    const { table, columns } = load(lines.join('\n'));
+    const model = buildModel(table, columns, { ...defaultConfig(columns), chart: 'bar-race', x: 0, ys: [2], groupBy: 1 });
+    expect(model.series).toHaveLength(30);
+    const scene = barRaceScene(model, raceFrames(model), 0, { width: 800, topN: 10, theme: THEMES.dark });
+    expect(scene.bars).toHaveLength(10);
+    expect(new Set(scene.bars.map((b) => b.fill)).size).toBe(1); // >8 entries: one colour, names carry identity
+    expect([...scene.bars].sort((a, b) => a.nameY - b.nameY).map((b) => b.name).slice(0, 3)).toEqual(['N29', 'N28', 'N27']);
+  });
+
+  test('bars swap places smoothly between frames', () => {
+    const model = raceData();
+    const frames = raceFrames(model);
+    const y = (scene, name) => {
+      const b = scene.bars.find((x) => x.name === name);
+      return b ? b.nameY : null;
+    };
+    const at = (p) => barRaceScene(model, frames, p, { width: 800, topN: 3, theme: THEMES.light });
+    expect(y(at(0), 'B')).toBeLessThan(y(at(0), 'A')); // B leads in 2021
+    expect(y(at(1), 'A')).toBeLessThan(y(at(1), 'B')); // A leads in 2022
+    const mid = y(at(0.5), 'A');
+    expect(mid).toBeGreaterThan(y(at(1), 'A'));
+    expect(mid).toBeLessThan(y(at(0), 'A'));
+    expect(at(2).period.text).toBe('2023');
+  });
+
+  test('line race reveals lines up to the current moment', () => {
+    const { table, columns } = load(SAMPLE_WIDE);
+    const model = buildModel(table, columns, { ...defaultConfig(columns), chart: 'line-race' });
+    const frames = raceFrames(model);
+    const early = lineRaceScene(model, frames, 1.5, { width: 800, theme: THEMES.dark });
+    const late = lineRaceScene(model, frames, 3, { width: 800, theme: THEMES.dark });
+    expect(early.lines[0].d.split('L')).toHaveLength(3); // points 0, 1 and the head at 1.5
+    expect(late.heads[0].x).toBeGreaterThan(early.heads[0].x);
+    expect(early.legend).toHaveLength(2);
+  });
+
+  test('speed and video format helpers', () => {
+    expect(stepDuration('500', 10)).toBe(500);
+    expect(stepDuration('auto', 13)).toBe(1500);
+    expect(stepDuration('auto', 400)).toBe(150);
+    expect(videoFormat(null)).toBeNull();
+    expect(videoFormat({ isTypeSupported: (m) => m === 'video/webm' })).toEqual({ mime: 'video/webm', ext: 'webm' });
+    expect(videoFormat({ isTypeSupported: (m) => m.startsWith('video/mp4') }).ext).toBe('mp4');
+  });
+
+  test('Chart Maker plays a bar race from the keyboard', () => {
+    globalThis.IS_REACT_ACT_ENVIRONMENT = true;
+    const { ChartMaker } = require('../utilities/chartMaker/ChartMaker');
+    const el = document.createElement('div');
+    document.body.appendChild(el);
+    let root;
+    act(() => {
+      root = createRoot(el);
+      root.render(React.createElement(ChartMaker));
+    });
+    const button = (label) => [...el.querySelectorAll('button')].find((b) => b.textContent.includes(label));
+    act(() => button('Bar race').click());
+    expect(el.querySelector('.cmk-period').textContent).toMatch(/Jan 2025\s+1 \/ 12/);
+    expect(el.querySelectorAll('.cmk-chart svg path').length).toBe(3);
+    const key = (k) => act(() => el.querySelector('.cmk-chart').dispatchEvent(new KeyboardEvent('keydown', { key: k, bubbles: true })));
+    key('ArrowRight');
+    expect(el.querySelector('.cmk-period').textContent).toMatch(/Feb 2025/);
+    key('End');
+    expect(el.querySelector('.cmk-period').textContent).toMatch(/Dec 2025\s+12 \/ 12/);
+    expect(button('Replay')).toBeTruthy();
+    act(() => root.unmount());
+  });
+});
+
+const SAMPLE_WIDE = 'm,a,b\n2025-01,1,5\n2025-02,4,3\n2025-03,9,2\n2025-04,7,8';
+
+test('long data splits into series by default, and only real merges are reported', () => {
+  const { table, columns } = load('Year,City,Pax\n2020,Dubai,10.5\n2020,Paris,8\n2021,Dubai,12\n2021,Paris,9.25');
+  const cfg = defaultConfig(columns, table);
+  expect(cfg.x).toBe(0);
+  expect(cfg.groupBy).toBe(1);
+  expect(cfg.ys).toEqual([2]);
+  const m = buildModel(table, columns, cfg);
+  expect(m.series.map((s) => s.name)).toEqual(['Dubai', 'Paris']);
+  expect(m.notes).toEqual([]);
+  const { valueDecimals, raceFrames } = require('../utilities/chartMaker/utils/race');
+  expect(valueDecimals(raceFrames(m))).toBe(2);
 });

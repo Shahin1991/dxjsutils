@@ -3,7 +3,7 @@ import { FONT, THEMES, hitTest, layoutChart, seriesColor } from './utils/layout'
 import { formatNumber } from './utils/scale';
 
 // Follows the app's light/dark switch (a class on <html>).
-function useTheme() {
+export function useTheme() {
   const read = () => (document.documentElement.classList.contains('light') ? 'light' : 'dark');
   const [name, setName] = useState(read);
   useEffect(() => {
@@ -14,7 +14,7 @@ function useTheme() {
   return name;
 }
 
-function useWidth(ref) {
+export function useWidth(ref) {
   const [w, setW] = useState(800);
   useEffect(() => {
     const el = ref.current;
